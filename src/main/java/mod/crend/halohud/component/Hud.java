@@ -15,13 +15,13 @@ import net.minecraft.util.Identifier;
 public class Hud extends DrawableHelper {
 	public static final Identifier haloTexture = new Identifier(mod.crend.halohud.HaloHud.MOD_ID, "textures/gui/halo.png");
 
+	boolean debug = true;
+
 	MinecraftClient client;
+	ClientPlayerEntity player = null;
 
 	public Hud() {
 		this.client = MinecraftClient.getInstance();
-		components[0] = new HealthHalo();
-		components[1] = new HungerHalo();
-		components[2] = new AirHalo();
 	}
 
 	boolean active = true;
@@ -37,6 +37,13 @@ public class Hud extends DrawableHelper {
 	static final int OUTER_HALO_MAX_HEIGHT = 27;
 
 	public void render(MatrixStack matrixStack, float tickDelta) {
+		if (client.player != player) {
+			player = client.player;
+			components[0] = new HealthHalo();
+			components[1] = new HungerHalo();
+			components[2] = new AirHalo();
+		}
+		if (player == null) return;
 		if (!active) {
 			boolean hasVisibleComponent = false;
 			for (HaloComponent component : components) {
@@ -57,8 +64,7 @@ public class Hud extends DrawableHelper {
 
 		// Pre-computation.
 		ActiveEffects effects = new ActiveEffects();
-		ClientPlayerEntity player = client.player;
-		if (player == null) return;
+
 		for (StatusEffectInstance effectInstance : player.getStatusEffects()) {
 			StatusEffect effect = effectInstance.getEffectType();
 			if (effect == StatusEffects.REGENERATION) effects.regeneration = true;
