@@ -3,6 +3,7 @@ package mod.crend.halohud.component;
 import com.mojang.blaze3d.systems.RenderSystem;
 import mod.crend.halohud.HaloHud;
 import mod.crend.halohud.render.HaloRenderer;
+import mod.crend.halohud.render.HaloType;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawableHelper;
 import net.minecraft.client.network.ClientPlayerEntity;
@@ -30,22 +31,21 @@ public class Hud extends DrawableHelper {
 		player = client.player;
 
 		components[0] = new HealthHalo(
-				new HaloRenderer(() -> HaloHud.config.haloRadius, () -> HaloHud.config.haloWidth, true),
+				new HaloRenderer(() -> HaloHud.config.haloRadius, () -> HaloHud.config.haloWidth, HaloType.Left),
 				player,
 				new SoftReference<>(effects)
 		);
 		components[1] = new HungerHalo(
-				new HaloRenderer(() -> HaloHud.config.haloRadius, () -> HaloHud.config.haloWidth, false),
+				new HaloRenderer(() -> HaloHud.config.haloRadius, () -> HaloHud.config.haloWidth, HaloType.Right),
 				player,
 				new SoftReference<>(effects)
 		);
 		components[2] = new AirHalo(
-				new HaloRenderer(() -> HaloHud.config.halo2Radius, () -> HaloHud.config.halo2Width, 30, 330),
+				new HaloRenderer(() -> HaloHud.config.halo2Radius, () -> HaloHud.config.halo2Width, HaloType.Full),
 				player,
 				new SoftReference<>(effects)
 		);
 	}
-
 
 	public void toggleHud() {
 		active = !active;

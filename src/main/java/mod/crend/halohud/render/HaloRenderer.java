@@ -19,15 +19,23 @@ public class HaloRenderer {
 	float a = 1.0f;
 	public boolean flipped = false;
 
-	public HaloRenderer(Supplier<Double> radius, Supplier<Double> width, boolean left) {
-		this(radius, width, left ? 185 : 30, left ? 330 : 175);
-	}
-
-	public HaloRenderer(Supplier<Double> radius, Supplier<Double> width, int start, int end) {
+	public HaloRenderer(Supplier<Double> radius, Supplier<Double> width, HaloType type) {
 		this.radius = radius;
 		this.width = width;
-		this.start = start;
-		this.end = end;
+		switch (type) {
+			case Full -> {
+				this.start = 30;
+				this.end = 330;
+			}
+			case Left -> {
+				this.start = 185;
+				this.end = 330;
+			}
+			case Right -> {
+				this.start = 30;
+				this.end = 175;
+			}
+		}
 	}
 
 	public void setColor(float r, float g, float b, float a) {
