@@ -1,7 +1,7 @@
 package mod.crend.halohud.component;
 
-import com.mojang.blaze3d.platform.GlStateManager;
 import com.mojang.blaze3d.systems.RenderSystem;
+import mod.crend.halohud.render.HaloRenderer;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawableHelper;
 import net.minecraft.client.network.ClientPlayerEntity;
@@ -10,61 +10,73 @@ import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.entity.effect.StatusEffect;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
-import net.minecraft.util.Identifier;
+
+import java.lang.ref.SoftReference;
 
 public class Hud extends DrawableHelper {
-	public static final Identifier haloTexture = new Identifier(mod.crend.halohud.HaloHud.MOD_ID, "textures/gui/halo.png");
-
-	boolean debug = true;
 
 	MinecraftClient client;
 	ClientPlayerEntity player = null;
+	final ActiveEffects effects = new ActiveEffects();
+	boolean active = true;
+	HaloComponent[] components = new HaloComponent[3];
 
 	public Hud() {
+		// Initialize render environment.
 		this.client = MinecraftClient.getInstance();
 	}
 
-	boolean active = true;
-	int scaledWidth;
-	int scaledHeight;
-	HaloComponent[] components = new HaloComponent[3];
+	private void init() {
+		Window window = client.getWindow();
+		double centerX = window.getScaledWidth() / 2.0d;
+		double centerY = window.getScaledHeight() / 2.0d;
+		player = client.player;
+
+		components[0] = new HealthHalo(
+				new HaloRenderer(centerX, centerY, 14, 2, true),
+				player,
+				new SoftReference<>(effects)
+		);
+		components[1] = new HungerHalo(
+				new HaloRenderer(centerX, centerY, 14, 2, false),
+				player,
+				new SoftReference<>(effects)
+		);
+		components[2] = new AirHalo(
+				new HaloRenderer(centerX, centerY, 16, 1, 30, 330),
+				player,
+				new SoftReference<>(effects)
+		);
+	}
+
 
 	public void toggleHud() {
 		active = !active;
 	}
 
-	static final int INNER_HALO_MAX_HEIGHT = 24;
-	static final int OUTER_HALO_MAX_HEIGHT = 27;
-
 	public void render(MatrixStack matrixStack, float tickDelta) {
+		// Setup.
 		if (client.player != player) {
+			if (player == null) {
+				init();
+			}
 			player = client.player;
-			components[0] = new HealthHalo();
-			components[1] = new HungerHalo();
-			components[2] = new AirHalo();
+			if (player == null) return;
+			for (HaloComponent component : components) {
+				component.setPlayer(player);
+			}
 		}
-		if (player == null) return;
 		if (!active) {
 			boolean hasVisibleComponent = false;
 			for (HaloComponent component : components) {
 				component.tick(1.5f * tickDelta, false);
-				if (component.ticksRemaining > 0) hasVisibleComponent = true;
+				if (component.isVisible()) hasVisibleComponent = true;
 			}
 			if (!hasVisibleComponent) return;
 		}
 
-		// Initialize render environment.
-		Window window = this.client.getWindow();
-		this.scaledWidth = window.getScaledWidth();
-		this.scaledHeight = window.getScaledHeight();
-		int previousShaderTexture = RenderSystem.getShaderTexture(0);
-		RenderSystem.setShaderTexture(0, haloTexture);
-		RenderSystem.enableBlend();
-		RenderSystem.blendFuncSeparate(GlStateManager.SrcFactor.SRC_ALPHA, GlStateManager.DstFactor.ONE_MINUS_SRC_ALPHA, GlStateManager.SrcFactor.ONE, GlStateManager.DstFactor.ZERO);
-
 		// Pre-computation.
-		ActiveEffects effects = new ActiveEffects();
-
+		effects.reset();
 		for (StatusEffectInstance effectInstance : player.getStatusEffects()) {
 			StatusEffect effect = effectInstance.getEffectType();
 			if (effect == StatusEffects.REGENERATION) effects.regeneration = true;
@@ -73,30 +85,25 @@ public class Hud extends DrawableHelper {
 			else if (effect == StatusEffects.HUNGER) effects.hunger = true;
 		}
 
-		// Anchor point
-		int x = (scaledWidth - 27) / 2;
-		int y = (scaledHeight - 27) / 2;
-
+		// Render.
+		RenderSystem.enableBlend();
 		for (HaloComponent component : components) {
-			float value = component.computeValue(player, effects);
-			boolean shouldRender = (value < 1.0f || component.forceRender());
-			if (active) component.tick(tickDelta, shouldRender);
-			if (component.ticksRemaining > 0) {
-				component.render(matrixStack, x, y);
+			if (active) component.tick(tickDelta, component.shouldRender());
+			if (component.isVisible()) {
+				component.render(matrixStack);
 			}
 		}
-
-		// Be kind and clean up after ourselves.
-		RenderSystem.blendFuncSeparate(GlStateManager.SrcFactor.ONE_MINUS_DST_COLOR, GlStateManager.DstFactor.ONE_MINUS_SRC_COLOR, GlStateManager.SrcFactor.ONE, GlStateManager.DstFactor.ZERO);
-		RenderSystem.setShaderTexture(0, previousShaderTexture);
-		RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
 	}
-
 
 	static class ActiveEffects {
 		boolean regeneration = false;
 		boolean poison = false;
 		boolean wither = false;
 		boolean hunger = false;
+
+		void reset() {
+			regeneration = poison = wither = hunger = false;
+		}
 	}
+
 }

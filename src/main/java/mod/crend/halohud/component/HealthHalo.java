@@ -1,30 +1,33 @@
 package mod.crend.halohud.component;
 
 import mod.crend.halohud.HaloHud;
+import mod.crend.halohud.render.HaloRenderer;
 import net.minecraft.client.network.ClientPlayerEntity;
 import net.minecraft.client.util.math.MatrixStack;
 
-import static mod.crend.halohud.component.Hud.INNER_HALO_MAX_HEIGHT;
+import java.lang.ref.Reference;
 
 public class HealthHalo extends HaloComponent {
 
-	Hud.ActiveEffects effects;
-	int haloSizeHealth;
-	int haloSizeAbsorption;
+	double haloSizeHealth;
+	double haloSizeAbsorption;
 
-	@Override
-	public float computeValue(ClientPlayerEntity player, Hud.ActiveEffects effects) {
-		this.effects = effects;
-		float health = player.getHealth() / player.getMaxHealth();
-		float absorption = player.getAbsorptionAmount() / player.getMaxHealth();
+	HealthHalo(HaloRenderer renderer, ClientPlayerEntity player, Reference<Hud.ActiveEffects> effects) {
+		super(renderer, player, effects);
+	}
 
-		haloSizeAbsorption = (int) (absorption * INNER_HALO_MAX_HEIGHT);
-		haloSizeHealth = Integer.min((int) (health * INNER_HALO_MAX_HEIGHT), INNER_HALO_MAX_HEIGHT - haloSizeAbsorption);
+	public float getValue() {
+		float health = (player.getHealth() / player.getMaxHealth());
+		haloSizeAbsorption = player.getAbsorptionAmount() / player.getMaxHealth();
+		haloSizeHealth = Double.min(player.getHealth() / player.getMaxHealth(), 1.0d - haloSizeAbsorption);
 		return health;
 	}
 
 	@Override
-	public boolean forceRender() {
+	public boolean shouldRender() {
+		return super.shouldRender() || forceRender(activeEffects());
+	}
+	public boolean forceRender(Hud.ActiveEffects effects) {
 		return effects.wither || effects.poison;
 	}
 
@@ -41,18 +44,18 @@ public class HealthHalo extends HaloComponent {
 	}
 
 	@Override
-	public void render(MatrixStack matrixStack, int x, int y) {
+	public void render(MatrixStack matrixStack) {
 		if (haloSizeHealth > 0) {
-			setColor(getColorForFilledHealthBar(effects));
-			drawTexture(matrixStack, x, y, 0, 0, 13, haloSizeHealth);
+			setColor(getColorForFilledHealthBar(activeEffects()));
+			renderer.render(matrixStack, 0, haloSizeHealth);
 		}
-		if (haloSizeHealth + haloSizeAbsorption < INNER_HALO_MAX_HEIGHT) {
+		if (haloSizeHealth + haloSizeAbsorption < 1.0d) {
 			setColor(HaloHud.config.colorHealthEmpty);
-			drawTexture(matrixStack, x, y + haloSizeHealth, 0, haloSizeHealth, 13, INNER_HALO_MAX_HEIGHT - haloSizeHealth - haloSizeAbsorption);
+			renderer.render(matrixStack, haloSizeHealth, 1.0d - haloSizeAbsorption);
 		}
 		if (haloSizeAbsorption > 0) {
 			setColor(HaloHud.config.colorAbsorption);
-			drawTexture(matrixStack, x, y + INNER_HALO_MAX_HEIGHT - haloSizeAbsorption, 0, INNER_HALO_MAX_HEIGHT - haloSizeAbsorption, 13, haloSizeAbsorption);
+			renderer.render(matrixStack, 1.0d - haloSizeAbsorption, 1.0f);
 		}
 	}
 }

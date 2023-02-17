@@ -1,24 +1,27 @@
 package mod.crend.halohud.component;
 
 import mod.crend.halohud.HaloHud;
+import mod.crend.halohud.render.HaloRenderer;
 import net.minecraft.client.network.ClientPlayerEntity;
 import net.minecraft.client.util.math.MatrixStack;
 
-import static mod.crend.halohud.component.Hud.OUTER_HALO_MAX_HEIGHT;
+import java.lang.ref.Reference;
 
 public class AirHalo extends HaloComponent {
-	int haloSizeAir;
 
-	@Override
-	public float computeValue(ClientPlayerEntity player, Hud.ActiveEffects effects) {
-		float air = player.getAir() / (float) player.getMaxAir();
-		haloSizeAir = (int) (air * OUTER_HALO_MAX_HEIGHT);
-		return air;
+	AirHalo(HaloRenderer renderer, ClientPlayerEntity player, Reference<Hud.ActiveEffects> effects) {
+		super(renderer, player, effects);
 	}
 
 	@Override
-	public void render(MatrixStack matrixStack, int x, int y) {
+	public float getValue() {
+		return player.getAir() / (float) player.getMaxAir();
+	}
+
+	@Override
+	public void render(MatrixStack matrixStack) {
 		setColor(HaloHud.config.colorAir);
-		drawTexture(matrixStack, x - 2, y - 2, 32, 0, 31, haloSizeAir);
+		double delta = (1.0 - getValue()) / 2.0d;
+		renderer.render(matrixStack, delta, 1.0d - delta);
 	}
 }
