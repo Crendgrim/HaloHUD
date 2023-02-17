@@ -25,7 +25,7 @@ public class HealthHalo extends HaloComponent {
 
 	@Override
 	public boolean shouldRender() {
-		return super.shouldRender() || forceRender(activeEffects());
+		return getValue() < HaloHud.config.showHealthBelow || forceRender(activeEffects());
 	}
 	public boolean forceRender(Hud.ActiveEffects effects) {
 		return effects.wither || effects.poison;

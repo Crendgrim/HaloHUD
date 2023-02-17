@@ -17,6 +17,11 @@ public class HungerHalo extends HaloComponent {
 		return player.getHungerManager().getFoodLevel() / 20.0f;
 	}
 
+	@Override
+	public boolean shouldRender() {
+		return getValue() < HaloHud.config.showFoodBelow;
+	}
+
 	private int getColorForFilledHungerBar(Hud.ActiveEffects effects) {
 		if (effects.hunger) {
 			return HaloHud.config.colorHunger;

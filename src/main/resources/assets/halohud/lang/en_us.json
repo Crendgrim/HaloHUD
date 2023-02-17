@@ -3,6 +3,7 @@
 
   "text.autoconfig.halohud.option.ticksRevealed": "Time revealed (ticks)",
 
+  "text.autoconfig.halohud.option.showHealthBelow": "Show health bar when below",
   "text.autoconfig.halohud.option.colorHealth": "Health bar",
   "text.autoconfig.halohud.option.colorWither": "Health bar (withered)",
   "text.autoconfig.halohud.option.colorPoison": "Health bar (poisoned)",
@@ -10,10 +11,12 @@
   "text.autoconfig.halohud.option.colorAbsorption": "Health bar (absorption)",
   "text.autoconfig.halohud.option.colorHealthEmpty": "Health bar (empty)",
 
+  "text.autoconfig.halohud.option.showFoodBelow": "Show food bar when below",
   "text.autoconfig.halohud.option.colorFood": "Food bar",
   "text.autoconfig.halohud.option.colorHunger": "Food bar (hunger)",
   "text.autoconfig.halohud.option.colorFoodEmpty": "Food bar (empty)",
 
+  "text.autoconfig.halohud.option.showAirBelow": "Show air bar when below",
   "text.autoconfig.halohud.option.colorAir": "Air bar",
 
   "key.category.halohud": "Halo HUD",

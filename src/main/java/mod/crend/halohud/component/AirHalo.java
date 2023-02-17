@@ -19,6 +19,11 @@ public class AirHalo extends HaloComponent {
 	}
 
 	@Override
+	public boolean shouldRender() {
+		return getValue() < HaloHud.config.showAirBelow;
+	}
+
+	@Override
 	public void render(MatrixStack matrixStack) {
 		setColor(HaloHud.config.colorAir);
 		double delta = (1.0 - getValue()) / 2.0d;

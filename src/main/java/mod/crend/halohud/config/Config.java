@@ -7,6 +7,7 @@ import me.shedaniel.autoconfig.annotation.ConfigEntry;
 public class Config implements ConfigData {
     public int ticksRevealed = 30;
 
+    public double showHealthBelow = 0.7;
     @ConfigEntry.ColorPicker(allowAlpha = true)
     public int colorHealth = 0x80FF0000;
     @ConfigEntry.ColorPicker(allowAlpha = true)
@@ -20,6 +21,7 @@ public class Config implements ConfigData {
     @ConfigEntry.ColorPicker(allowAlpha = true)
     public int colorHealthEmpty = 0x20FFFFFF;
 
+    public double showFoodBelow = 0.7;
     @ConfigEntry.ColorPicker(allowAlpha = true)
     public int colorFood = 0x80AA8000;
     @ConfigEntry.ColorPicker(allowAlpha = true)
@@ -27,6 +29,7 @@ public class Config implements ConfigData {
     @ConfigEntry.ColorPicker(allowAlpha = true)
     public int colorFoodEmpty = 0x20FFFFFF;
 
+    public double showAirBelow = 1.0;
     @ConfigEntry.ColorPicker(allowAlpha = true)
     public int colorAir = 0x80AAAAFF;
 }

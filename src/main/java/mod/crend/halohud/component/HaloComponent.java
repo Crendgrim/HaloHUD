@@ -31,9 +31,7 @@ public abstract class HaloComponent {
 		else ticksRemaining = Math.max(0, ticksRemaining - tickDelta);
 	}
 
-	public boolean shouldRender() {
-		return getValue() < 1.0f;
-	}
+	public abstract boolean shouldRender();
 
 	public abstract void render(MatrixStack matrixStack);
 
