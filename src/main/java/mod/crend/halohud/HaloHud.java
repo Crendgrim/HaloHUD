@@ -37,6 +37,7 @@ public class HaloHud implements ClientModInitializer {
                 ));
 
         ClientTickEvents.END_CLIENT_TICK.register(client -> {
+            hud.tick();
             while (toggleHudKeyBinding.wasPressed()) {
                 hud.toggleHud();
             }

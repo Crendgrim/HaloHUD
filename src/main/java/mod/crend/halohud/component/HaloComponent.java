@@ -26,9 +26,9 @@ public abstract class HaloComponent {
 
 	public boolean isVisible() { return ticksRemaining > 0; }
 
-	public void tick(float tickDelta, boolean shouldRender) {
-		if (shouldRender) ticksRemaining = Math.min(HaloHud.config.ticksRevealed, ticksRemaining + 2 * tickDelta);
-		else ticksRemaining = Math.max(0, ticksRemaining - tickDelta);
+	public void tick(boolean shouldRender) {
+		if (shouldRender) ticksRemaining = Math.min(HaloHud.config.ticksRevealed, ticksRemaining + 4);
+		else if (ticksRemaining > 0) ticksRemaining -= 2;
 	}
 
 	public abstract boolean shouldRender();

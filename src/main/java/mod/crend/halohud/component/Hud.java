@@ -54,26 +54,29 @@ public class Hud extends DrawableHelper {
 		active = !active;
 	}
 
-	public void render(MatrixStack matrixStack, float tickDelta) {
+	public void tick() {
 		// Setup.
+		if (client.player == null) {
+			return;
+		}
 		if (client.player != player) {
 			if (player == null) {
 				init();
-			}
-			player = client.player;
-			if (player == null) return;
-			for (HaloComponent component : components) {
-				component.setPlayer(player);
+			} else {
+				player = client.player;
+				for (HaloComponent component : components) {
+					component.setPlayer(player);
+				}
 			}
 		}
-		if (!active) {
-			boolean hasVisibleComponent = false;
-			for (HaloComponent component : components) {
-				component.tick(1.5f * tickDelta, false);
-				if (component.isVisible()) hasVisibleComponent = true;
-			}
-			if (!hasVisibleComponent) return;
+
+		// Tick components.
+		boolean hasVisibleComponent = false;
+		for (HaloComponent component : components) {
+			component.tick(active && component.shouldRender());
+			if (!active && component.isVisible()) hasVisibleComponent = true;
 		}
+		if (!active && !hasVisibleComponent) return;
 
 		// Pre-computation.
 		effects.reset();
@@ -84,11 +87,13 @@ public class Hud extends DrawableHelper {
 			else if (effect == StatusEffects.WITHER) effects.wither = true;
 			else if (effect == StatusEffects.HUNGER) effects.hunger = true;
 		}
+	}
 
-		// Render.
+	public void render(MatrixStack matrixStack, float tickDelta) {
+		if (player == null) return;
+
 		RenderSystem.enableBlend();
 		for (HaloComponent component : components) {
-			if (active) component.tick(tickDelta, component.shouldRender());
 			if (component.isVisible()) {
 				component.render(matrixStack);
 			}
