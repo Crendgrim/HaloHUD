@@ -1,4 +1,4 @@
-package mod.crend.halohud.render;
+package mod.crend.halohud.util;
 
 public enum HaloType {
 	Left,

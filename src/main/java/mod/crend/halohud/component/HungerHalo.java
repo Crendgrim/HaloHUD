@@ -2,13 +2,14 @@ package mod.crend.halohud.component;
 
 import mod.crend.halohud.HaloHud;
 import mod.crend.halohud.render.HaloRenderer;
+import mod.crend.halohud.util.ActiveEffects;
 import net.minecraft.client.network.ClientPlayerEntity;
 import net.minecraft.client.util.math.MatrixStack;
 
 import java.lang.ref.Reference;
 
 public class HungerHalo extends HaloComponent {
-	HungerHalo(HaloRenderer renderer, ClientPlayerEntity player, Reference<Hud.ActiveEffects> effects) {
+	public HungerHalo(HaloRenderer renderer, ClientPlayerEntity player, Reference<ActiveEffects> effects) {
 		super(renderer, player, effects);
 	}
 
@@ -22,7 +23,7 @@ public class HungerHalo extends HaloComponent {
 		return getValue() < HaloHud.config.showFoodBelow;
 	}
 
-	private int getColorForFilledHungerBar(Hud.ActiveEffects effects) {
+	private int getColorForFilledHungerBar(ActiveEffects effects) {
 		if (effects.hunger) {
 			return HaloHud.config.colorHunger;
 		} else {

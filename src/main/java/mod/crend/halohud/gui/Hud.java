@@ -1,9 +1,14 @@
-package mod.crend.halohud.component;
+package mod.crend.halohud.gui;
 
 import com.mojang.blaze3d.systems.RenderSystem;
 import mod.crend.halohud.HaloHud;
+import mod.crend.halohud.component.AirHalo;
+import mod.crend.halohud.component.HaloComponent;
+import mod.crend.halohud.component.HealthHalo;
+import mod.crend.halohud.component.HungerHalo;
 import mod.crend.halohud.render.HaloRenderer;
-import mod.crend.halohud.render.HaloType;
+import mod.crend.halohud.util.ActiveEffects;
+import mod.crend.halohud.util.HaloType;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawableHelper;
 import net.minecraft.client.network.ClientPlayerEntity;
@@ -94,17 +99,6 @@ public class Hud extends DrawableHelper {
 			if (component.isVisible()) {
 				component.render(matrixStack);
 			}
-		}
-	}
-
-	static class ActiveEffects {
-		boolean regeneration = false;
-		boolean poison = false;
-		boolean wither = false;
-		boolean hunger = false;
-
-		void reset() {
-			regeneration = poison = wither = hunger = false;
 		}
 	}
 

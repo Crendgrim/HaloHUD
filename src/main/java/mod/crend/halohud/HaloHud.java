@@ -2,7 +2,7 @@ package mod.crend.halohud;
 
 import me.shedaniel.autoconfig.AutoConfig;
 import me.shedaniel.autoconfig.serializer.JanksonConfigSerializer;
-import mod.crend.halohud.component.Hud;
+import mod.crend.halohud.gui.Hud;
 import mod.crend.halohud.config.Config;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;

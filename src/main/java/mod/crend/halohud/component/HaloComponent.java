@@ -2,6 +2,7 @@ package mod.crend.halohud.component;
 
 import mod.crend.halohud.HaloHud;
 import mod.crend.halohud.render.HaloRenderer;
+import mod.crend.halohud.util.ActiveEffects;
 import net.minecraft.client.network.ClientPlayerEntity;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.util.math.ColorHelper;
@@ -14,9 +15,9 @@ public abstract class HaloComponent {
 	private float ticksRemaining = 0;
 	protected final HaloRenderer renderer;
 	protected ClientPlayerEntity player;
-	private final Reference<Hud.ActiveEffects> effects;
+	private final Reference<ActiveEffects> effects;
 
-	HaloComponent(HaloRenderer renderer, ClientPlayerEntity player, Reference<Hud.ActiveEffects> effects) {
+	HaloComponent(HaloRenderer renderer, ClientPlayerEntity player, Reference<ActiveEffects> effects) {
 		this.renderer = renderer;
 		this.player = player;
 		this.effects = effects;
@@ -49,7 +50,7 @@ public abstract class HaloComponent {
 		);
 	}
 
-	protected Hud.ActiveEffects activeEffects() {
+	protected ActiveEffects activeEffects() {
 		return Objects.requireNonNull(effects.get());
 	}
 

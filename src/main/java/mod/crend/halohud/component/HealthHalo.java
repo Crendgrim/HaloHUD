@@ -2,6 +2,7 @@ package mod.crend.halohud.component;
 
 import mod.crend.halohud.HaloHud;
 import mod.crend.halohud.render.HaloRenderer;
+import mod.crend.halohud.util.ActiveEffects;
 import net.minecraft.client.network.ClientPlayerEntity;
 import net.minecraft.client.util.math.MatrixStack;
 
@@ -12,7 +13,7 @@ public class HealthHalo extends HaloComponent {
 	double haloSizeHealth;
 	double haloSizeAbsorption;
 
-	HealthHalo(HaloRenderer renderer, ClientPlayerEntity player, Reference<Hud.ActiveEffects> effects) {
+	public HealthHalo(HaloRenderer renderer, ClientPlayerEntity player, Reference<ActiveEffects> effects) {
 		super(renderer, player, effects);
 	}
 
@@ -27,11 +28,11 @@ public class HealthHalo extends HaloComponent {
 	public boolean shouldRender() {
 		return getValue() < HaloHud.config.showHealthBelow || forceRender(activeEffects());
 	}
-	public boolean forceRender(Hud.ActiveEffects effects) {
+	public boolean forceRender(ActiveEffects effects) {
 		return effects.wither || effects.poison;
 	}
 
-	private int getColorForFilledHealthBar(Hud.ActiveEffects effects) {
+	private int getColorForFilledHealthBar(ActiveEffects effects) {
 		if (effects.wither) {
 			return HaloHud.config.colorWither;
 		} else if (effects.poison) {

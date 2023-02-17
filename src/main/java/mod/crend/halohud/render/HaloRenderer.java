@@ -1,6 +1,7 @@
 package mod.crend.halohud.render;
 
 import com.mojang.blaze3d.systems.RenderSystem;
+import mod.crend.halohud.util.HaloType;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.render.*;
 import net.minecraft.client.util.math.MatrixStack;
