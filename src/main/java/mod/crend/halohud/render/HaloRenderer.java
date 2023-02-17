@@ -10,12 +10,13 @@ public class HaloRenderer {
 	double y;
 	double radius;
 	double width;
-	int start;
-	int end;
+	public int start;
+	public int end;
 	float r = 1.0f;
 	float g = 1.0f;
 	float b = 1.0f;
 	float a = 1.0f;
+	public boolean flipped = false;
 
 	public HaloRenderer(double x, double y, double radius, double width, boolean left) {
 		this(x, y, radius, width, left ? 185 : 30, left ? 330 : 175);
@@ -41,7 +42,7 @@ public class HaloRenderer {
 		render(matrices, start, end);
 	}
 	public void render(MatrixStack matrices, double from, double to) {
-		if (start > 180) {
+		if (flipped) {
 			double tmp = to;
 			to = 1.0d - from;
 			from = 1.0d - tmp;

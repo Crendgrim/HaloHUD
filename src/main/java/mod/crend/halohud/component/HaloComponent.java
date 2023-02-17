@@ -29,6 +29,7 @@ public abstract class HaloComponent {
 	public void tick(boolean shouldRender) {
 		if (shouldRender) ticksRemaining = Math.min(HaloHud.config.ticksRevealed, ticksRemaining + 4);
 		else if (ticksRemaining > 0) ticksRemaining -= 2;
+		renderer.flipped = (HaloHud.config.flipHalos && renderer.start < 180) || (!HaloHud.config.flipHalos && renderer.start > 180);
 	}
 
 	public abstract boolean shouldRender();

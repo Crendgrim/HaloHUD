@@ -7,6 +7,8 @@ import me.shedaniel.autoconfig.annotation.ConfigEntry;
 public class Config implements ConfigData {
     public int ticksRevealed = 30;
 
+    public boolean flipHalos = false;
+
     public double showHealthBelow = 0.7;
     @ConfigEntry.ColorPicker(allowAlpha = true)
     public int colorHealth = 0x80FF0000;

@@ -2,6 +2,7 @@
   "text.autoconfig.halohud.title": "Halo HUD",
 
   "text.autoconfig.halohud.option.ticksRevealed": "Time revealed (ticks)",
+  "text.autoconfig.halohud.option.flipHalos": "Reverse Halo fill direction",
 
   "text.autoconfig.halohud.option.showHealthBelow": "Show health bar when below",
   "text.autoconfig.halohud.option.colorHealth": "Health bar",
