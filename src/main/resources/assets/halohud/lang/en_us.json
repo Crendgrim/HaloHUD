@@ -3,6 +3,10 @@
 
   "text.autoconfig.halohud.option.ticksRevealed": "Time revealed (ticks)",
   "text.autoconfig.halohud.option.flipHalos": "Reverse Halo fill direction",
+  "text.autoconfig.halohud.option.haloRadius": "Radius of the main halo",
+  "text.autoconfig.halohud.option.haloWidth": "Width of the main halo",
+  "text.autoconfig.halohud.option.halo2Radius": "Radius of the air halo",
+  "text.autoconfig.halohud.option.halo2Width": "Width of the air halo",
 
   "text.autoconfig.halohud.option.showHealthBelow": "Show health bar when below",
   "text.autoconfig.halohud.option.colorHealth": "Health bar",

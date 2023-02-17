@@ -1,15 +1,16 @@
 package mod.crend.halohud.render;
 
 import com.mojang.blaze3d.systems.RenderSystem;
+import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.render.*;
 import net.minecraft.client.util.math.MatrixStack;
 import org.joml.Matrix4f;
 
+import java.util.function.Supplier;
+
 public class HaloRenderer {
-	double x;
-	double y;
-	double radius;
-	double width;
+	Supplier<Double> radius;
+	Supplier<Double> width;
 	public int start;
 	public int end;
 	float r = 1.0f;
@@ -18,13 +19,11 @@ public class HaloRenderer {
 	float a = 1.0f;
 	public boolean flipped = false;
 
-	public HaloRenderer(double x, double y, double radius, double width, boolean left) {
-		this(x, y, radius, width, left ? 185 : 30, left ? 330 : 175);
+	public HaloRenderer(Supplier<Double> radius, Supplier<Double> width, boolean left) {
+		this(radius, width, left ? 185 : 30, left ? 330 : 175);
 	}
 
-	public HaloRenderer(double x, double y, double radius, double width, int start, int end) {
-		this.x = x;
-		this.y = y;
+	public HaloRenderer(Supplier<Double> radius, Supplier<Double> width, int start, int end) {
 		this.radius = radius;
 		this.width = width;
 		this.start = start;
@@ -61,13 +60,17 @@ public class HaloRenderer {
 		// Setup circle arc
 		double from = Math.toRadians(start);
 		double to = Math.toRadians(end);
+		double _radius = radius.get();
+		double _width = width.get();
+		double x = MinecraftClient.getInstance().getWindow().getScaledWidth() / 2.0d;
+		double y = MinecraftClient.getInstance().getWindow().getScaledHeight() / 2.0d;
 		for (double i = from; i < to; i += Math.min(0.0125, to - i)) {
 			double sin = Math.sin(i);
 			double cos = Math.cos(i);
-			double xInner = x + sin * radius;
-			double xOuter = x + sin * (radius + width);
-			double yInner = y + cos * radius;
-			double yOuter = y + cos * (radius + width);
+			double xInner = x + sin * _radius;
+			double xOuter = xInner + sin * _width;
+			double yInner = y + cos * _radius;
+			double yOuter = yInner + cos * _width;
 			buffer.vertex(matrix, (float) xInner, (float) yInner, 0).color(r, g, b, a).next();
 			buffer.vertex(matrix, (float) xOuter, (float) yOuter, 0).color(r, g, b, a).next();
 		}

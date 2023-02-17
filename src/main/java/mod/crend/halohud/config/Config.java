@@ -9,6 +9,11 @@ public class Config implements ConfigData {
 
     public boolean flipHalos = false;
 
+    public double haloRadius = 14;
+    public double haloWidth = 2;
+    public double halo2Radius = 16;
+    public double halo2Width = 1;
+
     public double showHealthBelow = 0.7;
     @ConfigEntry.ColorPicker(allowAlpha = true)
     public int colorHealth = 0x80FF0000;

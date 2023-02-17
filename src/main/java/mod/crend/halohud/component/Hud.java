@@ -1,11 +1,11 @@
 package mod.crend.halohud.component;
 
 import com.mojang.blaze3d.systems.RenderSystem;
+import mod.crend.halohud.HaloHud;
 import mod.crend.halohud.render.HaloRenderer;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawableHelper;
 import net.minecraft.client.network.ClientPlayerEntity;
-import net.minecraft.client.util.Window;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.entity.effect.StatusEffect;
 import net.minecraft.entity.effect.StatusEffectInstance;
@@ -27,23 +27,20 @@ public class Hud extends DrawableHelper {
 	}
 
 	private void init() {
-		Window window = client.getWindow();
-		double centerX = window.getScaledWidth() / 2.0d;
-		double centerY = window.getScaledHeight() / 2.0d;
 		player = client.player;
 
 		components[0] = new HealthHalo(
-				new HaloRenderer(centerX, centerY, 14, 2, true),
+				new HaloRenderer(() -> HaloHud.config.haloRadius, () -> HaloHud.config.haloWidth, true),
 				player,
 				new SoftReference<>(effects)
 		);
 		components[1] = new HungerHalo(
-				new HaloRenderer(centerX, centerY, 14, 2, false),
+				new HaloRenderer(() -> HaloHud.config.haloRadius, () -> HaloHud.config.haloWidth, false),
 				player,
 				new SoftReference<>(effects)
 		);
 		components[2] = new AirHalo(
-				new HaloRenderer(centerX, centerY, 16, 1, 30, 330),
+				new HaloRenderer(() -> HaloHud.config.halo2Radius, () -> HaloHud.config.halo2Width, 30, 330),
 				player,
 				new SoftReference<>(effects)
 		);
