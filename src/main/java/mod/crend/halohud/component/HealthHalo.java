@@ -34,10 +34,10 @@ public class HealthHalo extends HaloComponent {
 	public void tick(boolean shouldRender) {
 		super.tick(shouldRender);
 		float health = getValue();
-		if (previousHealth > health) {
-			showForTicks = HaloHud.config.ticksRevealed;
+		if (previousHealth != health) {
+			reveal();
+			previousHealth = health;
 		}
-		previousHealth = health;
 	}
 
 	private int getColorForFilledHealthBar(ActiveEffects effects) {

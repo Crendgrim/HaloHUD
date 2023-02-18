@@ -14,6 +14,7 @@ public abstract class HaloComponent {
 
 	private int ticksRemaining = 0;
 	protected int showForTicks = 0;
+	int animationState = 0;
 	protected final HaloRenderer renderer;
 	protected ClientPlayerEntity player;
 	private final Reference<ActiveEffects> effects;
@@ -33,6 +34,12 @@ public abstract class HaloComponent {
 		else if (ticksRemaining > 0) ticksRemaining--;
 		renderer.flipped = (HaloHud.config.flipHalos && renderer.start < 180) || (!HaloHud.config.flipHalos && renderer.start > 180);
 		if (showForTicks > 0) --showForTicks;
+		animationState++;
+		if (animationState == 20) animationState = 0;
+	}
+
+	public void reveal() {
+		showForTicks = HaloHud.config.ticksRevealed;
 	}
 
 	public boolean shouldRender() {
@@ -45,6 +52,16 @@ public abstract class HaloComponent {
 
 
 	protected abstract float getValue();
+
+	protected int modifyAlpha(int argb, float multiplier) {
+		int a = (int) (multiplier * ColorHelper.Argb.getAlpha(argb));
+		return (a << 24) | argb & 0x00FFFFFF;
+	}
+
+	protected int animate(int argb) {
+		float alphaMultiplier = Math.abs(animationState - 10) / 10.0f;
+		return modifyAlpha(argb, alphaMultiplier);
+	}
 
 	protected void setColor(int argb) {
 		// The multiplier for the alpha value makes the halos fade in and out nicely.
