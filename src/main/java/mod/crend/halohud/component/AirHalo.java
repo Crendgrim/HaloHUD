@@ -20,7 +20,7 @@ public class AirHalo extends HaloComponent {
 	}
 
 	@Override
-	public boolean shouldRender() {
+	public boolean shouldRenderImpl() {
 		return getValue() < HaloHud.config.showAirBelow;
 	}
 

@@ -12,7 +12,8 @@ import java.util.Objects;
 
 public abstract class HaloComponent {
 
-	private float ticksRemaining = 0;
+	private int ticksRemaining = 0;
+	protected int showForTicks = 0;
 	protected final HaloRenderer renderer;
 	protected ClientPlayerEntity player;
 	private final Reference<ActiveEffects> effects;
@@ -28,12 +29,17 @@ public abstract class HaloComponent {
 	public boolean isVisible() { return ticksRemaining > 0; }
 
 	public void tick(boolean shouldRender) {
-		if (shouldRender) ticksRemaining = Math.min(HaloHud.config.ticksRevealed, ticksRemaining + 4);
-		else if (ticksRemaining > 0) ticksRemaining -= 2;
+		if (shouldRender) ticksRemaining = Math.min(HaloHud.config.ticksRevealed, ticksRemaining + 2);
+		else if (ticksRemaining > 0) ticksRemaining--;
 		renderer.flipped = (HaloHud.config.flipHalos && renderer.start < 180) || (!HaloHud.config.flipHalos && renderer.start > 180);
+		if (showForTicks > 0) --showForTicks;
 	}
 
-	public abstract boolean shouldRender();
+	public boolean shouldRender() {
+		return showForTicks > 0 || shouldRenderImpl();
+	}
+
+	protected abstract boolean shouldRenderImpl();
 
 	public abstract void render(MatrixStack matrixStack);
 
@@ -46,7 +52,7 @@ public abstract class HaloComponent {
 				ColorHelper.Argb.getRed(argb) / 255.0f,
 				ColorHelper.Argb.getGreen(argb) / 255.0f,
 				ColorHelper.Argb.getBlue(argb) / 255.0f,
-				(ticksRemaining / HaloHud.config.ticksRevealed) * (ColorHelper.Argb.getAlpha(argb) / 255.0f)
+				(((float) ticksRemaining) / HaloHud.config.ticksRevealed) * (ColorHelper.Argb.getAlpha(argb) / 255.0f)
 		);
 	}
 

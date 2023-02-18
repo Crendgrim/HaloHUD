@@ -5,7 +5,7 @@ import me.shedaniel.autoconfig.annotation.ConfigEntry;
 
 @me.shedaniel.autoconfig.annotation.Config(name = "halohud")
 public class Config implements ConfigData {
-    public int ticksRevealed = 30;
+    public int ticksRevealed = 20;
 
     public boolean flipHalos = false;
 

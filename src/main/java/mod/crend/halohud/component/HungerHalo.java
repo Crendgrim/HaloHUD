@@ -19,7 +19,7 @@ public class HungerHalo extends HaloComponent {
 	}
 
 	@Override
-	public boolean shouldRender() {
+	public boolean shouldRenderImpl() {
 		return getValue() < HaloHud.config.showFoodBelow;
 	}
 

@@ -10,26 +10,34 @@ import java.lang.ref.Reference;
 
 public class HealthHalo extends HaloComponent {
 
-	double haloSizeHealth;
-	double haloSizeAbsorption;
+	double previousHealth;
 
 	public HealthHalo(HaloRenderer renderer, ClientPlayerEntity player, Reference<ActiveEffects> effects) {
 		super(renderer, player, effects);
+		previousHealth = (player.getHealth() / player.getMaxHealth());
 	}
 
 	public float getValue() {
-		float health = (player.getHealth() / player.getMaxHealth());
-		haloSizeAbsorption = player.getAbsorptionAmount() / player.getMaxHealth();
-		haloSizeHealth = Double.min(player.getHealth() / player.getMaxHealth(), 1.0d - haloSizeAbsorption);
-		return health;
+		return player.getHealth() / player.getMaxHealth();
 	}
 
 	@Override
-	public boolean shouldRender() {
-		return getValue() < HaloHud.config.showHealthBelow || forceRender(activeEffects());
+	public boolean shouldRenderImpl() {
+		float health = getValue();
+		return health < HaloHud.config.showHealthBelow || forceRender(activeEffects());
 	}
 	public boolean forceRender(ActiveEffects effects) {
 		return effects.wither || effects.poison;
+	}
+
+	@Override
+	public void tick(boolean shouldRender) {
+		super.tick(shouldRender);
+		float health = getValue();
+		if (previousHealth > health) {
+			showForTicks = HaloHud.config.ticksRevealed;
+		}
+		previousHealth = health;
 	}
 
 	private int getColorForFilledHealthBar(ActiveEffects effects) {
@@ -46,6 +54,8 @@ public class HealthHalo extends HaloComponent {
 
 	@Override
 	public void render(MatrixStack matrixStack) {
+		double haloSizeAbsorption = player.getAbsorptionAmount() / player.getMaxHealth();
+		double haloSizeHealth = Double.min(getValue(), 1.0d - haloSizeAbsorption);
 		if (haloSizeHealth > 0) {
 			setColor(getColorForFilledHealthBar(activeEffects()));
 			renderer.render(matrixStack, 0, haloSizeHealth);
