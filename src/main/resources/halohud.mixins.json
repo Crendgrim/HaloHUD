@@ -1,0 +1,12 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "mod.crend.halohud.mixin",
+  "compatibilityLevel": "JAVA_17",
+  "client": [
+    "ClientPlayerInteractionManagerAccessor"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}

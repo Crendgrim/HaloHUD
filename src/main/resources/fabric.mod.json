@@ -26,6 +26,10 @@
     ]
   },
 
+  "mixins": [
+    "halohud.mixins.json"
+  ],
+
   "depends": {
     "fabric-key-binding-api-v1": "*",
 

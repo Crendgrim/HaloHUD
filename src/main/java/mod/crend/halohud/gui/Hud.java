@@ -2,10 +2,7 @@ package mod.crend.halohud.gui;
 
 import com.mojang.blaze3d.systems.RenderSystem;
 import mod.crend.halohud.HaloHud;
-import mod.crend.halohud.component.AirHalo;
-import mod.crend.halohud.component.HaloComponent;
-import mod.crend.halohud.component.HealthHalo;
-import mod.crend.halohud.component.HungerHalo;
+import mod.crend.halohud.component.*;
 import mod.crend.halohud.render.HaloRenderer;
 import mod.crend.halohud.util.ActiveEffects;
 import mod.crend.halohud.util.HaloType;
@@ -18,6 +15,8 @@ import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
 
 import java.lang.ref.SoftReference;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Hud extends DrawableHelper {
 
@@ -25,31 +24,71 @@ public class Hud extends DrawableHelper {
 	ClientPlayerEntity player = null;
 	final ActiveEffects effects = new ActiveEffects();
 	boolean active = true;
-	HaloComponent[] components = new HaloComponent[3];
+	List<HaloComponent> components = new ArrayList<>();
 
 	public Hud() {
 		// Initialize render environment.
 		this.client = MinecraftClient.getInstance();
 	}
 
+	/*
+
+	Left:
+	- health
+
+	Right:
+	- food
+
+	Bottom:
+	- Attack
+
+	big left:
+	- air?
+
+	big right
+	- durability??
+
+	 */
 	private void init() {
 		player = client.player;
 
-		components[0] = new HealthHalo(
+		components.add(new HealthHalo(
 				new HaloRenderer(() -> HaloHud.config.haloRadius, () -> HaloHud.config.haloWidth, HaloType.Left),
 				player,
 				new SoftReference<>(effects)
-		);
-		components[1] = new HungerHalo(
+		));
+		components.add(new HungerHalo(
 				new HaloRenderer(() -> HaloHud.config.haloRadius, () -> HaloHud.config.haloWidth, HaloType.Right),
 				player,
 				new SoftReference<>(effects)
-		);
-		components[2] = new AirHalo(
-				new HaloRenderer(() -> HaloHud.config.halo2Radius, () -> HaloHud.config.halo2Width, HaloType.Full),
+		));
+		components.add(new ArmorHalo(
+				new HaloRenderer(() -> HaloHud.config.halo2Radius, () -> HaloHud.config.halo2Width, HaloType.Left),
 				player,
 				new SoftReference<>(effects)
-		);
+		));
+		components.add(new StatusHalo(
+				new HaloRenderer(() -> HaloHud.config.halo2Radius, () -> HaloHud.config.halo2Width, HaloType.Right),
+				player,
+				new SoftReference<>(effects)
+		));
+		components.add(new ToolHalo(
+				new HaloRenderer(() -> HaloHud.config.halo2Radius, () -> HaloHud.config.halo2Width, HaloType.Bottom),
+				player,
+				new SoftReference<>(effects),
+				true
+		));
+		components.add(new ToolHalo(
+				new HaloRenderer(() -> HaloHud.config.halo2Radius + 2, () -> HaloHud.config.halo2Width, HaloType.Bottom),
+				player,
+				new SoftReference<>(effects),
+				false
+		));
+		components.add(new AttackHalo(
+				new HaloRenderer(() -> HaloHud.config.haloRadius, () -> HaloHud.config.haloWidth, HaloType.Bottom),
+				player,
+				new SoftReference<>(effects)
+		));
 	}
 
 	public void toggleHud() {
@@ -88,6 +127,10 @@ public class Hud extends DrawableHelper {
 			else if (effect == StatusEffects.POISON) effects.poison = true;
 			else if (effect == StatusEffects.WITHER) effects.wither = true;
 			else if (effect == StatusEffects.HUNGER) effects.hunger = true;
+			else if (effect == StatusEffects.HASTE) effects.haste = true;
+			else if (effect == StatusEffects.MINING_FATIGUE) effects.miningFatigue = true;
+			else if (effect == StatusEffects.STRENGTH) effects.strength = true;
+			else if (effect == StatusEffects.WEAKNESS) effects.weakness = true;
 		}
 	}
 

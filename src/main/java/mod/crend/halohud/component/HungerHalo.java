@@ -16,7 +16,6 @@ public class HungerHalo extends HaloComponent {
 		super(renderer, player, effects);
 	}
 
-	@Override
 	public float getValue() {
 		return player.getHungerManager().getFoodLevel() / 20.0f;
 	}

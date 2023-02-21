@@ -32,7 +32,7 @@ public abstract class HaloComponent {
 	public void tick(boolean shouldRender) {
 		if (shouldRender) ticksRemaining = Math.min(HaloHud.config.ticksRevealed, ticksRemaining + 2);
 		else if (ticksRemaining > 0) ticksRemaining--;
-		renderer.flipped = (HaloHud.config.flipHalos && renderer.start < 180) || (!HaloHud.config.flipHalos && renderer.start > 180);
+		renderer.tick();
 		if (showForTicks > 0) --showForTicks;
 		animationState++;
 		if (animationState == 20) animationState = 0;
@@ -49,9 +49,6 @@ public abstract class HaloComponent {
 	protected abstract boolean shouldRenderImpl();
 
 	public abstract void render(MatrixStack matrixStack);
-
-
-	protected abstract float getValue();
 
 	protected int modifyAlpha(int argb, float multiplier) {
 		int a = (int) (multiplier * ColorHelper.Argb.getAlpha(argb));
