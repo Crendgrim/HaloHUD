@@ -2,6 +2,7 @@ package mod.crend.halohud.component;
 
 import mod.crend.halohud.HaloHud;
 import mod.crend.halohud.render.HaloRenderer;
+import mod.crend.halohud.render.component.HungerHaloRenderer;
 import mod.crend.halohud.util.ActiveEffects;
 import net.minecraft.client.network.ClientPlayerEntity;
 import net.minecraft.client.util.math.MatrixStack;
@@ -10,10 +11,12 @@ import java.lang.ref.Reference;
 
 public class HungerHalo extends HaloComponent {
 
+	private final HungerHaloRenderer renderer;
 	float handItemFoodValue = 0;
 
 	public HungerHalo(HaloRenderer renderer, ClientPlayerEntity player, Reference<ActiveEffects> effects) {
-		super(renderer, player, effects);
+		super(player, effects);
+		this.renderer = new HungerHaloRenderer(renderer);
 	}
 
 	public float getValue() {
@@ -22,7 +25,7 @@ public class HungerHalo extends HaloComponent {
 
 	@Override
 	public boolean shouldRenderImpl() {
-		return getValue() < HaloHud.config.showFoodBelow;
+		return getValue() < HaloHud.config().showFoodBelow;
 	}
 
 	@Override
@@ -40,22 +43,9 @@ public class HungerHalo extends HaloComponent {
 		}
 	}
 
-	private int getColorForFilledHungerBar(ActiveEffects effects) {
-		if (effects.hunger) {
-			return HaloHud.config.colorHunger;
-		} else {
-			return HaloHud.config.colorFood;
-		}
-	}
 
 	@Override
 	public void render(MatrixStack matrixStack) {
-		setColor(getColorForFilledHungerBar(activeEffects()));
-		float hunger = getValue();
-		renderer.render(matrixStack, 0.0d, hunger);
-		setColor(animate(HaloHud.config.colorFood));
-		renderer.render(matrixStack, hunger, Math.min(1.0d, hunger + handItemFoodValue));
-		setColor(HaloHud.config.colorFoodEmpty);
-		renderer.render(matrixStack, hunger, 1.0d);
+		renderer.render(matrixStack, activeEffects(), getValue(), handItemFoodValue, intensity());
 	}
 }

@@ -1,11 +1,9 @@
 package mod.crend.halohud.component;
 
 import mod.crend.halohud.HaloHud;
-import mod.crend.halohud.render.HaloRenderer;
 import mod.crend.halohud.util.ActiveEffects;
 import net.minecraft.client.network.ClientPlayerEntity;
 import net.minecraft.client.util.math.MatrixStack;
-import net.minecraft.util.math.ColorHelper;
 
 import java.lang.ref.Reference;
 import java.util.Objects;
@@ -15,12 +13,10 @@ public abstract class HaloComponent {
 	private int ticksRemaining = 0;
 	protected int showForTicks = 0;
 	int animationState = 0;
-	protected final HaloRenderer renderer;
 	protected ClientPlayerEntity player;
 	private final Reference<ActiveEffects> effects;
 
-	HaloComponent(HaloRenderer renderer, ClientPlayerEntity player, Reference<ActiveEffects> effects) {
-		this.renderer = renderer;
+	HaloComponent(ClientPlayerEntity player, Reference<ActiveEffects> effects) {
 		this.player = player;
 		this.effects = effects;
 	}
@@ -30,16 +26,15 @@ public abstract class HaloComponent {
 	public boolean isVisible() { return ticksRemaining > 0; }
 
 	public void tick(boolean shouldRender) {
-		if (shouldRender) ticksRemaining = Math.min(HaloHud.config.ticksRevealed, ticksRemaining + 2);
+		if (shouldRender) ticksRemaining = Math.min(HaloHud.config().ticksRevealed, ticksRemaining + 2);
 		else if (ticksRemaining > 0) ticksRemaining--;
-		renderer.tick();
 		if (showForTicks > 0) --showForTicks;
 		animationState++;
 		if (animationState == 20) animationState = 0;
 	}
 
 	public void reveal() {
-		showForTicks = HaloHud.config.ticksRevealed;
+		showForTicks = HaloHud.config().ticksRevealed;
 	}
 
 	public boolean shouldRender() {
@@ -48,27 +43,9 @@ public abstract class HaloComponent {
 
 	protected abstract boolean shouldRenderImpl();
 
+	public float intensity() { return ticksRemaining / (float) HaloHud.config().ticksRevealed; }
+
 	public abstract void render(MatrixStack matrixStack);
-
-	protected int modifyAlpha(int argb, float multiplier) {
-		int a = (int) (multiplier * ColorHelper.Argb.getAlpha(argb));
-		return (a << 24) | argb & 0x00FFFFFF;
-	}
-
-	protected int animate(int argb) {
-		float alphaMultiplier = Math.abs(animationState - 10) / 10.0f;
-		return modifyAlpha(argb, alphaMultiplier);
-	}
-
-	protected void setColor(int argb) {
-		// The multiplier for the alpha value makes the halos fade in and out nicely.
-		renderer.setColor(
-				ColorHelper.Argb.getRed(argb) / 255.0f,
-				ColorHelper.Argb.getGreen(argb) / 255.0f,
-				ColorHelper.Argb.getBlue(argb) / 255.0f,
-				(((float) ticksRemaining) / HaloHud.config.ticksRevealed) * (ColorHelper.Argb.getAlpha(argb) / 255.0f)
-		);
-	}
 
 	protected ActiveEffects activeEffects() {
 		return Objects.requireNonNull(effects.get());

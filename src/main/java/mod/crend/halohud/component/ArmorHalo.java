@@ -2,6 +2,7 @@ package mod.crend.halohud.component;
 
 import mod.crend.halohud.HaloHud;
 import mod.crend.halohud.render.HaloRenderer;
+import mod.crend.halohud.render.SimpleHaloRenderer;
 import mod.crend.halohud.util.ActiveEffects;
 import net.minecraft.client.network.ClientPlayerEntity;
 import net.minecraft.client.util.math.MatrixStack;
@@ -13,8 +14,11 @@ import java.lang.ref.Reference;
 public class ArmorHalo extends HaloComponent {
 	float value;
 
+	private final SimpleHaloRenderer renderer;
+
 	public ArmorHalo(HaloRenderer renderer, ClientPlayerEntity player, Reference<ActiveEffects> effects) {
-		super(renderer, player, effects);
+		super(player, effects);
+		this.renderer = new SimpleHaloRenderer(renderer, HaloHud.config().colorElytra);
 	}
 
 	@Override
@@ -31,12 +35,11 @@ public class ArmorHalo extends HaloComponent {
 
 	@Override
 	public boolean shouldRenderImpl() {
-		return (player.isFallFlying() && value < HaloHud.config.showElytraBelow);
+		return (player.isFallFlying() && value < HaloHud.config().showElytraBelow);
 	}
 
 	@Override
 	public void render(MatrixStack matrixStack) {
-		setColor(HaloHud.config.colorElytra);
-		renderer.render(matrixStack, 0.0d, value);
+		renderer.render(matrixStack, value, intensity());
 	}
 }

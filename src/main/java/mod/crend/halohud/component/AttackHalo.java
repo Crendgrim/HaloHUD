@@ -1,7 +1,7 @@
 package mod.crend.halohud.component;
 
-import mod.crend.halohud.HaloHud;
 import mod.crend.halohud.mixin.ClientPlayerInteractionManagerAccessor;
+import mod.crend.halohud.render.component.AttackHaloRenderer;
 import mod.crend.halohud.render.HaloRenderer;
 import mod.crend.halohud.util.ActiveEffects;
 import net.minecraft.client.MinecraftClient;
@@ -16,12 +16,14 @@ import java.lang.ref.Reference;
 
 public class AttackHalo extends HaloComponent {
 	MinecraftClient client;
+	private final AttackHaloRenderer renderer;
 	float toolProgress = 0;
 	boolean fullyCharged = false;
 
 	public AttackHalo(HaloRenderer renderer, ClientPlayerEntity player, Reference<ActiveEffects> effects) {
-		super(renderer, player, effects);
+		super(player, effects);
 		client = MinecraftClient.getInstance();
+		this.renderer = new AttackHaloRenderer(renderer);
 	}
 
 	protected float getValue() {
@@ -57,36 +59,8 @@ public class AttackHalo extends HaloComponent {
 		}
 	}
 
-	private int getColor(ActiveEffects effects) {
-		if (toolProgress > 0) {
-			if (effects.miningFatigue) {
-				return HaloHud.config.colorToolMiningFatigue;
-			} else if (effects.haste) {
-				return HaloHud.config.colorToolHaste;
-			} else {
-				return HaloHud.config.colorProgress;
-			}
-		} else {
-			if (effects.strength) {
-				return HaloHud.config.colorStrength;
-			} else if (effects.weakness) {
-				return HaloHud.config.colorWeakness;
-			} else {
-				return HaloHud.config.colorAttack;
-			}
-		}
-	}
-
 	@Override
 	public void render(MatrixStack matrixStack) {
-		float progress = getValue();
-		int color = getColor(activeEffects());
-		if (toolProgress == 0 && progress < 1.0f) {
-			color = modifyAlpha(color, 0.7f);
-		}
-		setColor(color);
-		renderer.render(matrixStack, 0.0d, progress);
-		setColor(HaloHud.config.colorAttackEmpty);
-		renderer.render(matrixStack, progress, 1.0d);
+		renderer.render(matrixStack, activeEffects(), getValue(), toolProgress, intensity());
 	}
 }

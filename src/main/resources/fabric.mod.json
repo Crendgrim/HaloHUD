@@ -35,7 +35,8 @@
 
     "fabricloader": "*",
     "minecraft": ">=1.19.3",
-    "java": "*"
+    "java": "*",
+    "yet-another-config-lib": ">=2.2.0"
   },
   "suggests": {
   }

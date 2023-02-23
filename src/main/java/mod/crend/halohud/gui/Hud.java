@@ -31,61 +31,43 @@ public class Hud extends DrawableHelper {
 		this.client = MinecraftClient.getInstance();
 	}
 
-	/*
-
-	Left:
-	- health
-
-	Right:
-	- food
-
-	Bottom:
-	- Attack
-
-	big left:
-	- air?
-
-	big right
-	- durability??
-
-	 */
 	private void init() {
 		player = client.player;
 
 		components.add(new HealthHalo(
-				new HaloRenderer(() -> HaloHud.config.haloRadius, () -> HaloHud.config.haloWidth, HaloType.Left),
+				new HaloRenderer(() -> HaloHud.config().haloRadius, () -> HaloHud.config().haloWidth, HaloType.Left),
 				player,
 				new SoftReference<>(effects)
 		));
 		components.add(new HungerHalo(
-				new HaloRenderer(() -> HaloHud.config.haloRadius, () -> HaloHud.config.haloWidth, HaloType.Right),
+				new HaloRenderer(() -> HaloHud.config().haloRadius, () -> HaloHud.config().haloWidth, HaloType.Right),
 				player,
 				new SoftReference<>(effects)
 		));
 		components.add(new ArmorHalo(
-				new HaloRenderer(() -> HaloHud.config.halo2Radius, () -> HaloHud.config.halo2Width, HaloType.Left),
+				new HaloRenderer(() -> HaloHud.config().halo2Radius, () -> HaloHud.config().halo2Width, HaloType.Left),
 				player,
 				new SoftReference<>(effects)
 		));
 		components.add(new StatusHalo(
-				new HaloRenderer(() -> HaloHud.config.halo2Radius, () -> HaloHud.config.halo2Width, HaloType.Right),
+				new HaloRenderer(() -> HaloHud.config().halo2Radius, () -> HaloHud.config().halo2Width, HaloType.Right),
 				player,
 				new SoftReference<>(effects)
 		));
 		components.add(new ToolHalo(
-				new HaloRenderer(() -> HaloHud.config.halo2Radius, () -> HaloHud.config.halo2Width, HaloType.Bottom),
+				new HaloRenderer(() -> HaloHud.config().halo2Radius, () -> HaloHud.config().halo2Width, HaloType.Bottom),
 				player,
 				new SoftReference<>(effects),
 				true
 		));
 		components.add(new ToolHalo(
-				new HaloRenderer(() -> HaloHud.config.halo2Radius + 2, () -> HaloHud.config.halo2Width, HaloType.Bottom),
+				new HaloRenderer(() -> HaloHud.config().halo2Radius + 2, () -> HaloHud.config().halo2Width, HaloType.Bottom),
 				player,
 				new SoftReference<>(effects),
 				false
 		));
 		components.add(new AttackHalo(
-				new HaloRenderer(() -> HaloHud.config.haloRadius, () -> HaloHud.config.haloWidth, HaloType.Bottom),
+				new HaloRenderer(() -> HaloHud.config().haloRadius, () -> HaloHud.config().haloWidth, HaloType.Bottom),
 				player,
 				new SoftReference<>(effects)
 		));
@@ -118,6 +100,7 @@ public class Hud extends DrawableHelper {
 			if (!active && component.isVisible()) hasVisibleComponent = true;
 		}
 		if (!active && !hasVisibleComponent) return;
+		HaloRenderer.staticTick();
 
 		// Pre-computation.
 		effects.reset();

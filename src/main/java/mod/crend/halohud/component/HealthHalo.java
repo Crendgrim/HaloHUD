@@ -2,6 +2,7 @@ package mod.crend.halohud.component;
 
 import mod.crend.halohud.HaloHud;
 import mod.crend.halohud.render.HaloRenderer;
+import mod.crend.halohud.render.component.HealthHaloRenderer;
 import mod.crend.halohud.util.ActiveEffects;
 import net.minecraft.client.network.ClientPlayerEntity;
 import net.minecraft.client.util.math.MatrixStack;
@@ -10,11 +11,13 @@ import java.lang.ref.Reference;
 
 public class HealthHalo extends HaloComponent {
 
+	private final HealthHaloRenderer renderer;
 	double previousHealth;
 
 	public HealthHalo(HaloRenderer renderer, ClientPlayerEntity player, Reference<ActiveEffects> effects) {
-		super(renderer, player, effects);
+		super(player, effects);
 		previousHealth = (player.getHealth() / player.getMaxHealth());
+		this.renderer = new HealthHaloRenderer(renderer);
 	}
 
 	public float getValue() {
@@ -24,7 +27,7 @@ public class HealthHalo extends HaloComponent {
 	@Override
 	public boolean shouldRenderImpl() {
 		float health = getValue();
-		return health < HaloHud.config.showHealthBelow || forceRender(activeEffects());
+		return health < HaloHud.config().showHealthBelow || forceRender(activeEffects());
 	}
 	public boolean forceRender(ActiveEffects effects) {
 		return effects.wither || effects.poison;
@@ -40,33 +43,11 @@ public class HealthHalo extends HaloComponent {
 		}
 	}
 
-	private int getColorForFilledHealthBar(ActiveEffects effects) {
-		if (effects.wither) {
-			return HaloHud.config.colorWither;
-		} else if (effects.poison) {
-			return HaloHud.config.colorPoison;
-		} else if (effects.regeneration) {
-			return HaloHud.config.colorRegeneration;
-		} else {
-			return HaloHud.config.colorHealth;
-		}
-	}
 
 	@Override
 	public void render(MatrixStack matrixStack) {
-		double haloSizeAbsorption = player.getAbsorptionAmount() / player.getMaxHealth();
-		double haloSizeHealth = Double.min(getValue(), 1.0d - haloSizeAbsorption);
-		if (haloSizeHealth > 0) {
-			setColor(getColorForFilledHealthBar(activeEffects()));
-			renderer.render(matrixStack, 0, haloSizeHealth);
-		}
-		if (haloSizeHealth + haloSizeAbsorption < 1.0d) {
-			setColor(HaloHud.config.colorHealthEmpty);
-			renderer.render(matrixStack, haloSizeHealth, 1.0d - haloSizeAbsorption);
-		}
-		if (haloSizeAbsorption > 0) {
-			setColor(HaloHud.config.colorAbsorption);
-			renderer.render(matrixStack, 1.0d - haloSizeAbsorption, 1.0f);
-		}
+		float haloSizeAbsorption = player.getAbsorptionAmount() / player.getMaxHealth();
+		float haloSizeHealth = Float.min(getValue(), 1.0f - haloSizeAbsorption);
+		renderer.render(matrixStack, activeEffects(), haloSizeHealth, haloSizeAbsorption, intensity());
 	}
 }

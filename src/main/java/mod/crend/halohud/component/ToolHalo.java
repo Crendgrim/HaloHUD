@@ -2,6 +2,7 @@ package mod.crend.halohud.component;
 
 import mod.crend.halohud.HaloHud;
 import mod.crend.halohud.render.HaloRenderer;
+import mod.crend.halohud.render.SimpleHaloRenderer;
 import mod.crend.halohud.util.ActiveEffects;
 import net.minecraft.client.network.ClientPlayerEntity;
 import net.minecraft.client.util.math.MatrixStack;
@@ -11,12 +12,15 @@ import java.lang.ref.Reference;
 
 public class ToolHalo extends HaloComponent {
 
+	private final SimpleHaloRenderer renderer;
+
 	float value;
 	boolean active;
 	boolean mainHand;
 
 	public ToolHalo(HaloRenderer renderer, ClientPlayerEntity player, Reference<ActiveEffects> effects, boolean mainHand) {
-		super(renderer, player, effects);
+		super(player, effects);
+		this.renderer = new SimpleHaloRenderer(renderer, HaloHud.config().colorTool);
 		this.mainHand = mainHand;
 	}
 
@@ -37,12 +41,11 @@ public class ToolHalo extends HaloComponent {
 
 	@Override
 	protected boolean shouldRenderImpl() {
-		return value < HaloHud.config.showToolBelow;
+		return active && value < HaloHud.config().showToolBelow;
 	}
 
 	@Override
 	public void render(MatrixStack matrixStack) {
-		setColor(HaloHud.config.colorTool);
-		renderer.render(matrixStack, 0, value);
+		this.renderer.render(matrixStack, value, intensity());
 	}
 }

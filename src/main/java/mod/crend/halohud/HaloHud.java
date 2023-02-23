@@ -1,9 +1,7 @@
 package mod.crend.halohud;
 
-import me.shedaniel.autoconfig.AutoConfig;
-import me.shedaniel.autoconfig.serializer.JanksonConfigSerializer;
-import mod.crend.halohud.gui.Hud;
 import mod.crend.halohud.config.Config;
+import mod.crend.halohud.gui.Hud;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
 import net.fabricmc.fabric.api.client.keybinding.v1.KeyBindingHelper;
@@ -16,15 +14,15 @@ public class HaloHud implements ClientModInitializer {
 
     public static final String MOD_ID = "halohud";
 
-	public static Config config;
-
     private static Hud hud;
+
+    public static Config config() {
+        return Config.INSTANCE.getConfig();
+    }
 
     @Override
     public void onInitializeClient() {
-        AutoConfig.register(Config.class, JanksonConfigSerializer::new);
-        config = AutoConfig.getConfigHolder(Config.class).getConfig();
-
+        Config.INSTANCE.load();
         hud = new Hud();
 
         HudRenderCallback.EVENT.register((matrixStack, tickDelta) -> hud.render(matrixStack, tickDelta));
