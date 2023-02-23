@@ -122,6 +122,7 @@ public class HaloRenderInstance {
 				drawCurrentSlice();
 			}
 		}
+		drawCurrentSlice();
 		// Draw to the screen
 		RenderSystem.setShader(GameRenderer::getPositionColorProgram);
 		BufferRenderer.drawWithGlobalProgram(buffer.end());
