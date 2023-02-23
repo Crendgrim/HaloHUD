@@ -1,5 +1,8 @@
 package mod.crend.halohud.util;
 
+import net.minecraft.entity.effect.StatusEffect;
+import net.minecraft.entity.effect.StatusEffects;
+
 public class ActiveEffects {
 	public boolean regeneration = false;
 	public boolean poison = false;
@@ -20,5 +23,16 @@ public class ActiveEffects {
 				= strength
 				= weakness
 				= false;
+	}
+
+	public void enableFrom(StatusEffect effect) {
+		if (effect == StatusEffects.REGENERATION) this.regeneration = true;
+		else if (effect == StatusEffects.POISON) this.poison = true;
+		else if (effect == StatusEffects.WITHER) this.wither = true;
+		else if (effect == StatusEffects.HUNGER) this.hunger = true;
+		else if (effect == StatusEffects.HASTE) this.haste = true;
+		else if (effect == StatusEffects.MINING_FATIGUE) this.miningFatigue = true;
+		else if (effect == StatusEffects.STRENGTH) this.strength = true;
+		else if (effect == StatusEffects.WEAKNESS) this.weakness = true;
 	}
 }

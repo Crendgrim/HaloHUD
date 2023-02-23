@@ -10,9 +10,7 @@ import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawableHelper;
 import net.minecraft.client.network.ClientPlayerEntity;
 import net.minecraft.client.util.math.MatrixStack;
-import net.minecraft.entity.effect.StatusEffect;
 import net.minecraft.entity.effect.StatusEffectInstance;
-import net.minecraft.entity.effect.StatusEffects;
 
 import java.lang.ref.SoftReference;
 import java.util.ArrayList;
@@ -105,15 +103,7 @@ public class Hud extends DrawableHelper {
 		// Pre-computation.
 		effects.reset();
 		for (StatusEffectInstance effectInstance : player.getStatusEffects()) {
-			StatusEffect effect = effectInstance.getEffectType();
-			if (effect == StatusEffects.REGENERATION) effects.regeneration = true;
-			else if (effect == StatusEffects.POISON) effects.poison = true;
-			else if (effect == StatusEffects.WITHER) effects.wither = true;
-			else if (effect == StatusEffects.HUNGER) effects.hunger = true;
-			else if (effect == StatusEffects.HASTE) effects.haste = true;
-			else if (effect == StatusEffects.MINING_FATIGUE) effects.miningFatigue = true;
-			else if (effect == StatusEffects.STRENGTH) effects.strength = true;
-			else if (effect == StatusEffects.WEAKNESS) effects.weakness = true;
+			effects.enableFrom(effectInstance.getEffectType());
 		}
 	}
 

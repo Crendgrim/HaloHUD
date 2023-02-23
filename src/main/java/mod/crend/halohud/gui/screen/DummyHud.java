@@ -8,7 +8,6 @@ import mod.crend.halohud.render.SimpleHaloRenderer;
 import mod.crend.halohud.render.component.AttackHaloRenderer;
 import mod.crend.halohud.render.component.HealthHaloRenderer;
 import mod.crend.halohud.render.component.HungerHaloRenderer;
-import mod.crend.halohud.util.ActiveEffects;
 import mod.crend.halohud.util.HaloType;
 import net.minecraft.client.util.math.MatrixStack;
 
@@ -24,8 +23,6 @@ public class DummyHud {
 	SimpleHaloRenderer toolMainHand;
 	SimpleHaloRenderer toolOffhand;
 	AttackHaloRenderer attack;
-
-	ActiveEffects effects = new ActiveEffects();
 
 	DummyHud(Config dummyConfig) {
 		this.dummyConfig = dummyConfig;
@@ -44,13 +41,13 @@ public class DummyHud {
 
 	public void render(MatrixStack matrixStack) {
 		RenderSystem.enableBlend();
-		health.render(matrixStack, dummyConfig, effects, 0.7f, 0.2f, 1.0f);
-		hunger.render(matrixStack, dummyConfig, effects, 0.3f, 0.3f, 1.0f);
-		attack.render(matrixStack, dummyConfig, effects, 0.7f, 0.7f, 1.0f);
-		armor.render(matrixStack, dummyConfig, dummyConfig.colorElytra, 0.2f, 1.0f);
-		status.render(matrixStack, dummyConfig, dummyConfig.colorAir, 0.9f, 1.0f);
-		toolMainHand.render(matrixStack, dummyConfig, dummyConfig.colorTool, 0.7f, 1.0f);
-		toolOffhand.render(matrixStack, dummyConfig, dummyConfig.colorTool, 0.9f, 1.0f);
+		health.render(matrixStack, dummyConfig, DummyData.effects, DummyData.health, DummyData.absorption, 1.0f);
+		hunger.render(matrixStack, dummyConfig, DummyData.effects, DummyData.hunger, DummyData.handItemFoodValue, 1.0f);
+		attack.render(matrixStack, dummyConfig, DummyData.effects, DummyData.progress, DummyData.toolProgress, 1.0f);
+		armor.render(matrixStack, dummyConfig, dummyConfig.colorElytra, DummyData.elytraDurability, 1.0f);
+		status.render(matrixStack, dummyConfig, dummyConfig.colorAir, DummyData.air, 1.0f);
+		toolMainHand.render(matrixStack, dummyConfig, dummyConfig.colorTool, DummyData.toolDurabilityMainHand, 1.0f);
+		toolOffhand.render(matrixStack, dummyConfig, dummyConfig.colorTool, DummyData.toolDurabilityOffHand, 1.0f);
 	}
 
 
@@ -95,6 +92,7 @@ public class DummyHud {
 	}
 
 	public void tick() {
+		DummyData.staticTick();
 		HaloRenderer.staticTick();
 	}
 }
