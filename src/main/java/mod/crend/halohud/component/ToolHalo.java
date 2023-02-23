@@ -1,6 +1,7 @@
 package mod.crend.halohud.component;
 
 import mod.crend.halohud.HaloHud;
+import mod.crend.halohud.config.Config;
 import mod.crend.halohud.render.HaloRenderer;
 import mod.crend.halohud.render.SimpleHaloRenderer;
 import mod.crend.halohud.util.ActiveEffects;
@@ -20,7 +21,7 @@ public class ToolHalo extends HaloComponent {
 
 	public ToolHalo(HaloRenderer renderer, ClientPlayerEntity player, Reference<ActiveEffects> effects, boolean mainHand) {
 		super(player, effects);
-		this.renderer = new SimpleHaloRenderer(renderer, HaloHud.config().colorTool);
+		this.renderer = new SimpleHaloRenderer(renderer);
 		this.mainHand = mainHand;
 	}
 
@@ -45,7 +46,7 @@ public class ToolHalo extends HaloComponent {
 	}
 
 	@Override
-	public void render(MatrixStack matrixStack) {
-		this.renderer.render(matrixStack, value, intensity());
+	public void render(MatrixStack matrixStack, Config config) {
+		this.renderer.render(matrixStack, config, config.colorTool, value, intensity());
 	}
 }

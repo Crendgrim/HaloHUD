@@ -1,6 +1,6 @@
 package mod.crend.halohud.render.component;
 
-import mod.crend.halohud.HaloHud;
+import mod.crend.halohud.config.Config;
 import mod.crend.halohud.render.HaloRenderer;
 import mod.crend.halohud.util.ActiveEffects;
 import net.minecraft.client.util.math.MatrixStack;
@@ -13,22 +13,22 @@ public class HealthHaloRenderer {
 		this.renderer = renderer;
 	}
 
-	private int getColor(ActiveEffects effects) {
+	private int getColor(Config config, ActiveEffects effects) {
 		if (effects.wither) {
-			return HaloHud.config().colorWither;
+			return config.colorWither;
 		} else if (effects.poison) {
-			return HaloHud.config().colorPoison;
+			return config.colorPoison;
 		} else if (effects.regeneration) {
-			return HaloHud.config().colorRegeneration;
+			return config.colorRegeneration;
 		} else {
-			return HaloHud.config().colorHealth;
+			return config.colorHealth;
 		}
 	}
 
-	public void render(MatrixStack matrixStack, ActiveEffects effects, float health, float absorption, float intensity) {
+	public void render(MatrixStack matrixStack, Config config, ActiveEffects effects, float health, float absorption, float intensity) {
 		renderer.render(matrixStack, intensity)
-				.draw(getColor(effects), health)
-				.draw(HaloHud.config().colorAbsorption, absorption)
-				.execute();
+				.draw(getColor(config, effects), health)
+				.draw(config.colorAbsorption, absorption)
+				.execute(config);
 	}
 }

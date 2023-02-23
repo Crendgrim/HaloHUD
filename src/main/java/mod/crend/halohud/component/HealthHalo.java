@@ -1,6 +1,7 @@
 package mod.crend.halohud.component;
 
 import mod.crend.halohud.HaloHud;
+import mod.crend.halohud.config.Config;
 import mod.crend.halohud.render.HaloRenderer;
 import mod.crend.halohud.render.component.HealthHaloRenderer;
 import mod.crend.halohud.util.ActiveEffects;
@@ -45,9 +46,9 @@ public class HealthHalo extends HaloComponent {
 
 
 	@Override
-	public void render(MatrixStack matrixStack) {
+	public void render(MatrixStack matrixStack, Config config) {
 		float haloSizeAbsorption = player.getAbsorptionAmount() / player.getMaxHealth();
 		float haloSizeHealth = Float.min(getValue(), 1.0f - haloSizeAbsorption);
-		renderer.render(matrixStack, activeEffects(), haloSizeHealth, haloSizeAbsorption, intensity());
+		renderer.render(matrixStack, config, activeEffects(), haloSizeHealth, haloSizeAbsorption, intensity());
 	}
 }

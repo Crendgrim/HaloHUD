@@ -123,7 +123,7 @@ public class Hud extends DrawableHelper {
 		RenderSystem.enableBlend();
 		for (HaloComponent component : components) {
 			if (component.isVisible()) {
-				component.render(matrixStack);
+				component.render(matrixStack, HaloHud.config());
 			}
 		}
 	}

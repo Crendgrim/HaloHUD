@@ -1,6 +1,7 @@
 package mod.crend.halohud.component;
 
 import mod.crend.halohud.HaloHud;
+import mod.crend.halohud.config.Config;
 import mod.crend.halohud.render.HaloRenderer;
 import mod.crend.halohud.render.component.HungerHaloRenderer;
 import mod.crend.halohud.util.ActiveEffects;
@@ -45,7 +46,7 @@ public class HungerHalo extends HaloComponent {
 
 
 	@Override
-	public void render(MatrixStack matrixStack) {
-		renderer.render(matrixStack, activeEffects(), getValue(), handItemFoodValue, intensity());
+	public void render(MatrixStack matrixStack, Config config) {
+		renderer.render(matrixStack, config, activeEffects(), getValue(), handItemFoodValue, intensity());
 	}
 }

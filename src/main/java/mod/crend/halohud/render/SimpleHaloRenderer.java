@@ -1,21 +1,20 @@
 package mod.crend.halohud.render;
 
+import mod.crend.halohud.config.Config;
 import net.minecraft.client.util.math.MatrixStack;
 
 public class SimpleHaloRenderer {
 
 	public final HaloRenderer renderer;
-	private final int color;
 
-	public SimpleHaloRenderer(HaloRenderer renderer, int color) {
+	public SimpleHaloRenderer(HaloRenderer renderer) {
 		this.renderer = renderer;
-		this.color = color;
 	}
 
 
-	public void render(MatrixStack matrixStack, float value, float intensity) {
+	public void render(MatrixStack matrixStack, Config config, int color, float value, float intensity) {
 		renderer.render(matrixStack, intensity)
 				.draw(color, value)
-				.execute();
+				.execute(config);
 	}
 }

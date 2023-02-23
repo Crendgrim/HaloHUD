@@ -1,6 +1,6 @@
 package mod.crend.halohud.render.component;
 
-import mod.crend.halohud.HaloHud;
+import mod.crend.halohud.config.Config;
 import mod.crend.halohud.render.HaloRenderer;
 import mod.crend.halohud.util.ActiveEffects;
 import net.minecraft.client.util.math.MatrixStack;
@@ -13,18 +13,18 @@ public class HungerHaloRenderer {
 		this.renderer = renderer;
 	}
 
-	private int getColor(ActiveEffects effects) {
+	private int getColor(Config config, ActiveEffects effects) {
 		if (effects.hunger) {
-			return HaloHud.config().colorHunger;
+			return config.colorHunger;
 		} else {
-			return HaloHud.config().colorFood;
+			return config.colorFood;
 		}
 	}
 
-	public void render(MatrixStack matrixStack, ActiveEffects effects, float hunger, float handItemFoodValue, float intensity) {
+	public void render(MatrixStack matrixStack, Config config, ActiveEffects effects, float hunger, float handItemFoodValue, float intensity) {
 		renderer.render(matrixStack, intensity)
-				.draw(getColor(effects), hunger)
-				.draw(HaloRenderer.animate(HaloHud.config().colorFood, HaloHud.config().colorEmpty), handItemFoodValue)
-				.execute();
+				.draw(getColor(config, effects), hunger)
+				.draw(HaloRenderer.animate(config.colorFood, config.colorEmpty), handItemFoodValue)
+				.execute(config);
 	}
 }

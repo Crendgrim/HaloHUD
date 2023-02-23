@@ -4,6 +4,7 @@ import dev.isxander.yacl.api.YetAnotherConfigLib;
 import dev.isxander.yacl.api.utils.OptionUtils;
 import dev.isxander.yacl.gui.YACLScreen;
 import mod.crend.halohud.component.Component;
+import mod.crend.halohud.config.Config;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.text.Text;
@@ -14,9 +15,14 @@ import java.util.concurrent.atomic.AtomicBoolean;
 public class ConfigScreen extends YACLScreen {
 
 	protected final Screen parent;
-	public ConfigScreen(YetAnotherConfigLib config, Screen parent) {
+	protected final Config dummyConfig;
+	DummyHud dummyHud;
+
+	public ConfigScreen(YetAnotherConfigLib config, Config dummyConfig, Screen parent) {
 		super(config, parent);
+		this.dummyConfig = dummyConfig;
 		this.parent = parent;
+		this.dummyHud = new DummyHud(dummyConfig);
 	}
 
 	@Override
@@ -25,7 +31,6 @@ public class ConfigScreen extends YACLScreen {
 		dummyHud.init();
 	}
 
-	DummyHud dummyHud = new DummyHud();
 
 	@Override
 	public void tick() {

@@ -5,7 +5,7 @@ import dev.isxander.yacl.config.ConfigEntry;
 import dev.isxander.yacl.config.GsonConfigInstance;
 import net.fabricmc.loader.api.FabricLoader;
 
-public class Config  {
+public class Config implements Cloneable {
     public static final GsonConfigInstance<Config> INSTANCE = new GsonConfigInstance<>(
             Config.class,
             FabricLoader.getInstance().getConfigDir().resolve("halohud.json"),
@@ -47,4 +47,6 @@ public class Config  {
 
     @ConfigEntry public double showToolBelow = 0.5;
     @ConfigEntry public int colorTool = 0xC0FFFFFF;
+
+    public Object clone() throws CloneNotSupportedException { return super.clone(); }
 }

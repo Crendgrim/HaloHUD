@@ -10,11 +10,11 @@
 
   "halohud.category.general": "General Settings",
 
-  "halohud.component.armor": "Armor component",
+  "halohud.component.armor": "Armor Component",
   "halohud.option.showElytraBelow": "Show elytra below",
   "halohud.option.colorElytra": "Elytra bar",
 
-  "halohud.component.attack": "Attack component",
+  "halohud.component.attack": "Attack Component",
   "halohud.category.attackIndicator": "Attack Indicator",
   "halohud.option.colorAttack": "Attack bar",
   "halohud.option.colorStrength": "Strength",

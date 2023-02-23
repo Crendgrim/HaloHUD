@@ -1,6 +1,7 @@
 package mod.crend.halohud.component;
 
 import mod.crend.halohud.HaloHud;
+import mod.crend.halohud.config.Config;
 import mod.crend.halohud.render.HaloRenderer;
 import mod.crend.halohud.render.SimpleHaloRenderer;
 import mod.crend.halohud.util.ActiveEffects;
@@ -18,7 +19,7 @@ public class ArmorHalo extends HaloComponent {
 
 	public ArmorHalo(HaloRenderer renderer, ClientPlayerEntity player, Reference<ActiveEffects> effects) {
 		super(player, effects);
-		this.renderer = new SimpleHaloRenderer(renderer, HaloHud.config().colorElytra);
+		this.renderer = new SimpleHaloRenderer(renderer);
 	}
 
 	@Override
@@ -39,7 +40,7 @@ public class ArmorHalo extends HaloComponent {
 	}
 
 	@Override
-	public void render(MatrixStack matrixStack) {
-		renderer.render(matrixStack, value, intensity());
+	public void render(MatrixStack matrixStack, Config config) {
+		renderer.render(matrixStack, config, config.colorElytra, value, intensity());
 	}
 }

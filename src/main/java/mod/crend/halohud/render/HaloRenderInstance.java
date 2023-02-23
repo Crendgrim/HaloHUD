@@ -1,7 +1,7 @@
 package mod.crend.halohud.render;
 
 import com.mojang.blaze3d.systems.RenderSystem;
-import mod.crend.halohud.HaloHud;
+import mod.crend.halohud.config.Config;
 import mod.crend.halohud.util.HaloType;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.render.*;
@@ -110,9 +110,9 @@ public class HaloRenderInstance {
 		return this;
 	}
 
-	public void execute() {
+	public void execute(Config config) {
 		// Finish the halo
-		setColor(HaloHud.config().colorEmpty);
+		setColor(config.colorEmpty);
 		if (flipped) {
 			for (; current > left; current -= Math.min(HaloRenderer.STEP_SIZE, current - left)) {
 				drawCurrentSlice();

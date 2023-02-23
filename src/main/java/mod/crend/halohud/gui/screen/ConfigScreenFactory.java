@@ -16,7 +16,16 @@ import java.awt.*;
 
 public class ConfigScreenFactory {
 
+	private static Config getDummyConfig() {
+		try {
+			return (Config) Config.INSTANCE.getConfig().clone();
+		} catch (CloneNotSupportedException e) {
+			return new Config();
+		}
+	}
+
 	public static Screen makeArmorComponentScreen(Screen parent) {
+		Config dummyConfig = getDummyConfig();
 		return new ConfigScreen(YetAnotherConfigLib.create(Config.INSTANCE, (defaults, config, builder) -> {
 			var categoryBuilder = ConfigCategory.createBuilder()
 					.name(Text.translatable("halohud.component.armor"));
@@ -30,6 +39,7 @@ public class ConfigScreenFactory {
 									() -> config.showElytraBelow,
 									val -> config.showElytraBelow = val
 							)
+							.listener((opt, val) -> dummyConfig.showElytraBelow = val)
 							.controller(opt -> new DoubleSliderController(opt, 0.0, 1.0, 0.1))
 							.build())
 
@@ -40,6 +50,7 @@ public class ConfigScreenFactory {
 									() -> new Color(config.colorElytra, true),
 									val -> config.colorElytra = val.getRGB()
 							)
+							.listener((opt, val) -> dummyConfig.colorElytra = val.getRGB())
 							.controller(opt -> new ColorController(opt, true))
 							.build())
 					.build());
@@ -47,10 +58,11 @@ public class ConfigScreenFactory {
 			return builder
 					.title(Text.translatable("halohud.component.armor"))
 					.category(categoryBuilder.build());
-		}), parent);
+		}), dummyConfig, parent);
 	}
 
 	public static Screen makeAttackComponentScreen(Screen parent) {
+		Config dummyConfig = getDummyConfig();
 		return new ConfigScreen(YetAnotherConfigLib.create(Config.INSTANCE, (defaults, config, builder) -> {
 			var categoryBuilder = ConfigCategory.createBuilder()
 					.name(Text.translatable("halohud.component.attack"));
@@ -64,6 +76,7 @@ public class ConfigScreenFactory {
 									() -> new Color(config.colorAttack, true),
 									val -> config.colorAttack = val.getRGB()
 							)
+							.listener((opt, val) -> dummyConfig.colorAttack = val.getRGB())
 							.controller(opt -> new ColorController(opt, true))
 							.build())
 
@@ -74,6 +87,7 @@ public class ConfigScreenFactory {
 									() -> new Color(config.colorStrength, true),
 									val -> config.colorStrength = val.getRGB()
 							)
+							.listener((opt, val) -> dummyConfig.colorStrength = val.getRGB())
 							.controller(opt -> new ColorController(opt, true))
 							.build())
 
@@ -84,6 +98,7 @@ public class ConfigScreenFactory {
 									() -> new Color(config.colorWeakness, true),
 									val -> config.colorWeakness = val.getRGB()
 							)
+							.listener((opt, val) -> dummyConfig.colorWeakness = val.getRGB())
 							.controller(opt -> new ColorController(opt, true))
 							.build())
 					.build());
@@ -97,6 +112,7 @@ public class ConfigScreenFactory {
 									() -> new Color(config.colorProgress, true),
 									val -> config.colorProgress = val.getRGB()
 							)
+							.listener((opt, val) -> dummyConfig.colorProgress = val.getRGB())
 							.controller(opt -> new ColorController(opt, true))
 							.build())
 
@@ -107,6 +123,7 @@ public class ConfigScreenFactory {
 									() -> new Color(config.colorHaste, true),
 									val -> config.colorHaste = val.getRGB()
 							)
+							.listener((opt, val) -> dummyConfig.colorHaste = val.getRGB())
 							.controller(opt -> new ColorController(opt, true))
 							.build())
 
@@ -117,6 +134,7 @@ public class ConfigScreenFactory {
 									() -> new Color(config.colorMiningFatigue, true),
 									val -> config.colorMiningFatigue = val.getRGB()
 							)
+							.listener((opt, val) -> dummyConfig.colorMiningFatigue = val.getRGB())
 							.controller(opt -> new ColorController(opt, true))
 							.build())
 					.build());
@@ -124,10 +142,11 @@ public class ConfigScreenFactory {
 			return builder
 					.title(Text.translatable("halohud.component.attack"))
 					.category(categoryBuilder.build());
-		}), parent);
+		}), dummyConfig, parent);
 	}
 
 	public static Screen makeHealthComponentScreen(Screen parent) {
+		Config dummyConfig = getDummyConfig();
 		return new ConfigScreen(YetAnotherConfigLib.create(Config.INSTANCE, (defaults, config, builder) -> {
 			var categoryBuilder = ConfigCategory.createBuilder()
 					.name(Text.translatable("halohud.component.health"));
@@ -141,6 +160,7 @@ public class ConfigScreenFactory {
 									() -> config.showHealthBelow,
 									val -> config.showHealthBelow = val
 							)
+							.listener((opt, val) -> dummyConfig.showHealthBelow = val)
 							.controller(opt -> new DoubleSliderController(opt, 0.0, 1.0, 0.1))
 							.build())
 
@@ -151,6 +171,7 @@ public class ConfigScreenFactory {
 									() -> new Color(config.colorHealth, true),
 									val -> config.colorHealth = val.getRGB()
 							)
+							.listener((opt, val) -> dummyConfig.colorHealth = val.getRGB())
 							.controller(opt -> new ColorController(opt, true))
 							.build())
 					.build());
@@ -164,6 +185,7 @@ public class ConfigScreenFactory {
 									() -> new Color(config.colorAbsorption, true),
 									val -> config.colorAbsorption = val.getRGB()
 							)
+							.listener((opt, val) -> dummyConfig.colorAbsorption = val.getRGB())
 							.controller(opt -> new ColorController(opt, true))
 							.build())
 
@@ -174,6 +196,7 @@ public class ConfigScreenFactory {
 									() -> new Color(config.colorRegeneration, true),
 									val -> config.colorRegeneration = val.getRGB()
 							)
+							.listener((opt, val) -> dummyConfig.colorRegeneration = val.getRGB())
 							.controller(opt -> new ColorController(opt, true))
 							.build())
 					.build());
@@ -187,6 +210,7 @@ public class ConfigScreenFactory {
 									() -> new Color(config.colorPoison, true),
 									val -> config.colorPoison = val.getRGB()
 							)
+							.listener((opt, val) -> dummyConfig.colorPoison = val.getRGB())
 							.controller(opt -> new ColorController(opt, true))
 							.build())
 
@@ -197,6 +221,7 @@ public class ConfigScreenFactory {
 									() -> new Color(config.colorWither, true),
 									val -> config.colorWither = val.getRGB()
 							)
+							.listener((opt, val) -> dummyConfig.colorWither = val.getRGB())
 							.controller(opt -> new ColorController(opt, true))
 							.build())
 					.build());
@@ -204,10 +229,11 @@ public class ConfigScreenFactory {
 			return builder
 					.title(Text.translatable("halohud.component.health"))
 					.category(categoryBuilder.build());
-		}), parent);
+		}), dummyConfig, parent);
 	}
 
 	public static Screen makeHungerComponentScreen(Screen parent) {
+		Config dummyConfig = getDummyConfig();
 		return new ConfigScreen(YetAnotherConfigLib.create(Config.INSTANCE, (defaults, config, builder) -> {
 			var categoryBuilder = ConfigCategory.createBuilder()
 					.name(Text.translatable("halohud.component.hunger"));
@@ -222,6 +248,7 @@ public class ConfigScreenFactory {
 									() -> config.showFoodBelow,
 									val -> config.showFoodBelow = val
 							)
+							.listener((opt, val) -> dummyConfig.showFoodBelow = val)
 							.controller(opt -> new DoubleSliderController(opt, 0.0, 1.0, 0.1))
 							.build())
 
@@ -232,6 +259,7 @@ public class ConfigScreenFactory {
 									() -> new Color(config.colorFood, true),
 									val -> config.colorFood = val.getRGB()
 							)
+							.listener((opt, val) -> dummyConfig.colorFood = val.getRGB())
 							.controller(opt -> new ColorController(opt, true))
 							.build())
 
@@ -242,6 +270,7 @@ public class ConfigScreenFactory {
 									() -> new Color(config.colorHunger, true),
 									val -> config.colorHunger = val.getRGB()
 							)
+							.listener((opt, val) -> dummyConfig.colorHunger = val.getRGB())
 							.controller(opt -> new ColorController(opt, true))
 							.build())
 					.build());
@@ -249,10 +278,11 @@ public class ConfigScreenFactory {
 			return builder
 					.title(Text.translatable("halohud.component.hunger"))
 					.category(categoryBuilder.build());
-		}), parent);
+		}), dummyConfig, parent);
 	}
 
 	public static Screen makeStatusComponentScreen(Screen parent) {
+		Config dummyConfig = getDummyConfig();
 		return new ConfigScreen(YetAnotherConfigLib.create(Config.INSTANCE, (defaults, config, builder) -> {
 			var categoryBuilder = ConfigCategory.createBuilder()
 					.name(Text.translatable("halohud.component.status"));
@@ -266,6 +296,7 @@ public class ConfigScreenFactory {
 									() -> config.showAirBelow,
 									val -> config.showAirBelow = val
 							)
+							.listener((opt, val) -> dummyConfig.showAirBelow = val)
 							.controller(opt -> new DoubleSliderController(opt, 0.0, 1.0, 0.1))
 							.build())
 
@@ -276,6 +307,7 @@ public class ConfigScreenFactory {
 									() -> new Color(config.colorAir, true),
 									val -> config.colorAir = val.getRGB()
 							)
+							.listener((opt, val) -> dummyConfig.colorAir = val.getRGB())
 							.controller(opt -> new ColorController(opt, true))
 							.build())
 					.build());
@@ -283,10 +315,11 @@ public class ConfigScreenFactory {
 			return builder
 					.title(Text.translatable("halohud.component.status"))
 					.category(categoryBuilder.build());
-		}), parent);
+		}), dummyConfig, parent);
 	}
 
 	public static Screen makeToolComponentScreen(Screen parent) {
+		Config dummyConfig = getDummyConfig();
 		return new ConfigScreen(YetAnotherConfigLib.create(Config.INSTANCE, (defaults, config, builder) -> {
 			var categoryBuilder = ConfigCategory.createBuilder()
 					.name(Text.translatable("halohud.component.tool"));
@@ -300,6 +333,7 @@ public class ConfigScreenFactory {
 									() -> config.showToolBelow,
 									val -> config.showToolBelow = val
 							)
+							.listener((opt, val) -> dummyConfig.showToolBelow = val)
 							.controller(opt -> new DoubleSliderController(opt, 0.0, 1.0, 0.1))
 							.build())
 
@@ -310,6 +344,7 @@ public class ConfigScreenFactory {
 									() -> new Color(config.colorTool, true),
 									val -> config.colorTool = val.getRGB()
 							)
+							.listener((opt, val) -> dummyConfig.colorTool = val.getRGB())
 							.controller(opt -> new ColorController(opt, true))
 							.build())
 					.build());
@@ -317,10 +352,11 @@ public class ConfigScreenFactory {
 			return builder
 					.title(Text.translatable("halohud.component.tool"))
 					.category(categoryBuilder.build());
-		}), parent);
+		}), dummyConfig, parent);
 	}
 
 	public static Screen makeScreen(Screen parent) {
+		Config dummyConfig = getDummyConfig();
 		return new ConfigScreen(YetAnotherConfigLib.create(Config.INSTANCE, (defaults, config, builder) -> {
 			var categoryBuilder = ConfigCategory.createBuilder()
 					.name(Text.translatable("halohud.title"));
@@ -332,6 +368,7 @@ public class ConfigScreenFactory {
 							() -> config.ticksRevealed,
 							val -> config.ticksRevealed = val
 					)
+					.listener((opt, val) -> dummyConfig.ticksRevealed = val)
 					.controller(opt -> new IntegerSliderController(opt, 5, 60, 5))
 					.build());
 
@@ -343,6 +380,7 @@ public class ConfigScreenFactory {
 							() -> config.haloRadius,
 							val -> config.haloRadius = val
 					)
+					.listener((opt, val) -> dummyConfig.haloRadius = val)
 					.controller(opt -> new DoubleSliderController(opt, 10, 40, 0.5))
 					.build());
 			categoryBuilder.option(Option.createBuilder(double.class)
@@ -353,6 +391,7 @@ public class ConfigScreenFactory {
 							() -> config.haloWidth,
 							val -> config.haloWidth = val
 					)
+					.listener((opt, val) -> dummyConfig.haloWidth = val)
 					.controller(opt -> new DoubleSliderController(opt, 0.5, 10, 0.5))
 					.build());
 
@@ -364,6 +403,7 @@ public class ConfigScreenFactory {
 							() -> config.halo2Radius,
 							val -> config.halo2Radius = val
 					)
+					.listener((opt, val) -> dummyConfig.halo2Radius = val)
 					.controller(opt -> new DoubleSliderController(opt, 10, 40, 0.5))
 					.build());
 			categoryBuilder.option(Option.createBuilder(double.class)
@@ -374,6 +414,7 @@ public class ConfigScreenFactory {
 							() -> config.halo2Width,
 							val -> config.halo2Width = val
 					)
+					.listener((opt, val) -> dummyConfig.halo2Width = val)
 					.controller(opt -> new DoubleSliderController(opt, 0.5, 10, 0.5))
 					.build());
 			categoryBuilder.option(Option.createBuilder(Color.class)
@@ -383,12 +424,13 @@ public class ConfigScreenFactory {
 							() -> new Color(config.colorEmpty, true),
 							val -> config.colorEmpty = val.getRGB()
 					)
+					.listener((opt, val) -> dummyConfig.colorEmpty = val.getRGB())
 					.controller(opt -> new ColorController(opt, true))
 					.build());
 
 			return builder
 					.title(Text.translatable("halohud.title"))
 					.category(categoryBuilder.build());
-		}), parent);
+		}), dummyConfig, parent);
 	}
 }

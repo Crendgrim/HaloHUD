@@ -1,5 +1,6 @@
 package mod.crend.halohud.component;
 
+import mod.crend.halohud.config.Config;
 import mod.crend.halohud.mixin.ClientPlayerInteractionManagerAccessor;
 import mod.crend.halohud.render.component.AttackHaloRenderer;
 import mod.crend.halohud.render.HaloRenderer;
@@ -60,7 +61,7 @@ public class AttackHalo extends HaloComponent {
 	}
 
 	@Override
-	public void render(MatrixStack matrixStack) {
-		renderer.render(matrixStack, activeEffects(), getValue(), toolProgress, intensity());
+	public void render(MatrixStack matrixStack, Config config) {
+		renderer.render(matrixStack, config, activeEffects(), getValue(), toolProgress, intensity());
 	}
 }

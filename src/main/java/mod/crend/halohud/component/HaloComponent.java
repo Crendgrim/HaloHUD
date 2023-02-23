@@ -1,6 +1,7 @@
 package mod.crend.halohud.component;
 
 import mod.crend.halohud.HaloHud;
+import mod.crend.halohud.config.Config;
 import mod.crend.halohud.util.ActiveEffects;
 import net.minecraft.client.network.ClientPlayerEntity;
 import net.minecraft.client.util.math.MatrixStack;
@@ -45,7 +46,7 @@ public abstract class HaloComponent {
 
 	public float intensity() { return ticksRemaining / (float) HaloHud.config().ticksRevealed; }
 
-	public abstract void render(MatrixStack matrixStack);
+	public abstract void render(MatrixStack matrixStack, Config config);
 
 	protected ActiveEffects activeEffects() {
 		return Objects.requireNonNull(effects.get());
