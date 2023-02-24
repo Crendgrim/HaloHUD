@@ -44,7 +44,7 @@ public abstract class HaloComponent {
 
 	protected abstract boolean shouldRenderImpl();
 
-	public float intensity() { return ticksRemaining / (float) HaloHud.config().ticksRevealed; }
+	public float intensity() { return Math.min(1.0f, ticksRemaining / Math.min(10.0f, HaloHud.config().ticksRevealed)); }
 
 	public abstract void render(MatrixStack matrixStack, Config config);
 
