@@ -2,6 +2,7 @@ package mod.crend.halohud.gui.screen;
 
 import dev.isxander.yacl.api.*;
 import dev.isxander.yacl.gui.controllers.ColorController;
+import dev.isxander.yacl.gui.controllers.TickBoxController;
 import dev.isxander.yacl.gui.controllers.cycling.CyclingListController;
 import dev.isxander.yacl.gui.controllers.cycling.EnumController;
 import dev.isxander.yacl.gui.controllers.slider.DoubleSliderController;
@@ -419,6 +420,17 @@ public class ConfigScreenFactory {
 							)
 							.listener((opt, val) -> dummyConfig.showToolBelow = val)
 							.controller(opt -> new DoubleSliderController(opt, 0.0, 1.0, 0.1))
+							.build())
+
+					.option(Option.createBuilder(boolean.class)
+							.name(Text.translatable("halohud.option.showOffhand"))
+							.binding(
+									defaults.showOffhand,
+									() -> config.showOffhand,
+									val -> config.showOffhand = val
+							)
+							.listener((opt, val) -> dummyConfig.showOffhand = val)
+							.controller(TickBoxController::new)
 							.build())
 
 					.option(Option.createBuilder(Color.class)

@@ -12,6 +12,7 @@ import net.minecraft.client.gui.DrawableHelper;
 import net.minecraft.client.network.ClientPlayerEntity;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.entity.effect.StatusEffectInstance;
+import net.minecraft.util.Arm;
 
 import java.lang.ref.SoftReference;
 import java.util.ArrayList;
@@ -46,14 +47,13 @@ public class Hud extends DrawableHelper {
 				case Hunger -> components.add(new HungerHalo(renderer, player, new SoftReference<>(effects)));
 				case Status -> components.add(new StatusHalo(renderer, player, new SoftReference<>(effects)));
 				case Tool -> {
-					components.add(new ToolHalo(renderer, player, new SoftReference<>(effects), true));
-					HaloDimensions offhand = new HaloDimensions(Component.Tool,
-							dim.radius() + 3,
-							dim.width(),
-							dim.left(),
-							dim.right(),
-							dim.flipped());
-					components.add(new ToolHalo(new HaloRenderer(offhand), player, new SoftReference<>(effects), false));
+					if (HaloHud.config().showOffhand) {
+						boolean mainHandOnRight = MinecraftClient.getInstance().options.getMainArm().getValue() == Arm.RIGHT;
+						components.add(new ToolHalo(new HaloRenderer(dim.splitLeft()), player, new SoftReference<>(effects), !mainHandOnRight));
+						components.add(new ToolHalo(new HaloRenderer(dim.splitRight()), player, new SoftReference<>(effects), mainHandOnRight));
+					} else {
+						components.add(new ToolHalo(renderer, player, new SoftReference<>(effects), true));
+					}
 				}
 			}
 		}

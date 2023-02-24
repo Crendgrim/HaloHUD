@@ -54,6 +54,7 @@ public class Config implements Cloneable {
     @ConfigEntry public int colorAir = 0xC0AAAAFF;
 
     @ConfigEntry public double showToolBelow = 0.5;
+    @ConfigEntry public boolean showOffhand = true;
     @ConfigEntry public int colorTool = 0xC0FFFFFF;
 
     public Object clone() throws CloneNotSupportedException { return super.clone(); }

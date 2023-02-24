@@ -4,7 +4,9 @@ import mod.crend.halohud.component.Component;
 import mod.crend.halohud.config.Config;
 import mod.crend.halohud.render.HaloRenderer;
 import mod.crend.halohud.util.HaloDimensions;
+import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.util.math.MatrixStack;
+import net.minecraft.util.Arm;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,23 +37,14 @@ public class DummyHud {
 				case Hunger -> components.add(new DummyComponent.Hunger(renderer));
 				case Status -> components.add(new DummyComponent.Status(renderer));
 				case Tool -> {
-					components.add(new DummyComponent.Tool(renderer, true));
-					HaloDimensions offhand = new HaloDimensions(
-							dim.component(),
-							dim.radius() + dim.width() + 1,
-							dim.width(),
-							dim.left(),
-							dim.right(),
-							dim.flipped());
-					components.add(new DummyComponent.Tool(new HaloRenderer(offhand), false));
-					HaloDimensions full = new HaloDimensions(
-							dim.component(),
-							dim.radius(),
-							dim.width() * 2 + 1,
-							dim.left(),
-							dim.right(),
-							dim.flipped());
-					components.add(new DummyComponent.None(new HaloRenderer(full)));
+					if (dummyConfig.showOffhand) {
+						boolean mainHandOnRight = MinecraftClient.getInstance().options.getMainArm().getValue() == Arm.RIGHT;
+						components.add(new DummyComponent.Tool(new HaloRenderer(dim.splitLeft()), !mainHandOnRight));
+						components.add(new DummyComponent.Tool(new HaloRenderer(dim.splitRight()), mainHandOnRight));
+						components.add(new DummyComponent.None(renderer));
+					} else {
+						components.add(new DummyComponent.Tool(renderer, true));
+					}
 				}
 			}
 		}
@@ -66,6 +59,7 @@ public class DummyHud {
 		if (deg < 0) deg += 360;
 
 		for (DummyComponent component : components) {
+			if (dummyConfig.showOffhand && component instanceof DummyComponent.Tool) continue;
 			HaloDimensions dimensions = component.getDimensions();
 			if (dimensions.component() != Component.None
 					&& radius >= dimensions.radius() && radius <= dimensions.radius() + dimensions.width()) {

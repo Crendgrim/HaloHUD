@@ -54,6 +54,7 @@
 
   "halohud.component.tool": "Tool Component",
   "halohud.option.showToolBelow": "Show tool bar below",
+  "halohud.option.showOffhand": "Show for offhand item",
   "halohud.option.colorTool": "Tool bar",
 
   "key.category.halohud": "Halo HUD",

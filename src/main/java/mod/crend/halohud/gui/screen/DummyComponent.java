@@ -127,15 +127,15 @@ public abstract class DummyComponent {
 
 	public static class Tool extends DummyComponent {
 		SimpleHaloRenderer renderer;
-		boolean isMainHand;
-		public Tool(HaloRenderer renderer, boolean isMainHand) {
+		boolean mainHand;
+		public Tool(HaloRenderer renderer, boolean mainHand) {
 			this.renderer = new SimpleHaloRenderer(renderer);
-			this.isMainHand = isMainHand;
+			this.mainHand = mainHand;
 		}
 
 		@Override
 		public void render(MatrixStack matrixStack, Config config, float intensity) {
-			renderer.render(matrixStack, config, config.colorTool, (isMainHand ? DummyData.toolDurabilityMainHand : DummyData.toolDurabilityOffHand), intensity);
+			renderer.render(matrixStack, config, config.colorTool, (mainHand ? DummyData.toolDurabilityMainHand : DummyData.toolDurabilityOffHand), intensity);
 		}
 
 		@Override

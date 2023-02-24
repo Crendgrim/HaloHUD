@@ -94,9 +94,8 @@ public class HaloRenderInstance {
 		return this;
 	}
 
-	public void execute(Config config) {
-		// Finish the halo
-		setColor(config.colorEmpty);
+	public HaloRenderInstance finish(int color) {
+		setColor(color);
 		if (flipped) {
 			for (; current > left; current -= Math.min(HaloRenderer.STEP_SIZE, current - left)) {
 				drawCurrentSlice();
@@ -107,6 +106,12 @@ public class HaloRenderInstance {
 			}
 		}
 		drawCurrentSlice();
+		return this;
+	}
+
+	public void execute(Config config) {
+		// Finish the halo
+		finish(config.colorEmpty);
 		// Draw to the screen
 		RenderSystem.setShader(GameRenderer::getPositionColorProgram);
 		BufferRenderer.drawWithGlobalProgram(buffer.end());

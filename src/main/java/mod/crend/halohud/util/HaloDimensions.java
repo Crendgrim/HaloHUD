@@ -49,4 +49,13 @@ public record HaloDimensions(Component component, double radius, double width, i
 			);
 		};
 	}
+
+	public HaloDimensions splitLeft() {
+		int newRight = left + (right - left) / 2 - 2;
+		return new HaloDimensions(component, radius, width, left, newRight, flipped);
+	}
+	public HaloDimensions splitRight() {
+		int newLeft = left + (right - left) / 2 + 2;
+		return new HaloDimensions(component, radius, width, newLeft, right, !flipped);
+	}
 }
