@@ -41,7 +41,9 @@
 
   "halohud.component.hunger": "Food Component",
   "halohud.option.showFoodBelow": "Show food bar when below",
+  "halohud.option.heldFoodAnimationType": "Show held food value",
   "halohud.option.colorFood": "Food bar",
+  "halohud.option.colorHeldFood": "Held food item",
   "halohud.option.colorHunger": "Hunger",
 
   "halohud.component.status": "Status Component",
@@ -54,6 +56,11 @@
 
   "key.category.halohud": "Halo HUD",
   "key.halohud.toggle-hud": "Toggle Halo HUD",
+
+  "halohud.animationtype.flashing": "Flashing",
+  "halohud.animationtype.pulsating": "Pulsating",
+  "halohud.animationtype.static": "Static",
+  "halohud.animationtype.disabled": "Disabled",
 
   "modmenu.summaryTranslation.halohud": "Show a halo indicator around the crosshair.",
   "modmenu.descriptionTranslation.halohud": "Shows health and hunger data close to the crosshair when not full, by drawing a halo style indicator."

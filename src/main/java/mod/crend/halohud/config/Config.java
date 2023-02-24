@@ -46,7 +46,9 @@ public class Config implements Cloneable {
 
     @ConfigEntry public double showFoodBelow = 0.7;
     @ConfigEntry public int colorFood = 0xC0AA8000;
+    @ConfigEntry public int colorHeldFood = 0xC0AA8000;
     @ConfigEntry public int colorHunger = 0xC0587653;
+    @ConfigEntry public AnimationType heldFoodAnimationType = AnimationType.Pulsating;
 
     @ConfigEntry public double showAirBelow = 1.0;
     @ConfigEntry public int colorAir = 0xC0AAAAFF;

@@ -6,6 +6,7 @@ import dev.isxander.yacl.gui.controllers.cycling.CyclingListController;
 import dev.isxander.yacl.gui.controllers.slider.DoubleSliderController;
 import dev.isxander.yacl.gui.controllers.slider.IntegerSliderController;
 import mod.crend.halohud.component.Component;
+import mod.crend.halohud.config.AnimationType;
 import mod.crend.halohud.config.Config;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.entity.effect.StatusEffects;
@@ -19,9 +20,8 @@ import static com.google.common.collect.Lists.reverse;
 
 
 public class ConfigScreenFactory {
-	private static final List<Component> VALID_COMPONENTS = Arrays.stream(Component.values())
-			.filter(c -> c != Component.None)
-			.toList();
+	private static final List<Component> VALID_COMPONENTS = Arrays.stream(Component.values()).toList();
+	private static final List<AnimationType> VALID_ANIMATION_TYPES = Arrays.stream(AnimationType.values()).toList();
 
 	public static ConfigChangeListener configChangeListener = () -> { };
 
@@ -294,6 +294,17 @@ public class ConfigScreenFactory {
 							.controller(opt -> new DoubleSliderController(opt, 0.0, 1.0, 0.1))
 							.build())
 
+					.option(Option.createBuilder(AnimationType.class)
+							.name(Text.translatable("halohud.option.heldFoodAnimationType"))
+							.binding(
+									defaults.heldFoodAnimationType,
+									() -> config.heldFoodAnimationType,
+									val -> config.heldFoodAnimationType = val
+							)
+							.listener((opt, val) -> dummyConfig.heldFoodAnimationType = val)
+							.controller(opt -> new CyclingListController<>(opt, VALID_ANIMATION_TYPES))
+							.build())
+
 					.option(Option.createBuilder(Color.class)
 							.name(Text.translatable("halohud.option.colorFood"))
 							.binding(
@@ -302,6 +313,17 @@ public class ConfigScreenFactory {
 									val -> config.colorFood = val.getRGB()
 							)
 							.listener((opt, val) -> dummyConfig.colorFood = val.getRGB())
+							.controller(opt -> new ColorController(opt, true))
+							.build())
+
+					.option(Option.createBuilder(Color.class)
+							.name(Text.translatable("halohud.option.colorHeldFood"))
+							.binding(
+									new Color(defaults.colorHeldFood, true),
+									() -> new Color(config.colorHeldFood, true),
+									val -> config.colorHeldFood = val.getRGB()
+							)
+							.listener((opt, val) -> dummyConfig.colorHeldFood = val.getRGB())
 							.controller(opt -> new ColorController(opt, true))
 							.build())
 

@@ -24,7 +24,7 @@ public class HungerHaloRenderer {
 	public void render(MatrixStack matrixStack, Config config, ActiveEffects effects, float hunger, float handItemFoodValue, float intensity) {
 		renderer.render(matrixStack, intensity)
 				.draw(getColor(config, effects), hunger)
-				.draw(HaloRenderer.animate(config.colorFood, config.colorEmpty), handItemFoodValue)
+				.draw(HaloRenderer.animate(config.colorHeldFood, config.colorEmpty, config.heldFoodAnimationType), handItemFoodValue)
 				.execute(config);
 	}
 }
