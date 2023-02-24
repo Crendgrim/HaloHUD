@@ -3,12 +3,16 @@ package mod.crend.halohud.gui.screen;
 import dev.isxander.yacl.api.*;
 import dev.isxander.yacl.gui.controllers.ColorController;
 import dev.isxander.yacl.gui.controllers.cycling.CyclingListController;
+import dev.isxander.yacl.gui.controllers.cycling.EnumController;
 import dev.isxander.yacl.gui.controllers.slider.DoubleSliderController;
 import dev.isxander.yacl.gui.controllers.slider.IntegerSliderController;
+import dev.isxander.yacl.impl.GenericBindingImpl;
 import mod.crend.halohud.component.Component;
 import mod.crend.halohud.config.AnimationType;
 import mod.crend.halohud.config.Config;
+import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.screen.Screen;
+import net.minecraft.client.option.AttackIndicator;
 import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.text.Text;
 
@@ -80,6 +84,17 @@ public class ConfigScreenFactory {
 
 			categoryBuilder.group(OptionGroup.createBuilder()
 					.name(Text.translatable("halohud.category.attackIndicator"))
+					.option(Option.createBuilder(AttackIndicator.class)
+							.name(Text.translatable("halohud.option.attackIndicator.title"))
+							.tooltip(Text.translatable("halohud.option.attackIndicator.tooltip"))
+							.binding(new GenericBindingImpl<>(
+									AttackIndicator.OFF,
+									MinecraftClient.getInstance().options.getAttackIndicator()::getValue,
+									MinecraftClient.getInstance().options.getAttackIndicator()::setValue
+							))
+							.controller(EnumController::new)
+							.build())
+
 					.option(Option.createBuilder(Color.class)
 							.name(Text.translatable("halohud.option.colorAttack"))
 							.binding(

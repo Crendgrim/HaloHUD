@@ -21,6 +21,8 @@
 
   "halohud.component.attack": "Attack Component",
   "halohud.category.attackIndicator": "Attack Indicator",
+  "halohud.option.attackIndicator.title": "Vanilla Attack Indicator",
+  "halohud.option.attackIndicator.tooltip": "The attack indicator supersedes the vanilla attack indicator, so it is recommended not having it at the crosshair.\nParticularly with small halos, it can conflict otherwise.",
   "halohud.option.colorAttack": "Attack bar",
   "halohud.option.colorStrength": "Strength",
   "halohud.option.colorWeakness": "Weakness",
