@@ -408,76 +408,91 @@ public class ConfigScreenFactory {
 		return new ConfigScreen(YetAnotherConfigLib.create(Config.INSTANCE, (defaults, config, builder) -> {
 			var categoryBuilder = ConfigCategory.createBuilder()
 					.name(Text.translatable("halohud.title"));
+			var categoryHaloBuilder = ConfigCategory.createBuilder()
+					.name(Text.translatable("halohud.category.halo"));
+			var categoryHalo2Builder = ConfigCategory.createBuilder()
+					.name(Text.translatable("halohud.category.halo2"));
 
-			categoryBuilder.option(Option.createBuilder(int.class)
-					.name(Text.translatable("halohud.option.ticksRevealed"))
-					.binding(
-							defaults.ticksRevealed,
-							() -> config.ticksRevealed,
-							val -> config.ticksRevealed = val
-					)
-					.listener((opt, val) -> dummyConfig.ticksRevealed = val)
-					.controller(opt -> new IntegerSliderController(opt, 5, 60, 5))
-					.build());
+			categoryBuilder.group(OptionGroup.createBuilder()
+					.name(Text.translatable("halohud.category.general"))
+					.option(Option.createBuilder(int.class)
+							.name(Text.translatable("halohud.option.ticksRevealed"))
+							.binding(
+									defaults.ticksRevealed,
+									() -> config.ticksRevealed,
+									val -> config.ticksRevealed = val
+							)
+							.listener((opt, val) -> dummyConfig.ticksRevealed = val)
+							.controller(opt -> new IntegerSliderController(opt, 5, 60, 5))
+							.build())
 
-			categoryBuilder.option(Option.createBuilder(double.class)
-					.name(Text.translatable("halohud.option.haloRadius.title"))
-					.tooltip(Text.translatable("halohud.option.haloRadius.tooltip"))
-					.binding(
-							defaults.haloRadius,
-							() -> config.haloRadius,
-							val -> config.haloRadius = val
-					)
-					.listener((opt, val) -> dummyConfig.haloRadius = val)
-					.controller(opt -> new DoubleSliderController(opt, 10, 40, 0.5))
-					.build());
-			categoryBuilder.option(Option.createBuilder(double.class)
-					.name(Text.translatable("halohud.option.haloWidth.title"))
-					.tooltip(Text.translatable("halohud.option.haloWidth.tooltip"))
-					.binding(
-							defaults.haloWidth,
-							() -> config.haloWidth,
-							val -> config.haloWidth = val
-					)
-					.listener((opt, val) -> dummyConfig.haloWidth = val)
-					.controller(opt -> new DoubleSliderController(opt, 0.5, 10, 0.5))
-					.build());
+					.option(Option.createBuilder(Color.class)
+							.name(Text.translatable("halohud.option.colorEmpty"))
+							.binding(
+									new Color(defaults.colorEmpty, true),
+									() -> new Color(config.colorEmpty, true),
+									val -> config.colorEmpty = val.getRGB()
+							)
+							.listener((opt, val) -> dummyConfig.colorEmpty = val.getRGB())
+							.controller(opt -> new ColorController(opt, true))
+							.build())
 
-			categoryBuilder.option(Option.createBuilder(double.class)
-					.name(Text.translatable("halohud.option.halo2Radius.title"))
-					.tooltip(Text.translatable("halohud.option.halo2Radius.tooltip"))
-					.binding(
-							defaults.halo2Radius,
-							() -> config.halo2Radius,
-							val -> config.halo2Radius = val
-					)
-					.listener((opt, val) -> dummyConfig.halo2Radius = val)
-					.controller(opt -> new DoubleSliderController(opt, 10, 40, 0.5))
-					.build());
-			categoryBuilder.option(Option.createBuilder(double.class)
-					.name(Text.translatable("halohud.option.halo2Width.title"))
-					.tooltip(Text.translatable("halohud.option.halo2Width.tooltip"))
-					.binding(
-							defaults.halo2Width,
-							() -> config.halo2Width,
-							val -> config.halo2Width = val
-					)
-					.listener((opt, val) -> dummyConfig.halo2Width = val)
-					.controller(opt -> new DoubleSliderController(opt, 0.5, 10, 0.5))
-					.build());
-			categoryBuilder.option(Option.createBuilder(Color.class)
-					.name(Text.translatable("halohud.option.colorEmpty"))
-					.binding(
-							new Color(defaults.colorEmpty, true),
-							() -> new Color(config.colorEmpty, true),
-							val -> config.colorEmpty = val.getRGB()
-					)
-					.listener((opt, val) -> dummyConfig.colorEmpty = val.getRGB())
-					.controller(opt -> new ColorController(opt, true))
-					.build());
+					.build()
+			);
+
+			categoryHaloBuilder.group(OptionGroup.createBuilder()
+					.name(Text.translatable("halohud.category.halo"))
+					.option(Option.createBuilder(double.class)
+							.name(Text.translatable("halohud.option.haloRadius.title"))
+							.binding(
+									defaults.haloRadius,
+									() -> config.haloRadius,
+									val -> config.haloRadius = val
+							)
+							.listener((opt, val) -> dummyConfig.haloRadius = val)
+							.controller(opt -> new DoubleSliderController(opt, 10, 40, 0.5))
+							.build())
+					.option(Option.createBuilder(double.class)
+							.name(Text.translatable("halohud.option.haloWidth.title"))
+							.binding(
+									defaults.haloWidth,
+									() -> config.haloWidth,
+									val -> config.haloWidth = val
+							)
+							.listener((opt, val) -> dummyConfig.haloWidth = val)
+							.controller(opt -> new DoubleSliderController(opt, 0.5, 10, 0.5))
+							.build())
+					.build()
+			);
+
+			categoryHalo2Builder.group(OptionGroup.createBuilder()
+					.name(Text.translatable("halohud.category.halo2"))
+					.option(Option.createBuilder(double.class)
+							.name(Text.translatable("halohud.option.halo2Radius.title"))
+							.binding(
+									defaults.halo2Radius,
+									() -> config.halo2Radius,
+									val -> config.halo2Radius = val
+							)
+							.listener((opt, val) -> dummyConfig.halo2Radius = val)
+							.controller(opt -> new DoubleSliderController(opt, 10, 40, 0.5))
+							.build())
+					.option(Option.createBuilder(double.class)
+							.name(Text.translatable("halohud.option.halo2Width.title"))
+							.binding(
+									defaults.halo2Width,
+									() -> config.halo2Width,
+									val -> config.halo2Width = val
+							)
+							.listener((opt, val) -> dummyConfig.halo2Width = val)
+							.controller(opt -> new DoubleSliderController(opt, 0.5, 10, 0.5))
+							.build())
+					.build()
+			);
 
 			ListOption<Component> haloComponents = ListOption.createBuilder(Component.class)
-					.name(Text.translatable("halohud.option.haloComponents"))
+					.name(Text.translatable("halohud.option.haloComponents.title"))
+					.tooltip(Text.translatable("halohud.option.haloComponents.tooltip"))
 					.binding(
 							reverse(defaults.haloComponents),
 							() -> reverse(config.haloComponents),
@@ -487,10 +502,11 @@ public class ConfigScreenFactory {
 					.initial(Component.None)
 					.build();
 			haloComponents.addListener((opt, val) -> dummyConfig.haloComponents = reverse(val));
-			categoryBuilder.group(haloComponents);
+			categoryHaloBuilder.group(haloComponents);
 
 			ListOption<Component> halo2Components = ListOption.createBuilder(Component.class)
-					.name(Text.translatable("halohud.option.halo2Components"))
+					.name(Text.translatable("halohud.option.halo2Components.title"))
+					.tooltip(Text.translatable("halohud.option.haloComponents.tooltip"))
 					.binding(
 							reverse(defaults.halo2Components),
 							() -> reverse(config.halo2Components),
@@ -500,12 +516,14 @@ public class ConfigScreenFactory {
 					.initial(Component.None)
 					.build();
 			halo2Components.addListener((opt, val) -> dummyConfig.halo2Components = reverse(val));
-			categoryBuilder.group(halo2Components);
+			categoryHalo2Builder.group(halo2Components);
 
 			return builder
 					.title(Text.translatable("halohud.title"))
 					.save(() -> { Config.INSTANCE.save(); configChangeListener.onConfigChange(); })
-					.category(categoryBuilder.build());
+					.category(categoryBuilder.build())
+					.category(categoryHaloBuilder.build())
+					.category(categoryHalo2Builder.build());
 		}), dummyConfig, parent);
 	}
 
