@@ -2,6 +2,7 @@ package mod.crend.halohud;
 
 import mod.crend.halohud.config.Config;
 import mod.crend.halohud.gui.Hud;
+import mod.crend.halohud.render.HaloRenderer;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
 import net.fabricmc.fabric.api.client.keybinding.v1.KeyBindingHelper;
@@ -35,6 +36,7 @@ public class HaloHud implements ClientModInitializer {
                 ));
 
         ClientTickEvents.END_CLIENT_TICK.register(client -> {
+            HaloRenderer.tick();
             hud.tick();
             while (toggleHudKeyBinding.wasPressed()) {
                 hud.toggleHud();

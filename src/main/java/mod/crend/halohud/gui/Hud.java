@@ -86,7 +86,6 @@ public class Hud extends DrawableHelper {
 			if (!active && component.isVisible()) hasVisibleComponent = true;
 		}
 		if (!active && !hasVisibleComponent) return;
-		HaloRenderer.staticTick();
 
 		// Pre-computation.
 		effects.reset();

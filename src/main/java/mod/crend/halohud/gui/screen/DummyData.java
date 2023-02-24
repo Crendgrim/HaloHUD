@@ -37,7 +37,7 @@ public class DummyData {
 		toolDurabilityOffHand = 0.9f;
 	}
 
-	public static void staticTick() {
+	public static void tick() {
 		if (ticksAttack > 0) {
 			--ticksAttack;
 			progress = ((float) TICKS_ATTACK - ticksAttack) / TICKS_ATTACK;

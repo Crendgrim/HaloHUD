@@ -86,7 +86,6 @@ public class DummyHud {
 
 	public void tick() {
 		recalculateHalos();
-		DummyData.staticTick();
-		HaloRenderer.staticTick();
+		DummyData.tick();
 	}
 }

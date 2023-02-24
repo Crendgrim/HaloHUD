@@ -49,7 +49,7 @@ public class HaloRenderer {
 		);
 	}
 
-	public static void staticTick() {
+	public static void tick() {
 		animationState++;
 		if (animationState == 20) animationState = 0;
 	}
