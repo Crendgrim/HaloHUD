@@ -1,21 +1,29 @@
 package mod.crend.halohud.gui.screen;
 
-import dev.isxander.yacl.api.ConfigCategory;
-import dev.isxander.yacl.api.Option;
-import dev.isxander.yacl.api.OptionGroup;
-import dev.isxander.yacl.api.YetAnotherConfigLib;
+import dev.isxander.yacl.api.*;
 import dev.isxander.yacl.gui.controllers.ColorController;
+import dev.isxander.yacl.gui.controllers.cycling.CyclingListController;
 import dev.isxander.yacl.gui.controllers.slider.DoubleSliderController;
 import dev.isxander.yacl.gui.controllers.slider.IntegerSliderController;
+import mod.crend.halohud.component.Component;
 import mod.crend.halohud.config.Config;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.text.Text;
 
-import java.awt.*;
+import java.awt.Color;
+import java.util.Arrays;
+import java.util.List;
+
+import static com.google.common.collect.Lists.reverse;
 
 
 public class ConfigScreenFactory {
+	private static final List<Component> VALID_COMPONENTS = Arrays.stream(Component.values())
+			.filter(c -> c != Component.None)
+			.toList();
+
+	public static ConfigChangeListener configChangeListener = () -> { };
 
 	private static Config getDummyConfig() {
 		try {
@@ -468,9 +476,40 @@ public class ConfigScreenFactory {
 					.controller(opt -> new ColorController(opt, true))
 					.build());
 
+			ListOption<Component> haloComponents = ListOption.createBuilder(Component.class)
+					.name(Text.translatable("halohud.option.haloComponents"))
+					.binding(
+							reverse(defaults.haloComponents),
+							() -> reverse(config.haloComponents),
+							val -> config.haloComponents = reverse(val)
+					)
+					.controller(opt -> new CyclingListController<>(opt, VALID_COMPONENTS))
+					.initial(Component.None)
+					.build();
+			haloComponents.addListener((opt, val) -> dummyConfig.haloComponents = reverse(val));
+			categoryBuilder.group(haloComponents);
+
+			ListOption<Component> halo2Components = ListOption.createBuilder(Component.class)
+					.name(Text.translatable("halohud.option.halo2Components"))
+					.binding(
+							reverse(defaults.halo2Components),
+							() -> reverse(config.halo2Components),
+							val -> config.halo2Components = reverse(val)
+					)
+					.controller(opt -> new CyclingListController<>(opt, VALID_COMPONENTS))
+					.initial(Component.None)
+					.build();
+			halo2Components.addListener((opt, val) -> dummyConfig.halo2Components = reverse(val));
+			categoryBuilder.group(halo2Components);
+
 			return builder
 					.title(Text.translatable("halohud.title"))
+					.save(() -> { Config.INSTANCE.save(); configChangeListener.onConfigChange(); })
 					.category(categoryBuilder.build());
 		}), dummyConfig, parent);
+	}
+
+	public interface ConfigChangeListener {
+		void onConfigChange();
 	}
 }

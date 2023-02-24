@@ -3,9 +3,10 @@ package mod.crend.halohud.gui;
 import com.mojang.blaze3d.systems.RenderSystem;
 import mod.crend.halohud.HaloHud;
 import mod.crend.halohud.component.*;
+import mod.crend.halohud.gui.screen.ConfigScreenFactory;
 import mod.crend.halohud.render.HaloRenderer;
 import mod.crend.halohud.util.ActiveEffects;
-import mod.crend.halohud.util.HaloType;
+import mod.crend.halohud.util.HaloDimensions;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawableHelper;
 import net.minecraft.client.network.ClientPlayerEntity;
@@ -27,48 +28,35 @@ public class Hud extends DrawableHelper {
 	public Hud() {
 		// Initialize render environment.
 		this.client = MinecraftClient.getInstance();
+		ConfigScreenFactory.configChangeListener = this::init;
 	}
 
 	private void init() {
+		if (client.player == null) return;
 		player = client.player;
 
-		components.add(new HealthHalo(
-				new HaloRenderer(() -> HaloHud.config().haloRadius, () -> HaloHud.config().haloWidth, HaloType.Left),
-				player,
-				new SoftReference<>(effects)
-		));
-		components.add(new HungerHalo(
-				new HaloRenderer(() -> HaloHud.config().haloRadius, () -> HaloHud.config().haloWidth, HaloType.Right),
-				player,
-				new SoftReference<>(effects)
-		));
-		components.add(new ArmorHalo(
-				new HaloRenderer(() -> HaloHud.config().halo2Radius, () -> HaloHud.config().halo2Width, HaloType.Left),
-				player,
-				new SoftReference<>(effects)
-		));
-		components.add(new StatusHalo(
-				new HaloRenderer(() -> HaloHud.config().halo2Radius, () -> HaloHud.config().halo2Width, HaloType.Right),
-				player,
-				new SoftReference<>(effects)
-		));
-		components.add(new ToolHalo(
-				new HaloRenderer(() -> HaloHud.config().halo2Radius, () -> HaloHud.config().halo2Width, HaloType.Bottom),
-				player,
-				new SoftReference<>(effects),
-				true
-		));
-		components.add(new ToolHalo(
-				new HaloRenderer(() -> HaloHud.config().halo2Radius + 2, () -> HaloHud.config().halo2Width, HaloType.Bottom),
-				player,
-				new SoftReference<>(effects),
-				false
-		));
-		components.add(new AttackHalo(
-				new HaloRenderer(() -> HaloHud.config().haloRadius, () -> HaloHud.config().haloWidth, HaloType.Bottom),
-				player,
-				new SoftReference<>(effects)
-		));
+		components.clear();
+		List<HaloDimensions> haloDimensions = HaloDimensions.getDimensions(HaloHud.config());
+		for (var dim : haloDimensions) {
+			HaloRenderer renderer = new HaloRenderer(dim);
+			switch (dim.component()) {
+				case Armor -> components.add(new ArmorHalo(renderer, player, new SoftReference<>(effects)));
+				case Attack -> components.add(new AttackHalo(renderer, player, new SoftReference<>(effects)));
+				case Health -> components.add(new HealthHalo(renderer, player, new SoftReference<>(effects)));
+				case Hunger -> components.add(new HungerHalo(renderer, player, new SoftReference<>(effects)));
+				case Status -> components.add(new StatusHalo(renderer, player, new SoftReference<>(effects)));
+				case Tool -> {
+					components.add(new ToolHalo(renderer, player, new SoftReference<>(effects), true));
+					HaloDimensions offhand = new HaloDimensions(Component.Tool,
+							dim.radius() + 3,
+							dim.width(),
+							dim.left(),
+							dim.right(),
+							dim.flipped());
+					components.add(new ToolHalo(new HaloRenderer(offhand), player, new SoftReference<>(effects), false));
+				}
+			}
+		}
 	}
 
 	public void toggleHud() {

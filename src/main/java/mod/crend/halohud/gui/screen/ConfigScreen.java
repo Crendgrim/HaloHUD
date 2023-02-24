@@ -1,15 +1,16 @@
 package mod.crend.halohud.gui.screen;
 
+import com.mojang.blaze3d.systems.RenderSystem;
 import dev.isxander.yacl.api.YetAnotherConfigLib;
 import dev.isxander.yacl.api.utils.OptionUtils;
 import dev.isxander.yacl.gui.YACLScreen;
-import mod.crend.halohud.component.Component;
 import mod.crend.halohud.config.Config;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.text.Text;
 import net.minecraft.util.Formatting;
 
+import java.util.Optional;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 public class ConfigScreen extends YACLScreen {
@@ -64,14 +65,14 @@ public class ConfigScreen extends YACLScreen {
 			double radius = Math.sqrt((mouseX - x) * (mouseX - x) + (mouseY - y) * (mouseY - y));
 			double theta = Math.atan2(mouseX - x, mouseY - y);
 
-			Component hoveredComponent = dummyHud.getHoveredComponent(radius, theta);
-			if (hoveredComponent != Component.None) {
+			Optional<DummyComponent> hoveredComponent = dummyHud.getHoveredComponent(radius, theta);
+			if (hoveredComponent.isPresent()) {
 				if (pendingChanges()) {
 					setSaveButtonMessage(Text.translatable("yacl.gui.save_before_exit").formatted(Formatting.RED), Text.translatable("yacl.gui.save_before_exit.tooltip"));
 					return false;
 				}
 				Screen ref = (this.parent instanceof ConfigScreen ? this.parent : this);
-				switch (hoveredComponent) {
+				switch (hoveredComponent.get().getComponent()) {
 					case Armor -> this.client.setScreen(ConfigScreenFactory.makeArmorComponentScreen(ref));
 					case Attack -> this.client.setScreen(ConfigScreenFactory.makeAttackComponentScreen(ref));
 					case Health -> this.client.setScreen(ConfigScreenFactory.makeHealthComponentScreen(ref));
@@ -96,14 +97,14 @@ public class ConfigScreen extends YACLScreen {
 		double radius = Math.sqrt((mouseX - x) * (mouseX - x) + (mouseY - y) * (mouseY - y));
 		double theta = Math.atan2(mouseX - x, mouseY - y);
 
-		Component hoveredComponent = dummyHud.getHoveredComponent(radius, theta);
+		Optional<DummyComponent> hoveredComponent = dummyHud.getHoveredComponent(radius, theta);
 
 		matrices.push();
 		matrices.translate(deltaX, 0, 0);
-		dummyHud.renderComponent(matrices, hoveredComponent);
+		RenderSystem.enableBlend();
+		hoveredComponent.ifPresent(component -> dummyHud.renderHoveredComponent(matrices, component));
 		dummyHud.render(matrices);
 		matrices.pop();
-
-		hoveredComponent.text().ifPresent(t -> renderTooltip(matrices, t, mouseX, mouseY));
+		hoveredComponent.ifPresent(component -> renderTooltip(matrices, component.getComponent().getDisplayName(), mouseX, mouseY));
 	}
 }

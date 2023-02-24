@@ -1,24 +1,25 @@
 package mod.crend.halohud.render;
 
-import mod.crend.halohud.util.HaloType;
+import mod.crend.halohud.util.HaloDimensions;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.util.math.ColorHelper;
-
-import java.util.function.DoubleSupplier;
 
 public class HaloRenderer {
 	static final int STEP_SIZE = 4;
 
-	DoubleSupplier radius;
-	DoubleSupplier width;
-	public HaloType type;
+	HaloDimensions dimensions;
 
 	static int animationState = 0;
 
-	public HaloRenderer(DoubleSupplier radius, DoubleSupplier width, HaloType type) {
-		this.radius = radius;
-		this.width = width;
-		this.type = type;
+	public HaloRenderer(HaloDimensions dimensions) {
+		this.dimensions = dimensions;
+	}
+
+	public void setDimensions(HaloDimensions dimensions) {
+		this.dimensions = dimensions;
+	}
+	public HaloDimensions getDimensions() {
+		return this.dimensions;
 	}
 
 	public static int modifyAlpha(int argb, float multiplier) {
@@ -52,12 +53,8 @@ public class HaloRenderer {
 		animationState++;
 		if (animationState == 20) animationState = 0;
 	}
-	public boolean shouldFlip() {
-		return (type == HaloType.Left);
-	}
 
 	public HaloRenderInstance render(MatrixStack matrixStack, float intensity) {
-		return new HaloRenderInstance(matrixStack, radius.getAsDouble(), width.getAsDouble(), shouldFlip(), intensity, type);
+		return new HaloRenderInstance(matrixStack, dimensions, intensity);
 	}
-
 }

@@ -3,7 +3,10 @@ package mod.crend.halohud.config;
 import com.google.gson.GsonBuilder;
 import dev.isxander.yacl.config.ConfigEntry;
 import dev.isxander.yacl.config.GsonConfigInstance;
+import mod.crend.halohud.component.Component;
 import net.fabricmc.loader.api.FabricLoader;
+
+import java.util.List;
 
 public class Config implements Cloneable {
     public static final GsonConfigInstance<Config> INSTANCE = new GsonConfigInstance<>(
@@ -14,6 +17,9 @@ public class Config implements Cloneable {
 
     @ConfigEntry
     public int ticksRevealed = 20;
+
+    @ConfigEntry public List<Component> haloComponents = List.of(Component.Health, Component.Hunger, Component.Attack);
+    @ConfigEntry public List<Component> halo2Components = List.of(Component.Armor, Component.Status, Component.Tool);
 
     @ConfigEntry public double haloRadius = 14;
     @ConfigEntry public double haloWidth = 2;

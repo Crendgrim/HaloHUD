@@ -2,7 +2,7 @@ package mod.crend.halohud.render;
 
 import com.mojang.blaze3d.systems.RenderSystem;
 import mod.crend.halohud.config.Config;
-import mod.crend.halohud.util.HaloType;
+import mod.crend.halohud.util.HaloDimensions;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.render.*;
 import net.minecraft.client.util.math.MatrixStack;
@@ -22,37 +22,21 @@ public class HaloRenderInstance {
 	float a = 1.0f;
 	float intensity;
 
-	public HaloRenderInstance(MatrixStack matrixStack, double radius, double width, boolean flipped, float intensity, HaloType type) {
+	public HaloRenderInstance(MatrixStack matrixStack, HaloDimensions dimensions, float intensity) {
 		// Setup render buffer
 		matrix = matrixStack.peek().getPositionMatrix();
 		buffer = Tessellator.getInstance().getBuffer();
 		buffer.begin(VertexFormat.DrawMode.TRIANGLE_STRIP, VertexFormats.POSITION_COLOR);
 
 		// Setup circle arc
-		this.radius = radius;
-		this.width = width;
+		this.radius = dimensions.radius();
+		this.width = dimensions.width();
 		x = MinecraftClient.getInstance().getWindow().getScaledWidth() / 2.0d;
 		y = MinecraftClient.getInstance().getWindow().getScaledHeight() / 2.0d;
 
-		switch (type) {
-			case Full -> {
-				left = 40;
-				right = 320;
-			}
-			case Left -> {
-				left = 185;
-				right = 320;
-			}
-			case Right -> {
-				left = 40;
-				right = 175;
-			}
-			case Bottom -> {
-				left = 325;
-				right = 360 + 35;
-			}
-		}
-		this.flipped = flipped;
+		this.left = dimensions.left();
+		this.right = dimensions.right();
+		this.flipped = dimensions.flipped();
 		this.current = flipped ? right : left;
 		this.intensity = intensity;
 	}
