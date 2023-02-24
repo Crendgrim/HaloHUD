@@ -14,7 +14,7 @@ public class DummyData {
 
 	public static float health;
 	public static float absorption;
-	public static float hunger;
+	public static float food;
 	public static float handItemFoodValue;
 	public static float progress;
 	public static float toolProgress;
@@ -27,7 +27,7 @@ public class DummyData {
 		effects.reset();
 		health = 0.7f;
 		absorption = 0.2f;
-		hunger = 0.3f;
+		food = 0.3f;
 		handItemFoodValue = 0.3f;
 		progress = 0.7f;
 		toolProgress = 0.7f;

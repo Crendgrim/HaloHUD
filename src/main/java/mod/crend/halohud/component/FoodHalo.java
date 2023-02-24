@@ -3,21 +3,21 @@ package mod.crend.halohud.component;
 import mod.crend.halohud.HaloHud;
 import mod.crend.halohud.config.Config;
 import mod.crend.halohud.render.HaloRenderer;
-import mod.crend.halohud.render.component.HungerHaloRenderer;
+import mod.crend.halohud.render.component.FoodHaloRenderer;
 import mod.crend.halohud.util.ActiveEffects;
 import net.minecraft.client.network.ClientPlayerEntity;
 import net.minecraft.client.util.math.MatrixStack;
 
 import java.lang.ref.Reference;
 
-public class HungerHalo extends HaloComponent {
+public class FoodHalo extends HaloComponent {
 
-	private final HungerHaloRenderer renderer;
+	private final FoodHaloRenderer renderer;
 	float handItemFoodValue = 0;
 
-	public HungerHalo(HaloRenderer renderer, ClientPlayerEntity player, Reference<ActiveEffects> effects) {
+	public FoodHalo(HaloRenderer renderer, ClientPlayerEntity player, Reference<ActiveEffects> effects) {
 		super(player, effects);
-		this.renderer = new HungerHaloRenderer(renderer);
+		this.renderer = new FoodHaloRenderer(renderer);
 	}
 
 	public float getValue() {

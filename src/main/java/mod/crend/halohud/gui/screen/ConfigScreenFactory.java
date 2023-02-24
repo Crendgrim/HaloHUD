@@ -289,12 +289,12 @@ public class ConfigScreenFactory {
 		}), dummyConfig, parent);
 	}
 
-	public static Screen makeHungerComponentScreen(Screen parent) {
+	public static Screen makeFoodComponentScreen(Screen parent) {
 		Config dummyConfig = getDummyConfig();
 		DummyData.lock();
 		return new ConfigScreen(YetAnotherConfigLib.create(Config.INSTANCE, (defaults, config, builder) -> {
 			var categoryBuilder = ConfigCategory.createBuilder()
-					.name(Text.translatable("halohud.component.hunger"));
+					.name(Text.translatable("halohud.component.food"));
 
 			categoryBuilder.group(OptionGroup.createBuilder()
 					.name(Text.translatable("halohud.category.general"))
@@ -359,7 +359,7 @@ public class ConfigScreenFactory {
 					.build());
 
 			return builder
-					.title(Text.translatable("halohud.component.hunger"))
+					.title(Text.translatable("halohud.component.food"))
 					.category(categoryBuilder.build());
 		}), dummyConfig, parent);
 	}

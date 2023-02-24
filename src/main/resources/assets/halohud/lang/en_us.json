@@ -41,7 +41,7 @@
   "halohud.option.colorPoison": "Poisoned",
   "halohud.option.colorWither": "Withered",
 
-  "halohud.component.hunger": "Food Component",
+  "halohud.component.food": "Food Component",
   "halohud.option.showFoodBelow": "Show food bar when below",
   "halohud.option.heldFoodAnimationType": "Show held food value",
   "halohud.option.colorFood": "Food bar",

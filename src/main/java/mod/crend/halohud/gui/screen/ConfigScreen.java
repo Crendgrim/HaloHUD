@@ -76,7 +76,7 @@ public class ConfigScreen extends YACLScreen {
 					case Armor -> this.client.setScreen(ConfigScreenFactory.makeArmorComponentScreen(ref));
 					case Attack -> this.client.setScreen(ConfigScreenFactory.makeAttackComponentScreen(ref));
 					case Health -> this.client.setScreen(ConfigScreenFactory.makeHealthComponentScreen(ref));
-					case Hunger -> this.client.setScreen(ConfigScreenFactory.makeHungerComponentScreen(ref));
+					case Food -> this.client.setScreen(ConfigScreenFactory.makeFoodComponentScreen(ref));
 					case Status -> this.client.setScreen(ConfigScreenFactory.makeStatusComponentScreen(ref));
 					case Tool -> this.client.setScreen(ConfigScreenFactory.makeToolComponentScreen(ref));
 				}

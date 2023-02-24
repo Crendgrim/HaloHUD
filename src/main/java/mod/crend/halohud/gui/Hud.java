@@ -44,7 +44,7 @@ public class Hud extends DrawableHelper {
 				case Armor -> components.add(new ArmorHalo(renderer, player, new SoftReference<>(effects)));
 				case Attack -> components.add(new AttackHalo(renderer, player, new SoftReference<>(effects)));
 				case Health -> components.add(new HealthHalo(renderer, player, new SoftReference<>(effects)));
-				case Hunger -> components.add(new HungerHalo(renderer, player, new SoftReference<>(effects)));
+				case Food -> components.add(new FoodHalo(renderer, player, new SoftReference<>(effects)));
 				case Status -> components.add(new StatusHalo(renderer, player, new SoftReference<>(effects)));
 				case Tool -> {
 					if (HaloHud.config().showOffhand) {

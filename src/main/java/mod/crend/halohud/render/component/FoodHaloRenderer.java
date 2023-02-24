@@ -5,11 +5,11 @@ import mod.crend.halohud.render.HaloRenderer;
 import mod.crend.halohud.util.ActiveEffects;
 import net.minecraft.client.util.math.MatrixStack;
 
-public class HungerHaloRenderer {
+public class FoodHaloRenderer {
 
 	public final HaloRenderer renderer;
 
-	public HungerHaloRenderer(HaloRenderer renderer) {
+	public FoodHaloRenderer(HaloRenderer renderer) {
 		this.renderer = renderer;
 	}
 
@@ -21,9 +21,9 @@ public class HungerHaloRenderer {
 		}
 	}
 
-	public void render(MatrixStack matrixStack, Config config, ActiveEffects effects, float hunger, float handItemFoodValue, float intensity) {
+	public void render(MatrixStack matrixStack, Config config, ActiveEffects effects, float food, float handItemFoodValue, float intensity) {
 		renderer.render(matrixStack, intensity)
-				.draw(getColor(config, effects), hunger)
+				.draw(getColor(config, effects), food)
 				.draw(HaloRenderer.animate(config.colorHeldFood, config.colorEmpty, config.heldFoodAnimationType), handItemFoodValue)
 				.execute(config);
 	}

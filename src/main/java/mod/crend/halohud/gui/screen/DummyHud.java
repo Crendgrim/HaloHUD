@@ -34,7 +34,7 @@ public class DummyHud {
 				case Armor -> components.add(new DummyComponent.Armor(renderer));
 				case Attack -> components.add(new DummyComponent.Attack(renderer));
 				case Health -> components.add(new DummyComponent.Health(renderer));
-				case Hunger -> components.add(new DummyComponent.Hunger(renderer));
+				case Food -> components.add(new DummyComponent.Food(renderer));
 				case Status -> components.add(new DummyComponent.Status(renderer));
 				case Tool -> {
 					if (dummyConfig.showOffhand) {

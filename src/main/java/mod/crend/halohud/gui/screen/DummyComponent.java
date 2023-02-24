@@ -6,7 +6,7 @@ import mod.crend.halohud.render.HaloRenderer;
 import mod.crend.halohud.render.SimpleHaloRenderer;
 import mod.crend.halohud.render.component.AttackHaloRenderer;
 import mod.crend.halohud.render.component.HealthHaloRenderer;
-import mod.crend.halohud.render.component.HungerHaloRenderer;
+import mod.crend.halohud.render.component.FoodHaloRenderer;
 import mod.crend.halohud.util.HaloDimensions;
 import net.minecraft.client.util.math.MatrixStack;
 
@@ -45,15 +45,15 @@ public abstract class DummyComponent {
 		}
 	}
 
-	public static class Hunger extends DummyComponent {
-		HungerHaloRenderer renderer;
-		public Hunger(HaloRenderer renderer) {
-			this.renderer = new HungerHaloRenderer(renderer);
+	public static class Food extends DummyComponent {
+		FoodHaloRenderer renderer;
+		public Food(HaloRenderer renderer) {
+			this.renderer = new FoodHaloRenderer(renderer);
 		}
 
 		@Override
 		public void render(MatrixStack matrixStack, Config config, float intensity) {
-			renderer.render(matrixStack, config, DummyData.effects, DummyData.hunger, DummyData.handItemFoodValue, intensity);
+			renderer.render(matrixStack, config, DummyData.effects, DummyData.food, DummyData.handItemFoodValue, intensity);
 		}
 
 		@Override
