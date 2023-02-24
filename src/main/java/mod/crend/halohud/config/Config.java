@@ -21,9 +21,9 @@ public class Config implements Cloneable {
     @ConfigEntry public List<Component> haloComponents = List.of(Component.Health, Component.Hunger, Component.Attack);
     @ConfigEntry public List<Component> halo2Components = List.of(Component.Armor, Component.Status, Component.Tool);
 
-    @ConfigEntry public double haloRadius = 14;
+    @ConfigEntry public double haloRadius = 28;
     @ConfigEntry public double haloWidth = 2;
-    @ConfigEntry public double halo2Radius = 17;
+    @ConfigEntry public double halo2Radius = 31;
     @ConfigEntry public double halo2Width = 1;
     @ConfigEntry public int colorEmpty = 0x20FFFFFF;
 
