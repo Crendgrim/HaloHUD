@@ -67,7 +67,7 @@ modrinth {
 	loaders = ['fabric']
 	dependencies {
 		required.project 'P7dR8mSH' // Fabric API
-		required.project '9s6osm5g' // Cloth Config
+		required.project '1eAoo2KR' // YACL
 		optional.project 'mOgUt4GM' // Mod Menu
 	}
 }
@@ -87,7 +87,7 @@ curseforge {
 			displayName = "${project.mod_name} ${project.version}"
 			relations {
 				requiredDependency "fabric-api"
-				requiredDependency "cloth-config"
+				requiredDependency "yacl"
 				optionalDependency "modmenu"
 			}
 		}
