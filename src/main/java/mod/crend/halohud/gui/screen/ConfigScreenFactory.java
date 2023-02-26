@@ -464,6 +464,18 @@ public class ConfigScreenFactory {
 
 			categoryBuilder.group(OptionGroup.createBuilder()
 					.name(Text.translatable("halohud.category.general"))
+					.option(Option.createBuilder(boolean.class)
+							.name(Text.translatable("halohud.option.enabled.title"))
+							.tooltip(Text.translatable("halohud.option.enabled.tooltip"))
+							.binding(
+									defaults.enabled,
+									() -> config.enabled,
+									val -> config.enabled = val
+							)
+							.listener((opt, val) -> dummyConfig.enabled = val)
+							.controller(TickBoxController::new)
+							.build())
+
 					.option(Option.createBuilder(int.class)
 							.name(Text.translatable("halohud.option.ticksRevealed"))
 							.binding(

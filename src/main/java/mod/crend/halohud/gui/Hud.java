@@ -3,6 +3,7 @@ package mod.crend.halohud.gui;
 import com.mojang.blaze3d.systems.RenderSystem;
 import mod.crend.halohud.HaloHud;
 import mod.crend.halohud.component.*;
+import mod.crend.halohud.config.Config;
 import mod.crend.halohud.gui.screen.ConfigScreenFactory;
 import mod.crend.halohud.render.HaloRenderer;
 import mod.crend.halohud.util.ActiveEffects;
@@ -23,7 +24,6 @@ public class Hud extends DrawableHelper {
 	MinecraftClient client;
 	ClientPlayerEntity player = null;
 	final ActiveEffects effects = new ActiveEffects();
-	boolean active = true;
 	List<HaloComponent> components = new ArrayList<>();
 
 	public Hud() {
@@ -60,7 +60,8 @@ public class Hud extends DrawableHelper {
 	}
 
 	public void toggleHud() {
-		active = !active;
+		HaloHud.config().enabled = !HaloHud.config().enabled;
+		Config.INSTANCE.save();
 	}
 
 	public void tick() {
@@ -81,6 +82,7 @@ public class Hud extends DrawableHelper {
 
 		// Tick components.
 		boolean hasVisibleComponent = false;
+		boolean active = HaloHud.config().enabled;
 		for (HaloComponent component : components) {
 			component.tick(active && component.shouldRender());
 			if (!active && component.isVisible()) hasVisibleComponent = true;

@@ -1,6 +1,8 @@
 {
   "halohud.title": "Halo HUD",
 
+  "halohud.option.enabled.title": "Enable Halo HUD",
+  "halohud.option.enabled.tooltip": "This setting is also controlled by the Toggle Halo HUD key binding.",
   "halohud.option.ticksRevealed": "Time revealed (ticks)",
   "halohud.option.haloRadius.title": "Radius of the main halo",
   "halohud.option.haloWidth.title": "Width of the main halo",
