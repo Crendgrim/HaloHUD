@@ -61,8 +61,18 @@ public class DummyHud {
 		for (DummyComponent component : components) {
 			if (dummyConfig.showOffhand && component instanceof DummyComponent.Tool) continue;
 			HaloDimensions dimensions = component.getDimensions();
+			// Expand the dimensions a bit for narrow halos so they're easier to click on.
+			double componentRadius = dimensions.radius();
+			double componentWidth = dimensions.width();
+			if (componentWidth < 5) {
+				componentWidth = 5;
+				// Expand away from the other halo.
+				if (componentRadius < Math.max(dummyConfig.haloRadius, dummyConfig.halo2Radius)) {
+					componentRadius -= 5;
+				}
+			}
 			if (dimensions.component() != Component.None
-					&& radius >= dimensions.radius() && radius <= dimensions.radius() + dimensions.width()) {
+					&& radius >= componentRadius && radius <= componentRadius + componentWidth) {
 
 				if ((deg >= dimensions.left() && deg <= dimensions.right())
 						|| (deg + 360 >= dimensions.left() && deg + 360 <= dimensions.right())
