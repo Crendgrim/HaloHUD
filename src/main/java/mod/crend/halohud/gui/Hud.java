@@ -4,14 +4,13 @@ import com.mojang.blaze3d.systems.RenderSystem;
 import mod.crend.halohud.HaloHud;
 import mod.crend.halohud.component.*;
 import mod.crend.halohud.config.Config;
-import mod.crend.halohud.gui.screen.ConfigScreenFactory;
 import mod.crend.halohud.render.HaloRenderer;
 import mod.crend.halohud.util.ActiveEffects;
 import mod.crend.halohud.util.HaloDimensions;
+import mod.crend.yaclx.YaclX;
 import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.gui.DrawableHelper;
+import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.network.ClientPlayerEntity;
-import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.util.Arm;
 
@@ -19,7 +18,7 @@ import java.lang.ref.SoftReference;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Hud extends DrawableHelper {
+public class Hud {
 
 	MinecraftClient client;
 	ClientPlayerEntity player = null;
@@ -29,7 +28,9 @@ public class Hud extends DrawableHelper {
 	public Hud() {
 		// Initialize render environment.
 		this.client = MinecraftClient.getInstance();
-		ConfigScreenFactory.configChangeListener = this::init;
+		if (YaclX.HAS_YACL) {
+			Config.CONFIG_STORE.withYacl().configChangeListener = this::init;
+		}
 	}
 
 	private void init() {
@@ -61,7 +62,7 @@ public class Hud extends DrawableHelper {
 
 	public void toggleHud() {
 		HaloHud.config().enabled = !HaloHud.config().enabled;
-		Config.INSTANCE.save();
+		Config.CONFIG_STORE.save();
 	}
 
 	public void tick() {
@@ -96,13 +97,13 @@ public class Hud extends DrawableHelper {
 		}
 	}
 
-	public void render(MatrixStack matrixStack, float tickDelta) {
+	public void render(DrawContext context, float tickDelta) {
 		if (player == null) return;
 
 		RenderSystem.enableBlend();
 		for (HaloComponent component : components) {
 			if (component.isVisible()) {
-				component.render(matrixStack, HaloHud.config());
+				component.render(context.getMatrices(), HaloHud.config());
 			}
 		}
 	}

@@ -6,14 +6,15 @@ import mod.crend.halohud.util.HaloDimensions;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.render.*;
 import net.minecraft.client.util.math.MatrixStack;
-import net.minecraft.util.math.ColorHelper;
 import org.joml.Matrix4f;
+
+import java.awt.Color;
 
 public class HaloRenderInstance {
 	Matrix4f matrix;
 	BufferBuilder buffer;
 	double radius, width, x, y;
-	int current;
+	double current;
 	int left = 0, right = 0;
 	boolean flipped;
 	float r = 1.0f;
@@ -27,6 +28,9 @@ public class HaloRenderInstance {
 		matrix = matrixStack.peek().getPositionMatrix();
 		buffer = Tessellator.getInstance().getBuffer();
 		buffer.begin(VertexFormat.DrawMode.TRIANGLE_STRIP, VertexFormats.POSITION_COLOR);
+		RenderSystem.enableBlend();;
+		RenderSystem.defaultBlendFunc();
+		RenderSystem.disableCull();
 
 		// Setup circle arc
 		this.radius = dimensions.radius();
@@ -48,13 +52,13 @@ public class HaloRenderInstance {
 		this.a = a;
 	}
 
-	private void setColor(int argb) {
+	private void setColor(Color color) {
 		// The multiplier for the alpha value makes the halos fade in and out nicely.
 		setColor(
-				ColorHelper.Argb.getRed(argb) / 255.0f,
-				ColorHelper.Argb.getGreen(argb) / 255.0f,
-				ColorHelper.Argb.getBlue(argb) / 255.0f,
-				intensity * (ColorHelper.Argb.getAlpha(argb) / 255.0f)
+				color.getRed() / 255.0f,
+				color.getGreen() / 255.0f,
+				color.getBlue() / 255.0f,
+				intensity * (color.getAlpha() / 255.0f)
 		);
 	}
 
@@ -76,25 +80,25 @@ public class HaloRenderInstance {
 
 	private void draw(double pct) {
 		if (flipped) {
-			int end = Math.max(left, (int) (current - pct * (right - left)));
+			double end = Math.max(left, (current - pct * (right - left)));
 			for (; current > end; current -= Math.min(HaloRenderer.STEP_SIZE, current - end)) {
 				drawCurrentSlice();
 			}
 		} else {
-			int end = Math.min(right, (int) (current + pct * (right - left)));
+			double end = Math.min(right, (current + pct * (right - left)));
 			for (; current < end; current += Math.min(HaloRenderer.STEP_SIZE, end - current)) {
 				drawCurrentSlice();
 			}
 		}
 	}
 
-	public HaloRenderInstance draw(int argb, double pct) {
-		setColor(argb);
+	public HaloRenderInstance draw(Color color, double pct) {
+		setColor(color);
 		draw(pct);
 		return this;
 	}
 
-	public HaloRenderInstance finish(int color) {
+	public HaloRenderInstance finish(Color color) {
 		setColor(color);
 		if (flipped) {
 			for (; current > left; current -= Math.min(HaloRenderer.STEP_SIZE, current - left)) {
@@ -115,5 +119,8 @@ public class HaloRenderInstance {
 		// Draw to the screen
 		RenderSystem.setShader(GameRenderer::getPositionColorProgram);
 		BufferRenderer.drawWithGlobalProgram(buffer.end());
+
+		RenderSystem.enableCull();
+		RenderSystem.disableBlend();
 	}
 }

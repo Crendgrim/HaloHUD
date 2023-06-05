@@ -5,6 +5,8 @@ import mod.crend.halohud.render.HaloRenderer;
 import mod.crend.halohud.util.ActiveEffects;
 import net.minecraft.client.util.math.MatrixStack;
 
+import java.awt.Color;
+
 public class FoodHaloRenderer {
 
 	public final HaloRenderer renderer;
@@ -13,7 +15,7 @@ public class FoodHaloRenderer {
 		this.renderer = renderer;
 	}
 
-	private int getColor(Config config, ActiveEffects effects) {
+	private Color getColor(Config config, ActiveEffects effects) {
 		if (effects.hunger) {
 			return config.colorHunger;
 		} else {

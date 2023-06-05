@@ -1,5 +1,5 @@
 plugins {
-	id 'fabric-loom' version '1.0-SNAPSHOT'
+	id 'fabric-loom' version '1.2-SNAPSHOT'
 	id 'com.modrinth.minotaur' version '2.+'
 	id 'com.matthewprenger.cursegradle' version '1.4.0'
 }
@@ -15,6 +15,7 @@ repositories {
 	maven { url "https://maven.shedaniel.me/" }
 	maven { url "https://maven.terraformersmc.com/" }
 	maven { url "https://maven.isxander.dev/releases" }
+	flatDir { dir "${rootProject.getProjectDir()}/lib" }
 }
 
 dependencies {
@@ -24,11 +25,15 @@ dependencies {
 	modImplementation "net.fabricmc:fabric-loader:${project.fabric_loader_version}"
 
 	modImplementation fabricApi.module("fabric-api-base", project.fabric_api_version)
-	modImplementation fabricApi.module("fabric-lifecycle-events-v1", project.fabric_api_version)
+	modImplementation fabricApi.module("fabric-convention-tags-v1", project.fabric_api_version)
+	modImplementation fabricApi.module("fabric-client-tags-api-v1", project.fabric_api_version)
 	modImplementation fabricApi.module("fabric-key-binding-api-v1", project.fabric_api_version)
+	modImplementation fabricApi.module("fabric-lifecycle-events-v1", project.fabric_api_version)
 	modImplementation fabricApi.module("fabric-rendering-v1", project.fabric_api_version)
+	modImplementation fabricApi.module("fabric-screen-api-v1", project.fabric_api_version)
 
-	modImplementation "dev.isxander:yet-another-config-lib:${project.yacl_version}"
+	modImplementation "dev.isxander.yacl:yet-another-config-lib-fabric:${project.yacl_version}"
+	modImplementation include(name: "yaclx", group: "mod.crend.yaclx", version: "${project.yaclx_version}-fabric")
 	modImplementation "com.terraformersmc:modmenu:${project.modmenu_version}"
 }
 

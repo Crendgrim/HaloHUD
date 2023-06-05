@@ -1,7 +1,9 @@
 package mod.crend.halohud.gui.screen;
 
 import mod.crend.halohud.util.ActiveEffects;
+import mod.crend.yaclx.auto.annotation.Listener;
 import net.minecraft.entity.effect.StatusEffect;
+import net.minecraft.entity.effect.StatusEffects;
 
 public class DummyData {
 	private static final int TICKS_CHANGED = 20;
@@ -70,5 +72,66 @@ public class DummyData {
 
 	static {
 		reset();
+	}
+
+	public static class Attack implements Listener.Callback {
+		@Override
+		public void accept(String key, Object value) {
+			fakeAttack();
+		}
+	}
+	public static class Strength implements Listener.Callback {
+		@Override
+		public void accept(String key, Object value) {
+			enableFrom(StatusEffects.STRENGTH);
+		}
+	}
+	public static class Haste implements Listener.Callback {
+		@Override
+		public void accept(String key, Object value) {
+			enableFrom(StatusEffects.HASTE);
+		}
+	}
+	public static class Weakness implements Listener.Callback {
+		@Override
+		public void accept(String key, Object value) {
+			enableFrom(StatusEffects.WEAKNESS);
+		}
+	}
+	public static class MiningFatigue implements Listener.Callback {
+		@Override
+		public void accept(String key, Object value) {
+			enableFrom(StatusEffects.MINING_FATIGUE);
+		}
+	}
+	public static class Absorption implements Listener.Callback {
+		@Override
+		public void accept(String key, Object value) {
+			enableFrom(StatusEffects.ABSORPTION);
+		}
+	}
+	public static class Regeneration implements Listener.Callback {
+		@Override
+		public void accept(String key, Object value) {
+			enableFrom(StatusEffects.REGENERATION);
+		}
+	}
+	public static class Poison implements Listener.Callback {
+		@Override
+		public void accept(String key, Object value) {
+			enableFrom(StatusEffects.POISON);
+		}
+	}
+	public static class Wither implements Listener.Callback {
+		@Override
+		public void accept(String key, Object value) {
+			enableFrom(StatusEffects.WITHER);
+		}
+	}
+	public static class Hunger implements Listener.Callback {
+		@Override
+		public void accept(String key, Object value) {
+			enableFrom(StatusEffects.HUNGER);
+		}
 	}
 }

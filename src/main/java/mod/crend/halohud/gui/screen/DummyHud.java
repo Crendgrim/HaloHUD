@@ -31,12 +31,12 @@ public class DummyHud {
 		for (var dim : haloDimensions) {
 			HaloRenderer renderer = new HaloRenderer(dim);
 			switch (dim.component()) {
-				case Armor -> components.add(new DummyComponent.Armor(renderer));
+				case Armor  -> components.add(new DummyComponent.Armor(renderer));
 				case Attack -> components.add(new DummyComponent.Attack(renderer));
 				case Health -> components.add(new DummyComponent.Health(renderer));
-				case Food -> components.add(new DummyComponent.Food(renderer));
+				case Food   -> components.add(new DummyComponent.Food(renderer));
 				case Status -> components.add(new DummyComponent.Status(renderer));
-				case Tool -> {
+				case Tool   -> {
 					if (dummyConfig.showOffhand) {
 						boolean mainHandOnRight = MinecraftClient.getInstance().options.getMainArm().getValue() == Arm.RIGHT;
 						components.add(new DummyComponent.Tool(new HaloRenderer(dim.splitLeft()), !mainHandOnRight));

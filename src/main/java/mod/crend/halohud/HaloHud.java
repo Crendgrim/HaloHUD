@@ -18,15 +18,16 @@ public class HaloHud implements ClientModInitializer {
     private static Hud hud;
 
     public static Config config() {
-        return Config.INSTANCE.getConfig();
+        return Config.CONFIG_STORE.config();
     }
 
     @Override
     public void onInitializeClient() {
-        Config.INSTANCE.load();
         hud = new Hud();
 
-        HudRenderCallback.EVENT.register((matrixStack, tickDelta) -> hud.render(matrixStack, tickDelta));
+        config();
+
+        HudRenderCallback.EVENT.register((context, tickDelta) -> hud.render(context, tickDelta));
 
         KeyBinding toggleHudKeyBinding = KeyBindingHelper.registerKeyBinding(
                 new KeyBinding("key.halohud.toggle-hud",

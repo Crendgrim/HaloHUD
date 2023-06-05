@@ -5,6 +5,8 @@ import mod.crend.halohud.render.HaloRenderer;
 import mod.crend.halohud.util.ActiveEffects;
 import net.minecraft.client.util.math.MatrixStack;
 
+import java.awt.Color;
+
 public class AttackHaloRenderer {
 
 	public final HaloRenderer renderer;
@@ -13,7 +15,7 @@ public class AttackHaloRenderer {
 		this.renderer = renderer;
 	}
 
-	private int getColor(Config config, ActiveEffects effects, float toolProgress) {
+	private Color getColor(Config config, ActiveEffects effects, float toolProgress) {
 		if (toolProgress > 0) {
 			if (effects.miningFatigue) {
 				return config.colorMiningFatigue;
@@ -34,7 +36,7 @@ public class AttackHaloRenderer {
 	}
 
 	public void render(MatrixStack matrixStack, Config config, ActiveEffects effects, float progress, float toolProgress, float intensity) {
-		int color = getColor(config, effects, toolProgress);
+		Color color = getColor(config, effects, toolProgress);
 		if (toolProgress == 0 && progress < 1.0f) {
 			color = HaloRenderer.modifyAlpha(color, 0.7f);
 		}
