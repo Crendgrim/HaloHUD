@@ -49,6 +49,7 @@
 
   "halohud.category.health": "Health",
   "halohud.component.health": "Health Component",
+  "halohud.option.showHealthAlways": "Always show health bar",
   "halohud.option.showHealthBelow": "Show health bar below",
   "halohud.option.showHealthBelow.description": "Show health bar below this threshold",
   "halohud.option.colorHealth": "Health bar",
@@ -66,6 +67,7 @@
 
   "halohud.category.food": "Food",
   "halohud.component.food": "Food Component",
+  "halohud.option.showFoodAlways": "Always show food bar",
   "halohud.option.showFoodBelow": "Show food bar below",
   "halohud.option.showFoodBelow.description": "Show food bar below threshold",
   "halohud.option.heldFoodAnimationType": "Show held food value",
@@ -85,6 +87,7 @@
 
   "halohud.category.tool": "Tool",
   "halohud.component.tool": "Tool Component",
+  "halohud.option.showToolAlways": "Always show tool bar",
   "halohud.option.showToolBelow": "Show tool bar below",
   "halohud.option.showToolBelow.description": "Show tool bar below threshold",
   "halohud.option.showOffhand": "Show for offhand item",

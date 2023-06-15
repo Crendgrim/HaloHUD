@@ -42,7 +42,7 @@ public class ToolHalo extends HaloComponent {
 
 	@Override
 	protected boolean shouldRenderImpl() {
-		return active && value < HaloHud.config().showToolBelow;
+		return HaloHud.config().showToolAlways || (active && value < HaloHud.config().showToolBelow);
 	}
 
 	@Override

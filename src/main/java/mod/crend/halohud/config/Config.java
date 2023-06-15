@@ -70,7 +70,10 @@ public class Config implements Cloneable {
     @ConfigEntry public Color colorMiningFatigue = new Color(0xC04A4217, true);
 
     @Category(name = "health")
+    @ConfigEntry public boolean showHealthAlways = false;
+    @Category(name = "health")
     @FloatingPointRange(min = 0, max = 1, interval = 0.1)
+    @EnableIf(field = "showHealthAlways", value = EnableIf.NegativeBooleanPredicate.class)
     @ConfigEntry public double showHealthBelow = 0.7;
     @Category(name = "health")
     @ConfigEntry public Color colorHealth = new Color(0xC0F82423, true);
@@ -88,7 +91,10 @@ public class Config implements Cloneable {
     @ConfigEntry public Color colorWither = new Color(0xC0352A27, true);
 
     @Category(name = "food")
+    @ConfigEntry public boolean showFoodAlways = false;
+    @Category(name = "food")
     @FloatingPointRange(min = 0, max = 1, interval = 0.1)
+    @EnableIf(field = "showFoodAlways", value = EnableIf.NegativeBooleanPredicate.class)
     @ConfigEntry public double showFoodBelow = 0.7;
     @Category(name = "food")
     @ConfigEntry public Color colorFood = new Color(0xC0AA8000, true);
@@ -107,7 +113,10 @@ public class Config implements Cloneable {
     @ConfigEntry public Color colorAir = new Color(0xC0AAAAFF, true);
 
     @Category(name = "tool")
+    @ConfigEntry public boolean showToolAlways = false;
+    @Category(name = "tool")
     @FloatingPointRange(min = 0, max = 1, interval = 0.1)
+    @EnableIf(field = "showToolAlways", value = EnableIf.NegativeBooleanPredicate.class)
     @ConfigEntry public double showToolBelow = 0.5;
     @Category(name = "tool")
     @ConfigEntry public boolean showOffhand = true;

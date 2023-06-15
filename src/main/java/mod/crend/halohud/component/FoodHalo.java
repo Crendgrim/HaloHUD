@@ -26,7 +26,7 @@ public class FoodHalo extends HaloComponent {
 
 	@Override
 	public boolean shouldRenderImpl() {
-		return getValue() < HaloHud.config().showFoodBelow;
+		return HaloHud.config().showFoodAlways || getValue() < HaloHud.config().showFoodBelow;
 	}
 
 	@Override
