@@ -18,7 +18,7 @@ public class DummyHud {
 
 	List<DummyComponent> components = new ArrayList<>();
 
-	DummyHud(Config dummyConfig) {
+	public DummyHud(Config dummyConfig) {
 		this.dummyConfig = dummyConfig;
 	}
 

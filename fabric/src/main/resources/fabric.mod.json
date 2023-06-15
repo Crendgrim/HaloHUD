@@ -19,15 +19,15 @@
   "environment": "client",
   "entrypoints": {
     "client": [
-      "mod.crend.halohud.HaloHud"
+      "mod.crend.halohud.fabric.HaloHudFabric"
     ],
     "modmenu": [
-      "mod.crend.halohud.config.ModMenuIntegration"
+      "mod.crend.halohud.fabric.screen.ModMenuIntegration"
     ]
   },
 
   "mixins": [
-    "halohud.mixins.json"
+    "halohud-common.mixins.json"
   ],
 
   "depends": {

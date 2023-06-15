@@ -1,7 +1,8 @@
-package mod.crend.halohud.config;
+package mod.crend.halohud.fabric.screen;
 
 import com.terraformersmc.modmenu.api.ModMenuApi;
-import mod.crend.halohud.gui.screen.ConfigScreen;
+import mod.crend.halohud.config.Config;
+import mod.crend.halohud.gui.screen.ModConfigScreen;
 import mod.crend.yaclx.YaclX;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
@@ -12,7 +13,7 @@ public class ModMenuIntegration implements ModMenuApi {
     public com.terraformersmc.modmenu.api.ConfigScreenFactory<?> getModConfigScreenFactory() {
         if (YaclX.HAS_YACL) {
             Config.CONFIG_STORE.withYacl().registerDummyConfig(new Config());
-            return parent -> new ConfigScreen(Config.CONFIG_STORE.withYacl().setupScreen(), Config.CONFIG_STORE.withYacl().dummyConfig, parent);
+            return parent -> new ModConfigScreen(Config.CONFIG_STORE.withYacl().setupScreen(), Config.CONFIG_STORE.withYacl().dummyConfig, parent);
         } else {
             return Config.CONFIG_STORE::makeScreen;
         }

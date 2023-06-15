@@ -4,19 +4,21 @@ import com.mojang.blaze3d.systems.RenderSystem;
 import dev.isxander.yacl3.api.YetAnotherConfigLib;
 import dev.isxander.yacl3.gui.YACLScreen;
 import mod.crend.halohud.config.Config;
+import mod.crend.halohud.gui.screen.DummyComponent;
+import mod.crend.halohud.gui.screen.DummyHud;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.util.math.MatrixStack;
 
 import java.util.Optional;
 
-public class ConfigScreen extends YACLScreen {
+public class ModConfigScreen extends YACLScreen {
 
 	protected final Screen parent;
 	protected final Config dummyConfig;
 	DummyHud dummyHud;
 
-	public ConfigScreen(YetAnotherConfigLib config, Config dummyConfig, Screen parent) {
+	public ModConfigScreen(YetAnotherConfigLib config, Config dummyConfig, Screen parent) {
 		super(config, parent);
 		this.dummyConfig = dummyConfig;
 		this.parent = parent;
