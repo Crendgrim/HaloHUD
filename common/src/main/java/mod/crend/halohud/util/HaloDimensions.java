@@ -30,7 +30,7 @@ public record HaloDimensions(Component component, double radius, double width, i
 					new HaloDimensions(haloComponents.get(2), haloRadius, haloWidth, 325, 360 + 35, false)
 			);
 			case 4 -> List.of(
-					new HaloDimensions(haloComponents.get(0), haloRadius, haloWidth, 210, 320, true),
+					new HaloDimensions(haloComponents.get(0), haloRadius, haloWidth, 220, 320, true),
 					new HaloDimensions(haloComponents.get(1), haloRadius, haloWidth, 40, 140, false),
 					new HaloDimensions(haloComponents.get(2), haloRadius, haloWidth, 325, 360 + 35, false),
 					new HaloDimensions(haloComponents.get(3), haloRadius, haloWidth, 145, 215, true)
