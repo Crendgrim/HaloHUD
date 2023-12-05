@@ -36,7 +36,7 @@ public class ArmorHalo extends HaloComponent {
 
 	@Override
 	public boolean shouldRenderImpl() {
-		return (player.isFallFlying() && value < HaloHud.config().showElytraBelow);
+		return HaloHud.config().showArmorAlways || (player.isFallFlying() && value < HaloHud.config().showElytraBelow);
 	}
 
 	@Override

@@ -23,6 +23,7 @@
 
   "halohud.category.armor": "Armor",
   "halohud.component.armor": "Armor Component",
+  "halohud.option.showArmorAlways": "Always show elytra bar",
   "halohud.option.showElytraBelow": "Show elytra below",
   "halohud.option.showElytraBelow.description": "Show elytra below this threshold",
   "halohud.option.colorElytra": "Elytra bar",
@@ -30,6 +31,7 @@
 
   "halohud.category.attack": "Attack",
   "halohud.component.attack": "Attack Component",
+  "halohud.option.showAttackAlways": "Always show attack bar",
   "halohud.group.attackIndicator": "Attack Indicator",
   "halohud.option.attackIndicator": "Vanilla Attack Indicator",
   "halohud.option.attackIndicator.description": "The attack indicator supersedes the vanilla attack indicator, so it is recommended not having it at the crosshair.\nParticularly with small halos, it can conflict otherwise.",

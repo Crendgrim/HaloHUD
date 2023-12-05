@@ -1,5 +1,6 @@
 package mod.crend.halohud.component;
 
+import mod.crend.halohud.HaloHud;
 import mod.crend.halohud.config.Config;
 import mod.crend.halohud.mixin.ClientPlayerInteractionManagerAccessor;
 import mod.crend.halohud.render.component.AttackHaloRenderer;
@@ -36,7 +37,7 @@ public class AttackHalo extends HaloComponent {
 	protected boolean shouldRenderImpl() {
 		if (getValue() < 1.0f || fullyCharged) return true;
 
-		return (client.targetedEntity != null && client.targetedEntity instanceof LivingEntity && client.targetedEntity.isAlive());
+		return HaloHud.config().showAttackAlways || (client.targetedEntity != null && client.targetedEntity instanceof LivingEntity && client.targetedEntity.isAlive());
 	}
 
 	@Override

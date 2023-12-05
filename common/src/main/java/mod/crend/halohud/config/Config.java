@@ -42,11 +42,15 @@ public class Config implements Cloneable {
     @SerialEntry public Color colorEmpty = new Color(0x20FFFFFF, true);
 
     @Category(name = "armor")
+    @SerialEntry public boolean showArmorAlways = false;
+    @Category(name = "armor")
     @FloatingPointRange(min = 0, max = 1, interval = 0.1)
     @SerialEntry public double showElytraBelow = 0.5;
     @Category(name = "armor")
     @SerialEntry public Color colorElytra = new Color(0xC0DDDDDD, true);
 
+    @Category(name = "attack")
+    @SerialEntry public boolean showAttackAlways = false;
     @Category(name = "attack", group = "attackIndicator")
     @Listener(DummyData.Attack.class)
     @SerialEntry public Color colorAttack = new Color(0xC0FFFFFF, true);
@@ -108,10 +112,14 @@ public class Config implements Cloneable {
     @SerialEntry public AnimationType heldFoodAnimationType = AnimationType.Pulsating;
 
     @Category(name = "status")
+    @SerialEntry public boolean showStatusAlways = false;
+    @Category(name = "status")
     @FloatingPointRange(min = 0, max = 1, interval = 0.1)
     @SerialEntry public double showAirBelow = 1.0;
     @Category(name = "status")
     @SerialEntry public Color colorAir = new Color(0xC0AAAAFF, true);
+    @Category(name = "status")
+    @SerialEntry public Color colorFreezing = new Color(0xC0AAFFFF, true);
 
     @Category(name = "tool")
     @SerialEntry public boolean showToolAlways = false;
