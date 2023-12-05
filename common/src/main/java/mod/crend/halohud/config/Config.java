@@ -43,6 +43,7 @@ public class Config implements Cloneable {
     @SerialEntry public double halo2Width = 1;
     @SerialEntry public Color colorEmpty = new Color(0x20FFFFFF, true);
 
+    @Label(key = "halohud.category.armor.label")
     @Category(name = "armor")
     @SerialEntry public boolean showArmorAlways = false;
     @Category(name = "armor")
@@ -51,6 +52,7 @@ public class Config implements Cloneable {
     @Category(name = "armor")
     @SerialEntry public Color colorElytra = new Color(0xC0DDDDDD, true);
 
+    @Label(key = "halohud.category.attack.label")
     @Category(name = "attack")
     @SerialEntry public boolean showAttackAlways = false;
     @Category(name = "attack", group = "attackIndicator")
@@ -76,6 +78,7 @@ public class Config implements Cloneable {
     @Listener(DummyData.MiningFatigue.class)
     @SerialEntry public Color colorMiningFatigue = new Color(0xC04A4217, true);
 
+    @Label(key = "halohud.category.health.label")
     @Category(name = "health")
     @SerialEntry public boolean showHealthAlways = false;
     @Category(name = "health")
@@ -97,6 +100,7 @@ public class Config implements Cloneable {
     @Listener(DummyData.Wither.class)
     @SerialEntry public Color colorWither = new Color(0xC0352A27, true);
 
+    @Label(key = "halohud.category.food.label")
     @Category(name = "food")
     @SerialEntry public boolean showFoodAlways = false;
     @Category(name = "food")
@@ -113,6 +117,7 @@ public class Config implements Cloneable {
     @Category(name = "food")
     @SerialEntry public AnimationType heldFoodAnimationType = AnimationType.Pulsating;
 
+    @Label(key = "halohud.category.status.label")
     @Category(name = "status")
     @SerialEntry public boolean showStatusAlways = false;
     @Category(name = "status")
@@ -123,6 +128,7 @@ public class Config implements Cloneable {
     @Category(name = "status")
     @SerialEntry public Color colorFreezing = new Color(0xC0AAFFFF, true);
 
+    @Label(key = "halohud.category.tool.label")
     @Category(name = "tool")
     @SerialEntry public boolean showToolAlways = false;
     @Category(name = "tool")
