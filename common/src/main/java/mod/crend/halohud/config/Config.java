@@ -22,9 +22,11 @@ public class Config implements Cloneable {
 
     @Category(name = "halo")
     @Reverse
+    @NumberOfItems(max = 5)
     @SerialEntry public List<Component> haloComponents = List.of(Component.Health, Component.Food, Component.Attack);
     @Category(name = "halo2")
     @Reverse
+    @NumberOfItems(max = 5)
     @SerialEntry public List<Component> halo2Components = List.of(Component.Armor, Component.Status, Component.Tool);
 
     @Category(name = "halo")
