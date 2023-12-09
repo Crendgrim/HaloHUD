@@ -1,5 +1,5 @@
 modLoader = "javafml"
-loaderVersion = "[1,)"
+loaderVersion = "${forge_loader_version_range}"
 issueTrackerURL = "https://github.com/Crendgrim/HaloHUD/issues"
 license = "LGPL-3.0"
 
@@ -11,7 +11,7 @@ authors = "Crendgrim"
 description = '''
 Small halo style indicator around the crosshair for health and hunger.
 '''
-logoFile = "icon.png"
+logoFile = "assets/halohud/icon.png"
 displayTest = "IGNORE_ALL_VERSION"
 
 [[mixins]]
@@ -20,20 +20,20 @@ config = "halohud-common.mixins.json"
 [[dependencies.halohud]]
 modId = "neoforge"
 mandatory = true
-versionRange = "[20.2.59-beta,)"
+versionRange = "${neoforge_version_range}"
 ordering = "NONE"
 side = "BOTH"
 
 [[dependencies.halohud]]
 modId = "minecraft"
 mandatory = true
-versionRange = "[1.20.2,)"
+versionRange = "${minecraft_version_range_forge}"
 ordering = "NONE"
 side = "BOTH"
 
 [[dependencies.halohud]]
 modId = "yet_another_config_lib"
 mandatory = false
-versionRange = "[3,)"
+versionRange = "${yacl_version_range_neoforge}"
 ordering = "NONE"
 side = "BOTH"
