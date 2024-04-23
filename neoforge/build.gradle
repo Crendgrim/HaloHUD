@@ -18,13 +18,21 @@ configurations {
 
 repositories {
     maven { url "https://maven.neoforged.net/releases/" }
+    maven {
+        name 'Maven for PR #794' // https://github.com/neoforged/NeoForge/pull/794
+        url 'https://prmaven.neoforged.net/NeoForge/pr794'
+        content {
+            includeModule('net.neoforged', 'neoforge')
+            includeModule('net.neoforged', 'testframework')
+        }
+    }
 }
 
 dependencies {
     neoForge "net.neoforged:neoforge:${rootProject.neoforge_version}"
 
-    modImplementation "dev.isxander.yacl:yet-another-config-lib-forge:${project.yacl_version}"
-    modImplementation include(name: "yaclx", group: "mod.crend.yaclx", version:"${project.yaclx_version}-neoforge")
+    modImplementation "dev.isxander:yet-another-config-lib:${project.yacl_version}-neoforge"
+    modImplementation include(name: "libbamboo", group: "mod.crend.libbamboo", version:"${project.libbamboo_version}-neoforge")
 
     common(project(path: ":common", configuration: "namedElements")) { transitive false }
     shadowCommon(project(path: ":common", configuration: "transformProductionNeoForge")) { transitive = false }

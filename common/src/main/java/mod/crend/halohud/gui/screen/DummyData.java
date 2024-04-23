@@ -1,9 +1,10 @@
 package mod.crend.halohud.gui.screen;
 
 import mod.crend.halohud.util.ActiveEffects;
-import mod.crend.yaclx.auto.annotation.Listener;
+import mod.crend.libbamboo.auto.annotation.Listener;
 import net.minecraft.entity.effect.StatusEffect;
 import net.minecraft.entity.effect.StatusEffects;
+import net.minecraft.registry.entry.RegistryEntry;
 
 public class DummyData {
 	private static final int TICKS_CHANGED = 20;
@@ -57,7 +58,7 @@ public class DummyData {
 		locked = true;
 	}
 
-	public static void enableFrom(StatusEffect effect) {
+	public static void enableFrom(RegistryEntry<StatusEffect> effect) {
 		if (locked) return;
 		effects.enableFrom(effect);
 		ticksRemaining = TICKS_CHANGED;

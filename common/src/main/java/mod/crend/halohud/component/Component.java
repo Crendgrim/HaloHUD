@@ -1,6 +1,6 @@
 package mod.crend.halohud.component;
 
-import mod.crend.yaclx.type.NameableEnum;
+import mod.crend.libbamboo.type.NameableEnum;
 import net.minecraft.text.Text;
 
 public enum Component implements NameableEnum {

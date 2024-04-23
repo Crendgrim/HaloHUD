@@ -28,8 +28,8 @@ dependencies {
     //modApi "dev.architectury:architectury-forge:${rootProject.architectury_version}"
     implementation(include("com.github.LlamaLad7.MixinExtras:mixinextras-forge:${project.mixin_extras_version}"))
 
-    modImplementation "dev.isxander.yacl:yet-another-config-lib-forge:${project.yacl_version}"
-    modImplementation include(name: "yaclx", group: "mod.crend.yaclx", version:"${project.yaclx_version}-forge")
+    //modImplementation "dev.isxander:yet-another-config-lib:${project.yacl_version}-forge"
+    modImplementation include(name: "libbamboo", group: "mod.crend.libbamboo", version:"${project.libbamboo_version}-forge")
 
     common(project(path: ":common", configuration: "namedElements")) { transitive false }
     shadowCommon(project(path: ":common", configuration: "transformProductionForge")) { transitive = false }

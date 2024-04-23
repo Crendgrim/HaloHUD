@@ -3,7 +3,7 @@ package mod.crend.halohud.forge;
 import com.llamalad7.mixinextras.MixinExtrasBootstrap;
 import mod.crend.halohud.HaloHud;
 import mod.crend.halohud.ModKeyBindings;
-import mod.crend.yaclx.YaclX;
+import mod.crend.libbamboo.LibBamboo;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.RegisterGuiOverlaysEvent;
 import net.minecraftforge.client.event.RegisterKeyMappingsEvent;
@@ -17,7 +17,7 @@ public class HaloHudModEvents {
 	static void onClientSetup(FMLClientSetupEvent event) {
 		MixinExtrasBootstrap.init();
 		HaloHud.init();
-		if (YaclX.HAS_YACL) {
+		if (LibBamboo.HAS_YACL) {
 			ModConfigMenu.register();
 		}
 	}

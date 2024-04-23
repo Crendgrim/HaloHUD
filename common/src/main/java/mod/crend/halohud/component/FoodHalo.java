@@ -7,7 +7,9 @@ import mod.crend.halohud.render.component.FoodHaloRenderer;
 import mod.crend.halohud.util.ActiveEffects;
 import net.minecraft.client.network.ClientPlayerEntity;
 import net.minecraft.client.util.math.MatrixStack;
+import net.minecraft.component.DataComponentTypes;
 
+import javax.xml.crypto.Data;
 import java.lang.ref.Reference;
 
 public class FoodHalo extends HaloComponent {
@@ -34,11 +36,11 @@ public class FoodHalo extends HaloComponent {
 		super.tick(shouldRender);
 		handItemFoodValue = 0;
 		if (player.getHungerManager().getFoodLevel() < 20) {
-			if (player.getMainHandStack().isFood()) {
-				handItemFoodValue = (player.getMainHandStack().getItem().getFoodComponent().getHunger() / 20.0f);
+			if (player.getMainHandStack().contains(DataComponentTypes.FOOD)) {
+				handItemFoodValue = (player.getMainHandStack().get(DataComponentTypes.FOOD).nutrition() / 20.0f);
 				reveal();
-			} else if (player.getOffHandStack().isFood()) {
-				handItemFoodValue = (player.getOffHandStack().getItem().getFoodComponent().getHunger() / 20.0f);
+			} else if (player.getOffHandStack().contains(DataComponentTypes.FOOD)) {
+				handItemFoodValue = (player.getOffHandStack().get(DataComponentTypes.FOOD).nutrition() / 20.0f);
 				reveal();
 			}
 		}

@@ -7,7 +7,7 @@ import mod.crend.halohud.config.Config;
 import mod.crend.halohud.render.HaloRenderer;
 import mod.crend.halohud.util.ActiveEffects;
 import mod.crend.halohud.util.HaloDimensions;
-import mod.crend.yaclx.YaclX;
+import mod.crend.libbamboo.LibBamboo;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.network.ClientPlayerEntity;
@@ -28,7 +28,7 @@ public class Hud {
 	public Hud() {
 		// Initialize render environment.
 		this.client = MinecraftClient.getInstance();
-		if (YaclX.HAS_YACL) {
+		if (LibBamboo.HAS_YACL) {
 			Config.CONFIG_STORE.withYacl().configChangeListener = this::init;
 		}
 	}

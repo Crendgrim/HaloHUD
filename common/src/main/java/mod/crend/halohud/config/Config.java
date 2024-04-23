@@ -4,8 +4,8 @@ import dev.isxander.yacl3.config.v2.api.SerialEntry;
 import mod.crend.halohud.HaloHud;
 import mod.crend.halohud.component.Component;
 import mod.crend.halohud.gui.screen.DummyData;
-import mod.crend.yaclx.auto.annotation.*;
-import mod.crend.yaclx.opt.ConfigStore;
+import mod.crend.libbamboo.auto.annotation.*;
+import mod.crend.libbamboo.opt.ConfigStore;
 
 import java.awt.Color;
 import java.util.List;

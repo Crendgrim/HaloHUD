@@ -2,6 +2,7 @@ package mod.crend.halohud.util;
 
 import net.minecraft.entity.effect.StatusEffect;
 import net.minecraft.entity.effect.StatusEffects;
+import net.minecraft.registry.entry.RegistryEntry;
 
 public class ActiveEffects {
 	public boolean regeneration = false;
@@ -25,7 +26,7 @@ public class ActiveEffects {
 				= false;
 	}
 
-	public void enableFrom(StatusEffect effect) {
+	public void enableFrom(RegistryEntry<StatusEffect> effect) {
 		if (effect == StatusEffects.REGENERATION) this.regeneration = true;
 		else if (effect == StatusEffects.POISON) this.poison = true;
 		else if (effect == StatusEffects.WITHER) this.wither = true;

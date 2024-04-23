@@ -4,8 +4,6 @@ import com.mojang.blaze3d.systems.RenderSystem;
 import dev.isxander.yacl3.api.YetAnotherConfigLib;
 import dev.isxander.yacl3.gui.YACLScreen;
 import mod.crend.halohud.config.Config;
-import mod.crend.halohud.gui.screen.DummyComponent;
-import mod.crend.halohud.gui.screen.DummyHud;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.util.math.MatrixStack;

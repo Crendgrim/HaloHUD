@@ -37,12 +37,10 @@ dependencies {
     modImplementation fabricApi.module("fabric-rendering-v1", project.fabric_api_version)
     modImplementation fabricApi.module("fabric-screen-api-v1", project.fabric_api_version)
     modImplementation fabricApi.module("fabric-transfer-api-v1", project.fabric_api_version)
+    modRuntimeOnly "net.fabricmc.fabric-api:fabric-api:${project.fabric_api_version}"
 
-    include("com.github.LlamaLad7.MixinExtras:mixinextras-fabric:${project.mixin_extras_version}")
-    //modApi "dev.architectury:architectury-fabric:${rootProject.architectury_version}"
-
-    modImplementation "dev.isxander.yacl:yet-another-config-lib-fabric:${project.yacl_version}"
-    modImplementation include(name: "yaclx", group: "mod.crend.yaclx", version: "${project.yaclx_version}-fabric")
+    modImplementation "dev.isxander:yet-another-config-lib:${project.yacl_version}-fabric${project.yacl_branch}"
+    modImplementation include(name: "libbamboo", group: "mod.crend.libbamboo", version: "${project.libbamboo_version}-fabric")
     modImplementation "com.terraformersmc:modmenu:${project.modmenu_version}"
 
     common(project(path: ":common", configuration: "namedElements")) { transitive false }
