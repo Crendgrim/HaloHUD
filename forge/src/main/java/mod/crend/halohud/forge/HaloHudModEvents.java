@@ -1,6 +1,5 @@
 package mod.crend.halohud.forge;
 
-import com.llamalad7.mixinextras.MixinExtrasBootstrap;
 import mod.crend.halohud.HaloHud;
 import mod.crend.halohud.ModKeyBindings;
 import mod.crend.libbamboo.LibBamboo;
@@ -15,7 +14,6 @@ import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 public class HaloHudModEvents {
 	@SubscribeEvent
 	static void onClientSetup(FMLClientSetupEvent event) {
-		MixinExtrasBootstrap.init();
 		HaloHud.init();
 		if (LibBamboo.HAS_YACL) {
 			ModConfigMenu.register();
@@ -29,7 +27,7 @@ public class HaloHudModEvents {
 
 	@SubscribeEvent
 	static void onRegisterGuiOverlaysEvent(RegisterGuiOverlaysEvent event) {
-		event.registerAboveAll(HaloHud.MOD_ID, (gui, context, tickDelta, screenWidth, screenHeight)-> HaloHud.hud.render(context, tickDelta));
+		event.registerAboveAll(HaloHud.MOD_ID, (gui, context, tickDelta, screenWidth, screenHeight) -> HaloHud.hud.render(context, tickDelta));
 	}
 
 }
