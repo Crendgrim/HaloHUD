@@ -4,6 +4,8 @@ import mod.crend.halohud.config.Config;
 import mod.crend.halohud.gui.Hud;
 import mod.crend.halohud.render.HaloRenderer;
 import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.gui.DrawContext;
+import net.minecraft.client.render.RenderTickCounter;
 
 public class HaloHud {
 
@@ -25,5 +27,11 @@ public class HaloHud {
         HaloRenderer.tick();
         hud.tick();
         ModKeyBindings.clientTick(client);
+    }
+
+    public static void render(DrawContext context, RenderTickCounter renderTickCounter) {
+        if (hud != null) {
+            hud.render(context, renderTickCounter);
+        }
     }
 }

@@ -76,7 +76,7 @@ public class ModConfigScreen extends YACLScreen {
 
 		MatrixStack matrices = context.getMatrices();
 		matrices.push();
-		matrices.translate(deltaX, 0, 0);
+		matrices.translate(deltaX, 0, 100);
 		RenderSystem.enableBlend();
 		hoveredComponent.ifPresent(component -> dummyHud.renderHoveredComponent(matrices, component));
 		dummyHud.render(matrices);

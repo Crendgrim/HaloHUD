@@ -49,14 +49,14 @@ public class AttackHalo extends HaloComponent {
 		if (toolProgress == 0 && !player.getActiveItem().isEmpty()) {
 			ItemStack activeItemStack = player.getActiveItem();
 			if (activeItemStack.getUseAction() == UseAction.BOW) {
-				toolProgress = BowItem.getPullProgress(activeItemStack.getMaxUseTime() - player.getItemUseTimeLeft());
+				toolProgress = BowItem.getPullProgress(activeItemStack.getMaxUseTime(player) - player.getItemUseTimeLeft());
 				fullyCharged = true;
 			} else if (activeItemStack.getUseAction() == UseAction.SPEAR) {
-				int i = activeItemStack.getMaxUseTime() - player.getItemUseTimeLeft();
+				int i = activeItemStack.getMaxUseTime(player) - player.getItemUseTimeLeft();
 				toolProgress = Math.min(1.0f, i / 10.0f);
 				fullyCharged = true;
 			} else {
-				toolProgress = 1.0f - player.getItemUseTimeLeft() / (float) activeItemStack.getMaxUseTime();
+				toolProgress = 1.0f - player.getItemUseTimeLeft() / (float) activeItemStack.getMaxUseTime(player);
 			}
 		}
 	}

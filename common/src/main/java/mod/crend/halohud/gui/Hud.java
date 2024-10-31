@@ -11,6 +11,7 @@ import mod.crend.libbamboo.LibBamboo;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.network.ClientPlayerEntity;
+import net.minecraft.client.render.RenderTickCounter;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.util.Arm;
 
@@ -29,7 +30,7 @@ public class Hud {
 		// Initialize render environment.
 		this.client = MinecraftClient.getInstance();
 		if (LibBamboo.HAS_YACL) {
-			Config.CONFIG_STORE.withYacl().configChangeListener = this::init;
+			Config.CONFIG_STORE.withYacl().configChangeEvent.register(this::init);
 		}
 	}
 
@@ -97,7 +98,7 @@ public class Hud {
 		}
 	}
 
-	public void render(DrawContext context, float tickDelta) {
+	public void render(DrawContext context, RenderTickCounter tickDelta) {
 		if (player == null) return;
 
 		RenderSystem.enableBlend();

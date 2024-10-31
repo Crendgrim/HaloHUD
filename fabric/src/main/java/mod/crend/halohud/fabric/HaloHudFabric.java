@@ -13,7 +13,7 @@ public class HaloHudFabric implements ClientModInitializer {
     public void onInitializeClient() {
         HaloHud.init();
 
-        HudRenderCallback.EVENT.register((context, tickDelta) -> HaloHud.hud.render(context, tickDelta));
+        HudRenderCallback.EVENT.register(HaloHud::render);
 
         ModKeyBindings.ALL.forEach(KeyBindingHelper::registerKeyBinding);
         ClientTickEvents.END_CLIENT_TICK.register(HaloHud::clientTick);

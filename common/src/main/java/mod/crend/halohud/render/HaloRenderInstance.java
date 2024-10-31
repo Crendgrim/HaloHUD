@@ -26,8 +26,7 @@ public class HaloRenderInstance {
 	public HaloRenderInstance(MatrixStack matrixStack, HaloDimensions dimensions, float intensity) {
 		// Setup render buffer
 		matrix = matrixStack.peek().getPositionMatrix();
-		buffer = Tessellator.getInstance().getBuffer();
-		buffer.begin(VertexFormat.DrawMode.TRIANGLE_STRIP, VertexFormats.POSITION_COLOR);
+		buffer = Tessellator.getInstance().begin(VertexFormat.DrawMode.TRIANGLE_STRIP, VertexFormats.POSITION_COLOR);
 		RenderSystem.enableBlend();;
 		RenderSystem.defaultBlendFunc();
 		RenderSystem.disableCull();
@@ -70,11 +69,11 @@ public class HaloRenderInstance {
 		double yInner = y + cos * radius;
 		double yOuter = yInner + cos * width;
 		if (flipped) {
-			buffer.vertex(matrix, (float) xOuter, (float) yOuter, 0).color(r, g, b, a).next();
-			buffer.vertex(matrix, (float) xInner, (float) yInner, 0).color(r, g, b, a).next();
+			buffer.vertex(matrix, (float) xOuter, (float) yOuter, 0).color(r, g, b, a);
+			buffer.vertex(matrix, (float) xInner, (float) yInner, 0).color(r, g, b, a);
 		} else {
-			buffer.vertex(matrix, (float) xInner, (float) yInner, 0).color(r, g, b, a).next();
-			buffer.vertex(matrix, (float) xOuter, (float) yOuter, 0).color(r, g, b, a).next();
+			buffer.vertex(matrix, (float) xInner, (float) yInner, 0).color(r, g, b, a);
+			buffer.vertex(matrix, (float) xOuter, (float) yOuter, 0).color(r, g, b, a);
 		}
 	}
 
