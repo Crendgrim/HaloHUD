@@ -1,0 +1,19 @@
+modLoader = "javafml"
+loaderVersion = "*"
+issueTrackerURL = "https://github.com/Crendgrim/HaloHUD/issues"
+license = "LGPL-3.0"
+
+[[mods]]
+modId = "${id}"
+version = "${version}"
+displayName = "${name}"
+authors = "Crendgrim"
+description = '''
+Small halo style indicator around the crosshair for health and hunger.
+'''
+logoFile = "assets/${id}/icon.png"
+logoBlur = false
+displayTest = "IGNORE_ALL_VERSION"
+
+[[mixins]]
+config = "halohud-common.mixins.json"
