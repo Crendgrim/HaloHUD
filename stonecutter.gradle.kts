@@ -1,8 +1,12 @@
+import net.fabricmc.loom.task.RemapJarTask
+import java.util.*
+
 plugins {
     id("dev.kikugie.stonecutter")
     id("dev.architectury.loom") version "1.7-SNAPSHOT" apply false
     id("architectury-plugin") version "3.4-SNAPSHOT" apply false
     id("com.github.johnrengelman.shadow") version "8.1.1" apply false
+    id("me.modmuss50.mod-publish-plugin") version "0.8.1" apply false
 }
 stonecutter active "1.20.1" /* [SC] DO NOT EDIT */
 stonecutter.automaticPlatformConstants = true
@@ -22,6 +26,11 @@ for (it in stonecutter.tree.branches) {
         versions { branch, _ -> branch == it.id }
         ofTask("buildAndCollect")
     }
+}
+
+stonecutter registerChiseled tasks.register("chiseledPublish", stonecutter.chiseled) {
+    group = "project"
+    ofTask("publishMods")
 }
 
 // Runs active versions for each loader
