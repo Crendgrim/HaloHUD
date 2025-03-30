@@ -92,6 +92,7 @@
   "halohud.option.showAirBelow.description": "Show air bar below threshold",
   "halohud.option.colorAir": "Air bar",
   "halohud.option.colorAir.description": "Air bar color",
+  "halohud.option.colorFreezing": "Freezing",
 
   "halohud.category.tool": "Tool",
   "halohud.category.tool.label": "Shows the durability of equipped tools.",
